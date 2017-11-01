@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/style.css">
+
+    </head>
+    <body>
+    <div id="hero">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-toggleable-md navbar-inverse">
+
+                    <a href="#" class="navbar-brand text-primary" id="logo">LOGO</a>
+
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <?php foreach($menu as $key => $value): ?>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-primary"
+                                   href="<?=$value['href']?>">
+                                    <?=$value['name']?>
+                                </a>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+    </div>
+
+        <!-- Optional JavaScript -->
+
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/tether.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+    </body>
+</html>
