@@ -12,6 +12,7 @@ It uses Bootstrap 4.0.0 for frontend and for update or create new css and Javasc
 Run this command from the directory in which you want to install your new Slim Framework application.
 
     composer install
+    npm install
     gulp install
 
 * Point your virtual host document root to your new application's `public/` directory.
