@@ -21,9 +21,10 @@ $app = new \Slim\App($settings);
 $container = $app->getContainer();
 
 // Register provider
+
 $container['config'] = function () {
     //Create the configuration
-    return new \DavidePastore\Slim\Config\Config('/var/www/BeeWebpage/config.json');
+    return new \DavidePastore\Slim\Config\Config('./../config.json');
 };
 
 // Register middleware for all routes

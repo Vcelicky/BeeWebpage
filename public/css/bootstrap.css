@@ -2938,8 +2938,8 @@ tbody.collapse.show {
   margin-left: -0.625rem; }
 
 .card-primary {
-  background-color: #ffd500;
-  border-color: #ffd500; }
+  background-color: #000;
+  border-color: #000; }
   .card-primary .card-header,
   .card-primary .card-footer {
     background-color: transparent; }
@@ -4019,10 +4019,10 @@ button.close {
   background-color: #f7f7f7; }
 
 .bg-primary {
-  background-color: #ffd500 !important; }
+  background-color: #000 !important; }
 
 a.bg-primary:focus, a.bg-primary:hover {
-  background-color: #ccaa00 !important; }
+  background-color: black !important; }
 
 .bg-success {
   background-color: #5cb85c !important; }
@@ -5882,10 +5882,10 @@ a.text-muted:focus, a.text-muted:hover {
   color: #4b5257 !important; }
 
 .text-primary {
-  color: #ffd500 !important; }
+  color: #000 !important; }
 
 a.text-primary:focus, a.text-primary:hover {
-  color: #ccaa00 !important; }
+  color: black !important; }
 
 .text-success {
   color: #5cb85c !important; }

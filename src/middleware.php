@@ -17,13 +17,9 @@ $menu_midd = function ($request, $response, $next) {
             'name' => 'Kontakt',
             'href' => '#',
         ],
-        'item4' => [
-            'name' => 'Registrácia',
-            'href' => '#',
-        ],
         'item5' => [
             'name' => 'Prihlásenie',
-            'href' => '#',
+            'href' => '',
         ]
 
     ];
