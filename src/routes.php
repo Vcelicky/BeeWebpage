@@ -24,5 +24,5 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     }*/
 
     // Render index view
-    return $this->renderer->render($response, 'index.phtml', ['menu' => $request->getAttribute('menu')]);
+    return $this->renderer->render($response, 'index.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });

@@ -56,56 +56,17 @@
         </div>
     </div>
 
-    <!-- Modal HTML Markup -->
-    <div id="ModalLoginForm" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title text-xs-center">Prihlásenie</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form" method="POST" action="">
-                        <input type="hidden" name="_token" value="">
-                        <div class="form-group">
-                            <label class="control-label">Meno</label>
-                            <div>
-                                <input type="email" class="form-control input-lg" name="login" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Heslo</label>
-                            <div>
-                                <input type="password" class="form-control input-lg" name="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Zapamätaj si
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <a class="btn btn-link" href="">Zabudli ste heslo?</a>
-                                <button type="submit" class="btn btn-info btn-block">Prihlásiť sa</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer text-xs-center">
-                    Nemáte účet? <br><a href="/auth/register"> Zaregistruj sa »</a>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-        <!-- Optional JavaScript -->
+
+
+<section class="sub-footer">
+    <?php echo $footer; ?>
+</section>
+
+<!-- Optional JavaScript -->
 
         <script src="/js/jquery.min.js"></script>
         <script src="/js/tether.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/main_content.js"></script>>
+        <script src="/js/main_content.js"></script>
     </body>
 </html>
