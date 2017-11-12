@@ -85,19 +85,15 @@
     text-transform: uppercase;
     color: #aaa;
     padding: 0;
-    margin: 0;
-    line-height: 30px;
-    min-height: 30px; }
+    margin: 0; }
   .footer-bottom .design {
     font-family: 'Roboto Condensed', sans-serif;
     text-transform: uppercase;
     color: #aaa;
     padding: 0;
     margin: 0;
-    text-align: right;
-    line-height: 30px;
-    min-height: 30px; }
-    @media (max-width: 580px) {
+    text-align: right; }
+    @media only screen and (max-width: 580px) and (min-width: 300px) {
       .footer-bottom .design {
         text-align: left; } }
     .footer-bottom .design a {

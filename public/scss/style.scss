@@ -107,8 +107,6 @@
     color: #aaa;
     padding: 0;
     margin: 0;
-    line-height: 30px;
-    min-height: 30px;
   }
   .design {
     font-family: 'Roboto Condensed', sans-serif;
@@ -117,9 +115,7 @@
     padding: 0;
     margin: 0;
     text-align: right;
-    line-height: 30px;
-    min-height: 30px;
-    @media(max-width: 580px) {
+    @media only screen and (max-width: 580px) and (min-width: 300px) {
       text-align: left;
     }
 
