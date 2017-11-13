@@ -74,7 +74,6 @@ class Api extends Base
 
     public function getLastDeviceData($device_name)
     {
-        $devices_data = $this->getDevices();
 
         $devices = [];
         array_push($devices, $this->getActual($device_name));
