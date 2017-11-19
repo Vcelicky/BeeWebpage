@@ -18,10 +18,6 @@ $menu_footer_midd = function ($request, $response, $next) {
             'href' => '#',
         ],
         'item4' => [
-            'name' => 'Registrácia',
-            'href' => '#',
-        ],
-        'item5' => [
             'name' => 'Prihlásenie',
             'href' => '',
         ]
@@ -29,20 +25,19 @@ $menu_footer_midd = function ($request, $response, $next) {
     ];
 
     $footer = '<div class="footer-bottom">
-                    <div class="container">
-                        <div class="row">
-                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                                <div class="copyright">
-                                    © 2017, All rights reserved.
-                                </div>
+                    
+                    <div class="row">
+                        <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
+                            <div class="copyright">
+                                © 2017, All rights reserved.
                             </div>
-                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                                <div class="design">
-                                    Designed by: Vcelicky TEAM
-                                </div>
-                            </div>
-                            
                         </div>
+                        <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
+                            <div class="design">
+                                Designed by: Vcelicky TEAM
+                            </div>
+                        </div>
+                        
                     </div>
                </div>';
 
