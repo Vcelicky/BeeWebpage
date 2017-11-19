@@ -52,8 +52,9 @@ $app->get('/api', function (Request $request, Response $response, array $args) {
 
 });
 
-
-$app->get('/db/devices/{device_id}', function (Request $request, Response $response, array $args) {
+//Route returns devices of user with id=user_id
+//TODO Akekolvek das tak dostanes vzdy vsetky devices
+$app->get('/db/devices/{user_id}', function (Request $request, Response $response, array $args) {
 
 
     $config = $this->config->getConfig();
@@ -61,7 +62,7 @@ $app->get('/db/devices/{device_id}', function (Request $request, Response $respo
     $dbManager = new DbManager($config);
     $dbManager->connect();
 
-    $devices = $dbManager->getUsersDevices($args['device_id']);
+    $devices = $dbManager->getUsersDevices($args['user_id']);
 
     // Nazorna ukazka zobrazenia udajov zariadeni
     $rows = array();
@@ -72,6 +73,7 @@ $app->get('/db/devices/{device_id}', function (Request $request, Response $respo
 
 });
 
+//Route returns last measurement JSON of device {device_name} from Carriots service
 $app->get('/api/measurements/{device_name}', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $carrot_api = new Api($config);
@@ -80,6 +82,8 @@ $app->get('/api/measurements/{device_name}', function (Request $request, Respons
     print json_encode($metrics);
 });
 
+//Login: Temporary solution
+//Compares email and password with the records in the databaze
 $app->post('/functions/login', function ($request, $response, $args) {
     $config = $this->config->getConfig();
     $email = $request->getHeaders()['HTTP_EMAIL'];
@@ -87,4 +91,10 @@ $app->post('/functions/login', function ($request, $response, $args) {
 
     $login = new Login($config);
     $login->getLogin($email[0], $password[0]);
+});
+
+$app->get('/api/test', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    echo $_SESSION['userId'] . "\xA";;
+
 });
