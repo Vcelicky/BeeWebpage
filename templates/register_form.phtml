@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/register.css">
-
 </head>
 <body>
 <div id="hero">
@@ -48,7 +47,7 @@
         <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-body">
-                    <form method="POST" action="#" role="form" id = "register">
+                    <form role="form" id = "register" method="POST" action="/register/user">
                         <div class="form-group">
                             <h2>Registrácia</h2>
                         </div>
@@ -73,7 +72,7 @@
                             <input name="signupPasswordagain" id="signupPasswordagain" type="password" maxlength="25" class="form-control">
                         </div>
                         <div class="form-group">
-                            <button id="signupSubmit" type="submit" class="btn btn-info btn-block">Vytvorit účet</button>
+                            <button id="signupSubmit" class="btn btn-info btn-block">Vytvorit účet</button>
                         </div>
                         <hr>
                         <p>Už máte účet? <a href="#" data-toggle="modal" data-target="#ModalLoginForm">Prihlásenie</a></p>
@@ -93,12 +92,11 @@
                 <h4 class="modal-title text-xs-center">Prihlásenie</h4>
             </div>
             <div class="modal-body">
-                <form role="form" method="POST" action="">
-                    <input type="hidden" name="_token" value="">
+                <form id = "login" role="form" method="POST" action="/login/user">
                     <div class="form-group">
-                        <label class="control-label">Meno</label>
+                        <label class="control-label">Email</label>
                         <div>
-                            <input type="email" class="form-control input-lg" name="login" value="">
+                            <input type="email" class="form-control input-lg" name="email" value="">
                         </div>
                     </div>
                     <div class="form-group">

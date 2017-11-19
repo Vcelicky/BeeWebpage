@@ -67,4 +67,5 @@ $(document).ready(function(){
         email: "Prosím zadajte email v korektnom stave.",
         minlength: jQuery.validator.format("Prosím zadajte minimálne {0} znakov.")
     });
+
 });
