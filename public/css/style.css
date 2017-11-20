@@ -76,17 +76,22 @@
   max-width: 980px;
   margin: auto; }
 
-.footer-bottom {
-  padding: 20px 0 !important;
+#footer-bottom {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px 0;
+  margin: 0 0.5px;
   background-color: #ededed !important;
   font-size: 9px; }
-  .footer-bottom .copyright {
+  #footer-bottom .copyright {
     font-family: 'Roboto Condensed', sans-serif;
     text-transform: uppercase;
     color: #aaa;
     padding: 0;
     margin: 0; }
-  .footer-bottom .design {
+  #footer-bottom .design {
     font-family: 'Roboto Condensed', sans-serif;
     text-transform: uppercase;
     color: #aaa;
@@ -94,7 +99,7 @@
     margin: 0;
     text-align: right; }
     @media only screen and (max-width: 580px) and (min-width: 300px) {
-      .footer-bottom .design {
+      #footer-bottom .design {
         text-align: left; } }
-    .footer-bottom .design a {
+    #footer-bottom .design a {
       color: #fff; }
