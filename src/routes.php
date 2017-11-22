@@ -6,6 +6,7 @@ use src\Carrot_api\Api;
 use src\Db_api\DbManager;
 use src\Db_api\Login;
 
+
 $app->get('/', function (Request $request, Response $response, array $args) {
 
     return $this->renderer->render($response, 'index.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
@@ -72,39 +73,54 @@ $app->post('/login/user', function (Request $request, Response $response, array 
     return $this->response->withStatus(301)->withHeader('Location', '/');
 });
 
-
-$app->get('/db/devices/{device_id}', function (Request $request, Response $response, array $args) {
-
+/**
+ * Returns users devices
+ * Body: user_id, token
+ */
+$app->post('/db/devices', function (Request $request, Response $response, array $args) {
 
     $config = $this->config->getConfig();
+    $allPostPutVars = $request->getParams();
 
     $dbManager = new DbManager($config);
     $dbManager->connect();
 
-    $devices = $dbManager->getUsersDevices($args['device_id']);
-
-    // Nazorna ukazka zobrazenia udajov zariadeni
-    $rows = array();
-    while($r =  pg_fetch_assoc($devices)) {
-        $rows[] = $r;
-    }
-    print json_encode($rows);
-
+    $dbManager->getUsersDevices($allPostPutVars['user_id'], $allPostPutVars['token']);
 });
 
-$app->get('/api/measurements/{device_name}', function (Request $request, Response $response, array $args) {
+/**
+ * Returns last measurement
+ * Body: device_name, token
+ */
+$app->post('/api/measurements/actual', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
+    $allPostPutVars = $request->getParams();
     $carrot_api = new Api($config);
-    $metrics = $carrot_api->getLastDeviceData($args['device_name']);
-
-    print json_encode($metrics);
+    $measurement = $carrot_api->getLastDeviceData($allPostPutVars['device_name'], $allPostPutVars['token']);
+    print json_encode($measurement);
 });
 
-$app->post('/functions/login', function ($request, $response, $args) {
+/**
+ * Returns all measurements
+ * Body: device_name, token
+ */
+$app->post('/api/measurements/all', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
-    $email = $request->getHeaders()['HTTP_EMAIL'];
-    $password =  $request->getHeaders()['HTTP_PASSWORD'];
+    $allPostPutVars = $request->getParams();
+    $carrot_api = new Api($config);
+    $measurement = $carrot_api->getHistoryDeviceData($allPostPutVars['device_name'], $allPostPutVars['token']);
+    print json_encode($measurement);
+});
+
+
+/**
+ * Login user
+ * Body: email, password
+ */
+$app->post('/login2/user', function ($request, $response, $args) {
+    $config = $this->config->getConfig();
+    $allPostPutVars = $request->getParams();
 
     $login = new Login($config);
-    $login->getLogin($email[0], $password[0]);
+    $login->getLogin($allPostPutVars['email'], $allPostPutVars['password']);
 });

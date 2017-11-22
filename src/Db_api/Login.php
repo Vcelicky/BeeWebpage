@@ -8,6 +8,7 @@
 
 namespace src\Db_api;
 
+use \Firebase\JWT\JWT;
 
 class Login {
 
@@ -44,14 +45,12 @@ class Login {
                 $response["role_id"] = $user[3];
                 $response["user"]["name"] = $user[0];
                 $response["user"]["email"] = $user[1];
+
+                $token = array();
+                $token['id'] = $response["id"];
+
+                $response["token"] = JWT::encode($token, 'klobaska');
                 echo json_encode($response);
-
-                $_SESSION['sid'] = session_id();
-                $_SESSION['userId'] = $response["id"];
-
-//                echo "\xA";
-//                echo $_SESSION['sid'] . "\xA";;
-//                echo $_SESSION['userId'] . "\xA";;
             } else {
                 // user is not found with the credentials
                 $response["error"] = TRUE;
