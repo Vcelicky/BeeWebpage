@@ -113,6 +113,7 @@ $app->post('/api/measurements/all', function (Request $request, Response $respon
 });
 
 
+//TODO Temporary function, returns Token
 /**
  * Login user
  * Body: email, password

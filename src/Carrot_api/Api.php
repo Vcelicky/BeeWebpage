@@ -120,7 +120,7 @@ class Api extends Base
         if($this->isValidDeviceToken($device_name, $token) == false){
             return null;
         }
-        
+
         $result = [];
         $metrics = [];
         array_push($result, $this->getHistory($device_name));

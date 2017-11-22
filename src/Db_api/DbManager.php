@@ -29,20 +29,6 @@ class DbManager
         $this->conn = pg_connect("host=$host port=$port dbname=$dbName user=$user password=$password");
     }
 
-    //TODO Temporary function
-    //Returns all users
-    public function getUsers(){
-        $result = pg_query($this->conn, "SELECT * FROM bees.users");
-
-        if (!$result) {
-            echo "Problem with query ";
-            echo pg_last_error();
-            exit();
-        }
-
-        return $result;
-    }
-
     /** Returns names of users devices in Carriots format by userId parameter
      * @param $userId
      * @param $token
