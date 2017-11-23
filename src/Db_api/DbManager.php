@@ -7,6 +7,7 @@
  */
 
 namespace src\Db_api;
+use \Firebase\JWT\JWT;
 
 class DbManager
 {
@@ -28,10 +29,31 @@ class DbManager
         $this->conn = pg_connect("host=$host port=$port dbname=$dbName user=$user password=$password");
     }
 
-    //TODO Temporary function
-    //Returns all users
-    public function getUsers(){
-        $result = pg_query($this->conn, "SELECT * FROM bees.users");
+    /** Returns names of users devices in Carriots format by userId parameter
+     * @param $userId
+     * @param $token
+     */
+    public function getUsersDevices($userId, $token)
+    {
+        //Validate token
+        try {
+            $decoded = JWT::decode($token, $this->config['program.token'], array('HS256'));
+            if ($decoded->id != $userId) {
+                header('HTTP/1.0 401 Unauthorized');
+                return;
+            }
+
+        } catch (\Exception $e) {
+            header('HTTP/1.0 401 Unauthorized');
+            return;
+        }
+
+        $query = 'SELECT d.name FROM bees.users u
+                  JOIN bees.devices d ON u.id = d.user_id
+                  WHERE u.id = $1';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", array($userId));
 
         if (!$result) {
             echo "Problem with query ";
@@ -39,21 +61,41 @@ class DbManager
             exit();
         }
 
-        return $result;
+        $rows = array();
+        while($r =  pg_fetch_assoc($result)) {
+            $rows[] = $r;
+        }
+        print json_encode($rows);
     }
 
-    //Returns names of users devices in Carriots format by userId parameter
-    public function getUsersDevices($userId){
-        $result = pg_query($this->conn, "SELECT d.name FROM bees.users u
-                                                         JOIN bees.devices d ON u.id = d.user_id
-                                                         WHERE u.id =3");
+    /** Returns if $device with $device_name has relation with %user with $userId
+     * @param $userId
+     * @param $device_name
+     * @return bool
+     */
+    public function isUsersDevice($userId, $device_name) {
+        $query = 'SELECT u.id FROM bees.users u
+                JOIN bees.devices d ON u.id = d.user_id
+                WHERE d.name LIKE $1';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", array($device_name."%"));
+
+        $rows = array();
+        while($r =  pg_fetch_assoc($result)) {
+            $rows[] = $r;
+        }
+
         if (!$result) {
             echo "Problem with query ";
             echo pg_last_error();
             exit();
         }
-
-        return $result;
+        else if (($rows[0]['id']) == $userId)
+            return true;
+        else {
+            return false;
+        }
     }
 
     function disconnect(){
