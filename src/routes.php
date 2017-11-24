@@ -70,7 +70,7 @@ $app->post('/login/user', function (Request $request, Response $response, array 
     ob_end_clean();
 
     // return value form login script
-    $return = (array) json_decode($returned_value);
+    $returnn = (array) json_decode($returned_value);
     return $this->response->withStatus(301)->withHeader('Location', '/');
 });
 

@@ -24,22 +24,23 @@ $menu_footer_midd = function ($request, $response, $next) {
 
     ];
 
-    $footer = '<div class="footer-bottom">
+    $footer = '
                     
-                    <div class="row">
-                        <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                            <div class="copyright">
-                                © 2017, All rights reserved.
+                    <div id="footer-bottom" class="row">
+                        
+                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
+                                <div class="copyright">
+                                    © 2017, All rights reserved.
+                                </div>
                             </div>
-                        </div>
-                        <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                            <div class="design">
-                                Designed by: Vcelicky TEAM
+                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
+                                <div class="design">
+                                    Designed by: Vcelicky TEAM
+                                </div>
                             </div>
-                        </div>
                         
                     </div>
-               </div>';
+            ';
 
     $request = $request->withAttribute('menu', $menu);
     $request = $request->withAttribute('footer', $footer);
