@@ -48,7 +48,7 @@ $app->post('/register/user', function (Request $request, Response $response, arr
     ];
     $_POST = $params;
     ob_start();
-    include ('./../../android_login_api/register.php');
+    include ('./../../API/register.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
     // return value form login script
@@ -65,9 +65,10 @@ $app->post('/login/user', function (Request $request, Response $response, array 
     ];
     $_POST = $params;
     ob_start();
-    include ('./../../android_login_api/login.php');
+    include ('./../../API/login.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
+
     // return value form login script
     $return = (array) json_decode($returned_value);
     return $this->response->withStatus(301)->withHeader('Location', '/');
