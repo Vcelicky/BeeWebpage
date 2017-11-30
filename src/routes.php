@@ -125,3 +125,16 @@ $app->post('/login2/user', function ($request, $response, $args) {
     $login = new Login($config);
     $login->getLogin($allPostPutVars['email'], $allPostPutVars['password']);
 });
+
+/**
+ * Create new order
+ * Body: name, email, phone, device_count, notes
+ */
+$app->post('/order/new', function ($request, $response, $args) {
+    $config = $this->config->getConfig();
+    $allPostPutVars = $request->getParams();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+
+    $dbManager->createOrder($allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
+});

@@ -98,6 +98,22 @@ class DbManager
         }
     }
 
+    public function createOrder($name, $email,  $phone, $device_count, $notes) {
+
+        $query = 'INSERT INTO bees.orders(name, email, phone, device_count, notes)
+                  VALUES ($1, $2, $3, $4, $5);';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", array("$name", "$email", "$phone", "$device_count", "$notes"));
+
+
+        if (!$result) {
+            echo "Problem with query ";
+            echo pg_last_error();
+            exit();
+        }
+    }
+
     function disconnect(){
         pg_close($this->conn);
     }
