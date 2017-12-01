@@ -5,6 +5,7 @@ use Slim\Http\Response;
 use src\Carrot_api\Api;
 use src\Db_api\DbManager;
 use src\Db_api\Login;
+use src\middlware\UserMenuMiddleware;
 
 
 $app->get('/', function (Request $request, Response $response, array $args) {
@@ -39,6 +40,51 @@ $app->get('/register', function (Request $request, Response $response, array $ar
 });
 
 
+
+$app->get('/bee-hives/', function (Request $request, Response $response, array $args) {
+    $allPostPutVars = $request->getParams();
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+
+    ob_start();
+    $dbManager->getUsersDevices($allPostPutVars['user_id'], $allPostPutVars['token']);
+    $returnedValue = ob_get_contents();    // get contents from the buffer
+    ob_end_clean();
+    $devices =  json_decode($returnedValue);
+    return $this->renderer->render($response, 'beehives.phtml', ['user' => $request->getAttribute('user'), 'footer' => $request->getAttribute('footer'), 'devices' => $devices]);
+})->add(function($request, $response, $next) {
+    $user = [
+        'name' => 'anonymous user'
+    ];
+
+    $footer = '
+                    
+                    <div id="footer-bottom" class="row">
+                        
+                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
+                                <div class="copyright">
+                                    © 2017, All rights reserved.
+                                </div>
+                            </div>
+                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
+                                <div class="design">
+                                    Designed by: Vcelicky TEAM
+                                </div>
+                            </div>
+                        
+                    </div>
+            ';
+
+    $request = $request->withAttribute('user', $user);
+    $request = $request->withAttribute('footer', $footer);
+    $response = $next($request, $response);
+
+
+    return $response;
+});
+
+
 $app->post('/register/user', function (Request $request, Response $response, array $args) {
     $allPostPutVars = $request->getParams();
     $params = [
@@ -64,8 +110,13 @@ $app->post('/login/user', function (Request $request, Response $response, array 
         'password' => $allPostPutVars['password']
     ];
     $_POST = $params;
+    $config = $this->config->getConfig();
+    $allPostPutVars = $request->getParams();
+
+    $login = new Login($config);
     ob_start();
-    include ('./../../API/login.php');
+    //include ('./../../API/login.php');
+    $login->getLogin($allPostPutVars['email'], $allPostPutVars['password']);
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
 
