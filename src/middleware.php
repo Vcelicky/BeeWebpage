@@ -15,7 +15,7 @@ $menu_footer_midd = function ($request, $response, $next) {
         ],
         'item3' => [
             'name' => 'Kontakt',
-            'href' => '#',
+            'href' => 'contact',
         ],
         'item4' => [
             'name' => 'Prihlásenie',

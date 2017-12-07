@@ -39,6 +39,11 @@ $app->get('/register', function (Request $request, Response $response, array $ar
     return $this->renderer->render($response, 'register_form.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
+
+//linka pre spustenie kontaktu
+$app->get('/contact', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response, 'skuska.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+});
 /*
  * Render site for signed up beekeeper with his devices
  * 
