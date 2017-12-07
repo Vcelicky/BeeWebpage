@@ -139,7 +139,26 @@ $app->post('/db/devices', function (Request $request, Response $response, array 
     $dbManager = new DbManager($config);
     $dbManager->connect();
 
-    $dbManager->getUsersDevices($allPostPutVars['user_id'], $allPostPutVars['token']);
+    $return = $dbManager->getUsersDevices($allPostPutVars['user_id'], $allPostPutVars['token']);
+    return $response->withStatus($return);
+
+});
+
+/**
+ * Returns users devices with additional informations
+ * Body: user_id, token
+ */
+$app->post('/db/devices/info', function (Request $request, Response $response, array $args) {
+
+    $config = $this->config->getConfig();
+    $allPostPutVars = $request->getParams();
+
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+
+    $return = $dbManager->getUsersDevicesInfo($allPostPutVars['user_id'], $allPostPutVars['token']);
+    return $response->withStatus($return);
+
 });
 
 /**
@@ -150,8 +169,9 @@ $app->post('/api/measurements/actual', function (Request $request, Response $res
     $config = $this->config->getConfig();
     $allPostPutVars = $request->getParams();
     $carrot_api = new Api($config);
-    $measurement = $carrot_api->getLastDeviceData($allPostPutVars['device_name'], $allPostPutVars['token']);
-    print json_encode($measurement);
+    $return = $carrot_api->getLastDeviceData($allPostPutVars['device_name'], $allPostPutVars['token']);
+    return $response->withStatus($return);
+
 });
 
 /**
@@ -162,8 +182,9 @@ $app->post('/api/measurements/all', function (Request $request, Response $respon
     $config = $this->config->getConfig();
     $allPostPutVars = $request->getParams();
     $carrot_api = new Api($config);
-    $measurement = $carrot_api->getHistoryDeviceData($allPostPutVars['device_name'], $allPostPutVars['token']);
-    print json_encode($measurement);
+    $return = $carrot_api->getHistoryDeviceData($allPostPutVars['device_name'], $allPostPutVars['token']);
+    return $response->withStatus($return);
+
 });
 
 
@@ -190,5 +211,15 @@ $app->post('/order/new', function ($request, $response, $args) {
     $dbManager = new DbManager($config);
     $dbManager->connect();
 
-    $dbManager->createOrder($allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
+    $return = $dbManager->createOrder($allPostPutVars['user_id'], $allPostPutVars['token'], $allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
+    return $response->withStatus($return);
+});
+
+//Deprecated
+$app->post('/order/new2', function ($request, $response, $args) {
+    $config = $this->config->getConfig();
+    $allPostPutVars = $request->getParams();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $dbManager->createOrder2($allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
 });
