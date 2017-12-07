@@ -17,7 +17,7 @@
             <div class="row">
                 <nav class="navbar navbar-toggleable-md navbar-inverse">
 
-                    <a href="/" class="navbar-brand text-primary" id="logo">
+                    <a href="/public" class="navbar-brand text-primary" id="logo">
                         <img src="images/logo.png" width="100px" height="100px">
                     </a>
 
@@ -66,7 +66,7 @@
                     <h4 class="modal-title text-xs-center">Prihlásenie</h4>
                 </div>
                 <div class="modal-body">
-                    <form role="form" id = "login" method="POST" action="/login/user">
+                    <form role="form" id = "login">
                         <div class="form-group">
                             <label class="control-label">Email</label>
                             <div>
@@ -91,13 +91,13 @@
                         <div class="form-group">
                             <div>
                                 <a class="btn btn-link" href="">Zabudli ste heslo?</a>
-                                <button type="submit" class="btn btn-info btn-block">Prihlásiť sa</button>
+                                <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer text-xs-center">
-                    Nemáte účet? <br><a href="/register"> Zaregistruj sa »</a>
+                    Nemáte účet? <br><a href="/public/register"> Zaregistrujte sa »</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

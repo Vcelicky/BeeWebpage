@@ -76,6 +76,30 @@
   max-width: 980px;
   margin: auto; }
 
+#search {
+  position: relative;
+  font-size: 18px;
+  padding-top: 40px;
+  margin: -20px auto 0; }
+  #search label {
+    position: absolute;
+    left: 17px;
+    top: 45px; }
+  #search #search-input {
+    padding-left: 43px;
+    padding-right: 43px;
+    border-radius: 23px; }
+  #search #search-clear {
+    text-decoration: none;
+    position: absolute;
+    right: 18px;
+    top: 50px;
+    color: #b3b3b3; }
+
+#filter {
+  padding: 10px 10px;
+  float: right; }
+
 #footer-bottom {
   position: absolute;
   right: 0;
