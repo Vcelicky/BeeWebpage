@@ -5,16 +5,18 @@ namespace src\Carrot_api;
 
 use \Firebase\JWT\JWT;
 use src\Db_api\DbManager;
+use src\Db_api\Tokenizer;
 
 class Api extends Base
 {
 
     private $config;
+    private $tokenizer;
 
     public function __construct($config)
     {
         $this->config = $config;
-
+        $this->tokenizer = new Tokenizer($config);
     }
 
 
@@ -49,7 +51,7 @@ class Api extends Base
             "content-type: application/json"
 
         ];
-        return $this->getData($this->config['carrot_db.host'] . "/streams/?device=" . $device_name . "&max=1", $params);
+        return $this->getData($this->config['carrot_db.host'] . "/streams/?device=" . $device_name . "&max=1&order=-1", $params);
     }
 
     public function getHistory($device_name)
@@ -89,14 +91,12 @@ class Api extends Base
     /** Get last measurement for device with device_name = $device_name
      * @param $device_name
      * @param $token
-     * @return array of data if valid token |null if invalid token
      */
     public function getLastDeviceData($device_name, $token)
     {
 
-
-        if($this->isValidDeviceToken($device_name, $token) == false){
-            return null;
+        if($this->tokenizer->isValidDeviceToken($token, $device_name) == false){
+            return 401;
         }
 
         $devices = [];
@@ -105,20 +105,20 @@ class Api extends Base
         $metrics = [];
         array_push($metrics, $devices[0]['result'][0]['data']['Merania']);
 
-        return $metrics;
+        print json_encode(array('data'=>$devices[0]['result'][0]['data']['Merania']));
+        return 200;
     }
 
 
     /** Get all measurements for device with device_name = $device_name
      * @param $device_name
      * @param $token
-     * @return array of data if valid token |null if invalid token
      */
     public function getHistoryDeviceData($device_name, $token)
     {
 
-        if($this->isValidDeviceToken($device_name, $token) == false){
-            return null;
+        if($this->tokenizer->isValidDeviceToken($token, $device_name) == false) {
+            return 401;
         }
 
         $result = [];
@@ -129,36 +129,7 @@ class Api extends Base
             array_push($metrics, $result[0]['result'][$i]['data']['Merania']);
         }
 
-        return $metrics;
+        print json_encode(array('data'=>$metrics));
+        return 200;
     }
-
-
-    /** Verifies token for device
-     * @param $device_name Name of device
-     * @param $token Users token
-     * @return bool TRUE if valid, FALSE if invalid token
-     */
-    public function isValidDeviceToken($device_name, $token){
-
-        try {
-            $decoded = JWT::decode($token, $this->config['program.token'], array('HS256'));
-
-            $db = new DbManager($this->config);
-            $db->connect();
-
-            //Validate user
-            if (!$db->isUsersDevice($decoded->id, $device_name)) {
-                header('HTTP/1.0 401 Unauthorized');
-                return false;
-            }
-
-        } catch (\Exception $e) {
-
-            header('HTTP/1.0 401 Unauthorized');
-            return false;
-        }
-
-        return true;
-    }
-
 }

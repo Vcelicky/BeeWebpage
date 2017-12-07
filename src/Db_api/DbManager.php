@@ -13,13 +13,15 @@ class DbManager
 {
     private $config;
     private $conn;
+    private $tokenizer;
 
     public function __construct($conn)
     {
         $this->config = $conn;
+        $this->tokenizer = new Tokenizer($conn);
     }
 
-    public function connect(){
+    public function connect() {
         $host = $this->config['pg_db.host'];
         $port = $this->config['pg_db.port'];
         $dbName = $this->config['pg_db.dbname'];
@@ -35,17 +37,10 @@ class DbManager
      */
     public function getUsersDevices($userId, $token)
     {
-        //Validate token
-        try {
-            $decoded = JWT::decode($token, $this->config['program.token'], array('HS256'));
-            if ($decoded->id != $userId) {
-                header('HTTP/1.0 401 Unauthorized');
-                return;
-            }
 
-        } catch (\Exception $e) {
-            header('HTTP/1.0 401 Unauthorized');
-            return;
+        if($this->tokenizer->isValidToken($token, $userId) == false){
+
+            return 401;
         }
 
         $query = 'SELECT d.name FROM bees.users u
@@ -65,7 +60,45 @@ class DbManager
         while($r =  pg_fetch_assoc($result)) {
             $rows[] = $r;
         }
-        print json_encode($rows);
+
+        //https://stackoverflow.com/questions/22089602/create-json-array-using-php
+        print json_encode(array('data'=>$rows));
+        return 200;
+    }
+
+    /**
+     * @param $userId
+     * @param $token
+     * @return int
+     */
+    public function getUsersDevicesInfo($userId, $token)
+    {
+
+        if($this->tokenizer->isValidToken($token, $userId) == false){
+
+            return 401;
+        }
+
+        $query = 'SELECT d.name, d.uf_name, d.location, d.coordinates FROM bees.users u
+                  JOIN bees.devices d ON u.id = d.user_id
+                  WHERE u.id = $1';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", array($userId));
+
+        if (!$result) {
+            echo "Problem with query ";
+            echo pg_last_error();
+            exit();
+        }
+
+        $rows = array();
+        while($r =  pg_fetch_assoc($result)) {
+            $rows[] = $r;
+        }
+
+        print json_encode(array('data'=>$rows));
+        return 200;
     }
 
     /** Returns if $device with $device_name has relation with %user with $userId
@@ -98,7 +131,14 @@ class DbManager
         }
     }
 
-    public function createOrder($name, $email,  $phone, $device_count, $notes) {
+    /** Logged in user creates order for device
+     * @param $name
+     * @param $email
+     * @param $phone
+     * @param $device_count
+     * @param $notes
+     */
+    public function createOrder2($name, $email,  $phone, $device_count, $notes) {
 
         $query = 'INSERT INTO bees.orders(name, email, phone, device_count, notes)
                   VALUES ($1, $2, $3, $4, $5);';
@@ -112,6 +152,26 @@ class DbManager
             echo pg_last_error();
             exit();
         }
+    }
+
+    //TODO Add token, userId, check
+    public function createOrder($userId, $token, $name, $email,  $phone, $device_count, $notes) {
+        if(!$this->tokenizer->isValidToken($token, $userId))
+            return 401;
+
+        $query = 'INSERT INTO bees.orders(name, email, phone, device_count, notes)
+                  VALUES ($1, $2, $3, $4, $5);';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", array("$name", "$email", "$phone", "$device_count", "$notes"));
+
+
+        if (!$result) {
+            echo "Problem with query ";
+            echo pg_last_error();
+            exit();
+        }
+        return 200;
     }
 
     function disconnect(){
