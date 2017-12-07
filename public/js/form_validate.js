@@ -34,9 +34,54 @@ $(document).ready(function(){
                 element
                     .text('OK!').addClass('valid')
                     .closest('.form-group').removeClass('error').addClass('success');
+            },
+            submitHandler:function(){
+                var registerForm = document.getElementById("register");
+                var name = registerForm["0"].value;
+                var email = registerForm["1"].value;
+                var password = registerForm["3"].value;
+
+                data = {
+                    email : email,
+                    password : password,
+                    name : name
+
+                };
+                $.ajax({
+                    url: '../src/register.php',
+                    method : 'POST',
+                    dataType : 'json',
+                    data : data
+                })
+                    .done(function (data) {
+                        alterRegister(data);
+                    });
             }
 
 });
+
+    // take care of error message and for successful registration
+    function alterRegister(data) {
+        if (data.error) {
+            $("<div class= \"alert alert-danger\">\n" +
+                "<strong>Chyba!</strong>" + data.error_msg + "\n" +
+                "</div>").insertBefore(".register-panel .panel-body");
+
+            $('html, body').animate({
+                scrollTop: $(".register-panel").offset().top
+            }, 1000);
+
+            setTimeout(function(){
+            var alert = $(".register-panel .alert");
+            alert.fadeOut();
+            alert.remove();
+            }, 5000);
+        }
+        else {
+            // home utl
+            location.href='/public';
+        }
+    }
 
     $.validator.addMethod("emailvalidation",
         function(value, element) {

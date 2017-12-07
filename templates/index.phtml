@@ -12,12 +12,12 @@
 
     </head>
     <body>
-    <div id="hero">
-        <div class="container">
+    <main class="container">
+        
             <div class="row">
                 <nav class="navbar navbar-toggleable-md navbar-inverse">
 
-                    <a href="/" class="navbar-brand text-primary" id="logo">
+                    <a href="/public" class="navbar-brand text-primary" id="logo">
                         <img src="images/logo.png" width="100px" height="100px">
                     </a>
 
@@ -55,9 +55,8 @@
                     <button class="vcelicky-button vcelicky-black vcelicky-display-right" onclick="plusDivs(1)">&#10095;</button>
                 </div>
             </div>
-
-        </div>
-    </div>
+        
+    </main>
 
     <!-- Modal HTML Markup -->
     <div id="ModalLoginForm" class="modal fade">
@@ -67,7 +66,7 @@
                     <h4 class="modal-title text-xs-center">Prihlásenie</h4>
                 </div>
                 <div class="modal-body">
-                    <form role="form" id = "login" method="POST" action="/login/user">
+                    <form role="form" id = "login">
                         <div class="form-group">
                             <label class="control-label">Email</label>
                             <div>
@@ -92,26 +91,28 @@
                         <div class="form-group">
                             <div>
                                 <a class="btn btn-link" href="">Zabudli ste heslo?</a>
-                                <button type="submit" class="btn btn-info btn-block">Prihlásiť sa</button>
+                                <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer text-xs-center">
-                    Nemáte účet? <br><a href="/register"> Zaregistruj sa »</a>
+                    Nemáte účet? <br><a href="/public/register"> Zaregistrujte sa »</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <section>
-        <?php echo $footer;?>
-    </section>
+    <?php echo $footer;?>
+    
+
         <!-- Optional JavaScript -->
 
         <script src="js/jquery.min.js"></script>
         <script src="js/tether.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/slider.js"></script>
+        <script src="js/slider_lr.js"></script>
+        <script src="js/style.js"></script>
     </body>
 </html>

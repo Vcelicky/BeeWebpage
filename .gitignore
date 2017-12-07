@@ -1,5 +1,1 @@
 config.json
-composer.lock
-vendor/
-node_modules/
-public/.htaccess
