@@ -86,45 +86,30 @@ $app->get('/bee-hives/', function (Request $request, Response $response, array $
     return $response;
 });
 
-
+/*
+ * register user
+ * body arguments: name, email, password
+*/
 $app->post('/register/user', function (Request $request, Response $response, array $args) {
-    $allPostPutVars = $request->getParams();
-    $params = [
-        'name' => $allPostPutVars['signupName'],
-        'email' => $allPostPutVars['signupEmail'],
-        'password' => $allPostPutVars['signupPassword']
-    ];
-    $_POST = $params;
     ob_start();
     include ('./../../API/register.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
-    // return value form login script
-    $return = (array) json_decode($returned_value);
 
-    return $this->response->withStatus(301)->withHeader('Location', '/');
+    echo $returned_value;
 });
 
+/*
+ * login user
+ * body arguments: email, password
+*/
 $app->post('/login/user', function (Request $request, Response $response, array $args) {
-    $allPostPutVars = $request->getParams();
-    $params = [
-        'email' => $allPostPutVars['email'],
-        'password' => $allPostPutVars['password']
-    ];
-    $_POST = $params;
-    $config = $this->config->getConfig();
-    $allPostPutVars = $request->getParams();
-
-    $login = new Login($config);
     ob_start();
-    //include ('./../../API/login.php');
-    $login->getLogin($allPostPutVars['email'], $allPostPutVars['password']);
+    include ('./../../API/login.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
 
-    // return value form login script
-    $returnn = (array) json_decode($returned_value);
-    return $this->response->withStatus(301)->withHeader('Location', '/');
+    echo $returned_value;
 });
 
 /**
@@ -187,20 +172,6 @@ $app->post('/api/measurements/all', function (Request $request, Response $respon
 
 });
 
-
-//TODO Temporary function, returns Token
-/**
- * Login user
- * Body: email, password
- */
-$app->post('/login2/user', function ($request, $response, $args) {
-    $config = $this->config->getConfig();
-    $allPostPutVars = $request->getParams();
-
-    $login = new Login($config);
-    $login->getLogin($allPostPutVars['email'], $allPostPutVars['password']);
-});
-
 /**
  * Create new order
  * Body: name, email, phone, device_count, notes
@@ -223,3 +194,4 @@ $app->post('/order/new2', function ($request, $response, $args) {
     $dbManager->connect();
     $dbManager->createOrder2($allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
 });
+
