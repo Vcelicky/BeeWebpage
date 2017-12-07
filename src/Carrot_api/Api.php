@@ -96,6 +96,7 @@ class Api extends Base
     {
 
         if($this->tokenizer->isValidDeviceToken($token, $device_name) == false){
+            print json_encode(array('error'=>true));
             return 401;
         }
 
@@ -118,6 +119,7 @@ class Api extends Base
     {
 
         if($this->tokenizer->isValidDeviceToken($token, $device_name) == false) {
+            print json_encode(array('error'=>true));
             return 401;
         }
 

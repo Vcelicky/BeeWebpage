@@ -75,7 +75,7 @@ class DbManager
     {
 
         if($this->tokenizer->isValidToken($token, $userId) == false){
-
+            print json_encode(array('error'=>true));
             return 401;
         }
 
@@ -156,8 +156,11 @@ class DbManager
 
     //TODO Add token, userId, check
     public function createOrder($userId, $token, $name, $email,  $phone, $device_count, $notes) {
-        if(!$this->tokenizer->isValidToken($token, $userId))
+        if(!$this->tokenizer->isValidToken($token, $userId)){
+            print json_encode(array('error'=>true));
             return 401;
+        }
+
 
         $query = 'INSERT INTO bees.orders(name, email, phone, device_count, notes)
                   VALUES ($1, $2, $3, $4, $5);';
