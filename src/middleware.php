@@ -5,6 +5,10 @@
 $menu_footer_midd = function ($request, $response, $next) {
     // menu attributes contain name of menu item and href attr after that
     $menu = [
+		'item0' => [
+            'name' => 'Domov',
+            'href' => '/BeeWebpage/public/',
+        ],
         'item1' => [
             'name' => 'Produkty',
             'href' => '#',
@@ -15,7 +19,7 @@ $menu_footer_midd = function ($request, $response, $next) {
         ],
         'item3' => [
             'name' => 'Kontakt',
-            'href' => '#',
+            'href' => 'contact',
         ],
         'item4' => [
             'name' => 'Prihlásenie',
