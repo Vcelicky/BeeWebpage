@@ -19,7 +19,7 @@ $menu_footer_midd = function ($request, $response, $next) {
         ],
         'item3' => [
             'name' => 'Kontakt',
-            'href' => 'contact',
+            'href' => '/BeeWebpage/public/contact',
         ],
         'item4' => [
             'name' => 'Prihlásenie',
@@ -30,20 +30,11 @@ $menu_footer_midd = function ($request, $response, $next) {
 
     $footer = '
                     
-                    <div id="footer-bottom" class="row">
-                        
-                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                                <div class="copyright">
-                                    © 2017, All rights reserved.
-                                </div>
+                        <footer class="footer bg-dark">
+                            <div class="container">
+                                <p class="m-0 text-center">Designed by Včeličky Team - FIIT STU</p>
                             </div>
-                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                                <div class="design">
-                                    Designed by: Vcelicky TEAM
-                                </div>
-                            </div>
-                        
-                    </div>
+                        </footer>
             ';
 
     $request = $request->withAttribute('menu', $menu);

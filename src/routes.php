@@ -41,7 +41,7 @@ $app->get('/register', function (Request $request, Response $response, array $ar
 
 
 //linka pre spustenie kontaktu
-$app->get('/contact', function (Request $request, Response $response, array $args) {
+$app->get('/BeeWebpage/public/contact', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'skuska.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 /*
