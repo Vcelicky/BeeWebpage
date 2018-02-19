@@ -34,7 +34,7 @@
       border: 1px solid silver;
       width: 140px;
       height: 40px;
-      
+
       @media(max-width: 34em) {
         font-weight:normal;
         color:#fff !important;
@@ -96,6 +96,39 @@
   margin:auto
 }
 
+// users window
+
+#search {
+  position: relative;
+  font-size: 18px;
+  padding-top: 40px;
+  margin: -20px auto 0;
+
+  label {
+    position: absolute;
+    left: 17px;
+    top: 45px;
+  }
+
+  #search-input {
+    padding-left: 43px;
+    padding-right: 43px;
+    border-radius: 23px;
+  }
+
+  #search-clear {
+    text-decoration: none;
+    position: absolute;
+    right: 18px;
+    top: 50px;
+    color: #b3b3b3;
+  }
+}
+
+#filter {
+  padding: 10px 10px;
+  float: right;
+}
 // Footer
 #footer-bottom {
   position: absolute;

@@ -16,7 +16,7 @@
         <div class="row">
             <nav class="navbar navbar-toggleable-md navbar-inverse">
 
-                <a href="/" class="navbar-brand text-primary" id="logo">
+                <a href="/public" class="navbar-brand text-primary" id="logo">
                     <img src="images/logo.png" width="100px" height="100px">
                 </a>
 
@@ -44,9 +44,9 @@
         </div>
 
         <div class="row">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary register-panel">
                 <div class="panel-body">
-                    <form role="form" id = "register" method="POST" action="/register/user">
+                    <form role="form" id = "register">
                         <div class="form-group">
                             <h2>Registrácia</h2>
                         </div>
@@ -71,7 +71,7 @@
                             <input name="signupPasswordagain" id="signupPasswordagain" type="password" maxlength="25" class="form-control">
                         </div>
                         <div class="form-group">
-                            <button id="signupSubmit" class="btn btn-info btn-block">Vytvorit účet</button>
+                            <button type="submit" id="register_button" class="btn btn-info btn-block">Vytvorit účet</button>
                         </div>
                         <hr>
                         <p>Už máte účet? <a href="#" data-toggle="modal" data-target="#ModalLoginForm">Prihlásenie</a></p>
@@ -90,7 +90,7 @@
                 <h4 class="modal-title text-xs-center">Prihlásenie</h4>
             </div>
             <div class="modal-body">
-                <form id = "login" role="form" method="POST" action="/login/user">
+                <form id = "login" role="form" action="#">
                     <div class="form-group">
                         <label class="control-label">Email</label>
                         <div>
@@ -115,7 +115,7 @@
                     <div class="form-group">
                         <div>
                             <a class="btn btn-link" href="">Zabudli ste heslo?</a>
-                            <button type="submit" class="btn btn-info btn-block">Prihlásiť sa</button>
+                            <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
                         </div>
                     </div>
                 </form>

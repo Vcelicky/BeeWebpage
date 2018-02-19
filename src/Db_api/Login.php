@@ -14,11 +14,12 @@ class Login
 {
 
     private $config;
+    private $tokenizer;
 
     public function __construct($conn)
     {
         $this->config = $conn;
-
+        $this->tokenizer = new Tokenizer($conn);
     }
 
     public function getLogin($email, $password)
