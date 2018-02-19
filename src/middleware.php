@@ -11,7 +11,7 @@ $menu_footer_midd = function ($request, $response, $next) {
         ],
         'item1' => [
             'name' => 'Produkty',
-            'href' => '#',
+            'href' => '/BeeWebpage/public/products',
         ],
         'item2' => [
             'name' => 'Objednávka',
@@ -32,7 +32,7 @@ $menu_footer_midd = function ($request, $response, $next) {
                     
                         <footer class="footer bg-dark">
                             <div class="container">
-                                <p class="m-0 text-center">Designed by Včeličky Team - FIIT STU</p>
+                                <p class="m-0 text-center">Včeličky Team - FIIT STU, 2018</p>
                             </div>
                         </footer>
             ';
