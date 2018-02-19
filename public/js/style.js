@@ -19,7 +19,7 @@ $("#log_out_button").click(function() {
     deleteCookie("token");
     deleteCookie("user_name");
     deleteCookie("user_id");
-    window.location.assign(window.origin + "/public/");
+    window.location.assign(window.origin + "/BeeWebpage/public");
 
 })
 
@@ -34,7 +34,7 @@ $("#login_button").click(function () {
 
     };
     $.ajax({
-        url: 'http://bee_app.sk/public/login/user',
+        url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/login/user',
         method : 'POST',
         dataType : 'json',
         data : data
@@ -61,7 +61,7 @@ function alterLogin(data) {
         setCookie('token', data.token, 1);
         setCookie('user_name', data.user.name, 1);
         setCookie('user_id', data.id, 1);
-        window.location.assign(window.origin + "/public/bee-hives/?token=" + data.token + "&user_id=" + data.id);
+        window.location.assign(window.origin + "/BeeWebpage/public/bee-hives/?token=" + data.token + "&user_id=" + data.id);
     }
 }
 

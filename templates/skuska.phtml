@@ -15,7 +15,7 @@
 
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-faded fixed-top">
 
-        <a href="/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
+        <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
             <img src="images/logo.png" width="50px" height="50px">
         </a>
 
@@ -80,8 +80,58 @@
         </section>
     </div>
 
+    <!-- Modal HTML Markup -->
+    <div id="ModalLoginForm" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-xs-center">Prihlásenie</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id = "login">
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <div>
+                                <input type="email" class="form-control input-lg" name="email" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Heslo</label>
+                            <div>
+                                <input type="password" class="form-control input-lg" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember"> Zapamätaj si
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <a class="btn btn-link" href="">Zabudli ste heslo?</a>
+                                <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-xs-center">
+                    Nemáte účet? <br><a href="/BeeWebpage/public/register"> Zaregistrujte sa »</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <?php echo $footer;?>
-    
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+    <script src="js/form_validate.js"></script>
+    <script src="js/style.js"></script>
     </body>
 </html>

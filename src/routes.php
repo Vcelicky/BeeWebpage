@@ -4,9 +4,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use src\Carrot_api\Api;
 use src\Db_api\DbManager;
-use src\Db_api\Login;
-use src\middlware\UserMenuMiddleware;
-
 
 $app->get('/', function (Request $request, Response $response, array $args) {
 
@@ -41,7 +38,7 @@ $app->get('/register', function (Request $request, Response $response, array $ar
 
 
 //linka pre spustenie kontaktu
-$app->get('/BeeWebpage/public/contact', function (Request $request, Response $response, array $args) {
+$app->get('/contact', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'skuska.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 /*
@@ -96,13 +93,8 @@ $app->get('/bee-hives/', function (Request $request, Response $response, array $
  * body arguments: name, email, password
 */
 $app->post('/register/user', function (Request $request, Response $response, array $args) {
-/*
- * register user
- * body arguments: name, email, password
-*/
-$app->post('/register/user', function (Request $request, Response $response, array $args) {
     ob_start();
-    include (__DIR__ . '/API/login.php');
+    include (__DIR__ . '/API/register.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
 
