@@ -102,7 +102,7 @@ $app->post('/register/user', function (Request $request, Response $response, arr
 */
 $app->post('/register/user', function (Request $request, Response $response, array $args) {
     ob_start();
-    include ('./../../API/register.php');
+    include (__DIR__ . '/API/login.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
 
@@ -115,7 +115,7 @@ $app->post('/register/user', function (Request $request, Response $response, arr
 */
 $app->post('/login/user', function (Request $request, Response $response, array $args) {
     ob_start();
-    include ('./../../API/login.php');
+    include (__DIR__ . '/API/login.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
 
