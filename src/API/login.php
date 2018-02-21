@@ -27,7 +27,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && (strlen($_POST['email
 
         $token = array();
         $token['id'] = $response["id"];
-        $response["token"] = JWT::encode($token, 'something');
+        $response["token"] = JWT::encode($token, 'klobaska');
         echo json_encode($response);
     } else {
         // user is not found with the credentials
