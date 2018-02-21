@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--        <link rel="stylesheet" href="css/style.css">-->
+    <link href="css/global.css" rel="stylesheet">
+
+</head>
+<body>
+
+<!--Navigation-->
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded fixed-top">
+
+    <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
+        <img src="images/logo.png" width="50px" height="50px">
+    </a>
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <!--                        <ul class="navbar-nav">-->
+        <ul class="navbar-nav ml-auto">
+            <?php foreach($menu as $key => $value): ?>
+
+                <li class="nav-item">
+                    <a class="nav-link text-primary"
+                       href="<?=$value['href']?>"
+                        <?php if(strlen($value['href']) == 0): echo 'data-toggle="modal" data-target="#ModalLoginForm"'; endif; ?>
+                    >
+                        <?=$value['name']?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+</nav>
+
+<div class="container" style="margin-top: 25px;">
+    <div class="row">
+
+    </div>
+
+
+</div>
+
+<!-- Login -->
+<div id="ModalLoginForm" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-xs-center">Prihlásenie</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id = "login">
+                    <div class="form-group">
+                        <label class="control-label">Email</label>
+                        <div>
+                            <input type="email" class="form-control input-lg" name="email" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Heslo</label>
+                        <div>
+                            <input type="password" class="form-control input-lg" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="remember"> Zapamätaj si
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <a class="btn btn-link" href="">Zabudli ste heslo?</a>
+                            <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer text-xs-center">
+                Nemáte účet? <br><a href="/public/register"> Zaregistrujte sa »</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<?php echo $footer;?>
+
+<!-- Optional JavaScript -->
+
+<script src="js/jquery.min.js"></script>
+<script src="js/tether.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/slider.js"></script>
+<script src="js/slider_lr.js"></script>
+<script src="js/style.js"></script>
+</body>
+</html>

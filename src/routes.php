@@ -40,13 +40,19 @@ $app->get('/register', function (Request $request, Response $response, array $ar
 });
 
 
-//linka pre spustenie kontaktu
-$app->get('/BeeWebpage/public/contact', function (Request $request, Response $response, array $args) {
+//Contact
+$app->get('/contact', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'skuska.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
+
+//Products
+$app->get('/products', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response, 'products.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+});
+
 /*
  * Render site for signed up beekeeper with his devices
- * 
+ *
  */
 $app->get('/bee-hives/', function (Request $request, Response $response, array $args) {
     $allPostPutVars = $request->getParams();
@@ -199,4 +205,3 @@ $app->post('/order/new2', function ($request, $response, $args) {
     $dbManager->connect();
     $dbManager->createOrder2($allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
 });
-
