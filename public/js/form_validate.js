@@ -48,7 +48,7 @@ $(document).ready(function(){
 
                 };
                 $.ajax({
-                    url: '../src/register.php',
+                    url: 'https://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/register/user',
                     method : 'POST',
                     dataType : 'json',
                     data : data

@@ -15,6 +15,14 @@ window.onload = function() {
 
 };
 
+$("#log_out_button").click(function() {
+    deleteCookie("token");
+    deleteCookie("user_name");
+    deleteCookie("user_id");
+    window.location.assign(window.origin + "/BeeWebpage/public");
+
+})
+
 $("#login_button").click(function () {
     var loginForm = document.getElementById("login");
     var email = loginForm["0"].value;
@@ -26,7 +34,7 @@ $("#login_button").click(function () {
 
     };
     $.ajax({
-        url: '../src/login.php',
+        url: 'https://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/login/user',
         method : 'POST',
         dataType : 'json',
         data : data
@@ -50,11 +58,10 @@ function alterLogin(data) {
         }, 5000);
     }
     else {
-        var location = window.location.href;
         setCookie('token', data.token, 1);
         setCookie('user_name', data.user.name, 1);
         setCookie('user_id', data.id, 1);
-        window.location.assign(location + "bee-hives/?token=" + data.token + "&user_id=" + data.id);
+        window.location.assign(window.origin + "/BeeWebpage/public/bee-hives/?token=" + data.token + "&user_id=" + data.id);
     }
 }
 
@@ -78,6 +85,12 @@ function getDevices() {
 
 function generateDevicesContent(devices) {
 
+}
+
+// delete cookie
+
+function deleteCookie(name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
 // set cookie
