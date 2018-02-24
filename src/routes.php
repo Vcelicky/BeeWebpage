@@ -39,7 +39,7 @@ $app->get('/register', function (Request $request, Response $response, array $ar
 
 //Contact
 $app->get('/contact', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response, 'skuska.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+    return $this->renderer->render($response, 'contact.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
 //Products
