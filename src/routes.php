@@ -39,12 +39,17 @@ $app->get('/register', function (Request $request, Response $response, array $ar
 
 //Contact
 $app->get('/contact', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response, 'skuska.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+    return $this->renderer->render($response, 'contact.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
 //Products
 $app->get('/products', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'products.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+});
+
+//Portal
+$app->get('/portal', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response, 'portal.phtml');
 });
 
 /*
@@ -105,6 +110,20 @@ $app->post('/register/user', function (Request $request, Response $response, arr
     ob_end_clean();
 
     echo $returned_value;
+});
+
+$app->post('/sigfox', function (Request $request, Response $response, array $args) {
+    $file = fopen("./POST_log.txt", "w");
+    $body = json_decode($request->getBody()->getContents());
+    fwrite($file, $body);
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+
+    ob_start();
+    $dbManager->insertValue($body);
+    $returnedValue = ob_get_contents();    // get contents from the buffer
+    ob_end_clean();
 });
 
 /*
