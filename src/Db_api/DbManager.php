@@ -284,5 +284,30 @@ class DbManager
         return $hash;
     }
 
+    public function insertValue()
+    {
+
+        $query = 'INSERT INTO bees.testsigfox(lama)
+                  VALUES ($1);';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", array("ahoj"));
+
+        if (!$result) {
+            echo "Problem with query ";
+            echo pg_last_error();
+            exit();
+        }
+
+        $rows = array();
+        while($r =  pg_fetch_assoc($result)) {
+            $rows[] = $r;
+        }
+
+        //https://stackoverflow.com/questions/22089602/create-json-array-using-php
+        print json_encode(array('data'=>$rows));
+        return 200;
+    }
+
 
 }

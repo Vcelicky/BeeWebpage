@@ -1,8 +1,12 @@
 <?php
 require_once 'include/DB_Functions.php';
 use \Firebase\JWT\JWT;
+use \src\Db_api\Tokenizer;
+
 $db = new DB_Functions();
- 
+$config = $this->config->getConfig();
+$tokenizer = new Tokenizer($config);
+
 // json response array
 $response = array("error" => FALSE);
 
@@ -23,11 +27,11 @@ if (isset($_POST['email']) && isset($_POST['password']) && (strlen($_POST['email
 	    $response["role_id"] = $user[3];
         $response["user"]["name"] = $user[0];
         $response["user"]["email"] = $user[1];
-        $response["user"]["email"] = $user[1];
+        $response["expires"] = time() + (24 * 60 * 60);
 
-        $token = array();
-        $token['id'] = $response["id"];
-        $response["token"] = JWT::encode($token, 'klobaska');
+        $response["token"] = $this->tokenizer->createToken($response["id"], $response["expires"]);
+
+
         echo json_encode($response);
     } else {
         // user is not found with the credentials

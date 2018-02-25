@@ -20,6 +20,18 @@ class Tokenizer
         $this->config = $conn;
     }
 
+    /**
+     * @return mixed
+     */
+    public function createToken($responseId, $time)
+    {
+        $token = array();
+        $token['id'] = $responseId;
+        $token['time'] = $time;
+        $token['random'] = $this->generateRandomString();
+        return JWT::encode($token, $this->config['program.token']);
+    }
+
     /** The main token verification method
      * @param $token
      * @param $userId
@@ -32,7 +44,10 @@ class Tokenizer
                 header('HTTP/1.0 401 Unauthorized');
                 return false;
             }
-
+            if($decoded->time < time()){
+                header('HTTP/1.0 401 Unauthorized');
+                return false;
+            }
         } catch (\Exception $e) {
             header('HTTP/1.0 401 Unauthorized');
             return false;
@@ -58,6 +73,10 @@ class Tokenizer
                 header('HTTP/1.0 401 Unauthorized');
                 return false;
             }
+            if($decoded->time < time()){
+                header('HTTP/1.0 401 Unauthorized');
+                return false;
+            }
 
         } catch (\Exception $e) {
 
@@ -66,6 +85,10 @@ class Tokenizer
         }
 
         return true;
+    }
+
+    function generateRandomString($length = 10) {
+        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
     }
 
 }
