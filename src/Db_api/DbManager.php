@@ -8,6 +8,7 @@
 
 namespace src\Db_api;
 use \Firebase\JWT\JWT;
+use src\Db_api\parser;
 
 class DbManager
 {
@@ -282,6 +283,42 @@ class DbManager
     public function checkhashSSHA($salt, $password) {
         $hash = base64_encode(sha1($password . $salt, true) . $salt);
         return $hash;
+    }
+
+    public function insertValue($raw_data)
+    {
+        $data = parser::getData($raw_data->data->value);
+        $query = 'INSERT INTO bees.measurements(time, temperature_in, weight, proximity, temperature_out,
+                  humidity_in, humidity_out, device_name, batery)
+                  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", [
+            date('Y-m-d G:i:s'),
+            $data['$teplota_vonku'],
+            $data['hmotnost'],
+            true,
+            $data['teplota_von'],
+            $data['vlhkost_von'],
+            $data['vlhkost_dnu'],
+            $raw_data->device,
+            $data['stav_baterie']
+        ]);
+
+        if (!$result) {
+            echo "Problem with query ";
+            echo pg_last_error();
+            exit();
+        }
+
+        $rows = array();
+        /*while($r =  pg_fetch_assoc($result)) {
+            $rows[] = $r;
+        }
+
+        //https://stackoverflow.com/questions/22089602/create-json-array-using-php
+        print json_encode(array('data'=>$rows));*/
+        return true;
     }
 
 
