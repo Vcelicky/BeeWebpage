@@ -10,7 +10,29 @@ namespace src\Db_api;
 
 class parser
 {
-    public static function getData($data) {
+	public static function getData($data) {
+	if(strlen($data)==11)
+	{
+			$data="0" . $data;
+	}
+
+	if(strlen($data)==10)
+	{
+			$data="00" . $data;
+	}
+
+	if(strlen($data)==9)
+	{
+			$data="000" . $data;
+	}
+
+	if(strlen($data)==8)
+	{
+			$data="0000" . $data;
+	}
+
+	if(strlen($data)==12)
+	{
         $parsing = str_split($data, 2);
         $parsing1 = str_split($data, 1);
 
@@ -96,6 +118,6 @@ class parser
         ];
 
         return $parsed_data;
-    }
+    }}
 
 }
