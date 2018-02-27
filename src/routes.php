@@ -112,6 +112,10 @@ $app->post('/register/user', function (Request $request, Response $response, arr
     echo $returned_value;
 });
 
+/*
+ * save sigfox data to database
+ * params: sigfox data
+*/
 $app->post('/sigfox', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
@@ -125,8 +129,48 @@ $app->post('/sigfox', function (Request $request, Response $response, array $arg
         $response->withStatus(200);
     }
 
-    return $returnedValue;
+    return json_encode($returnedValue);
 });
+
+$app->get('/devices', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $devices = $dbManager->getAllDevices();
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    }
+    else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+$app->get('/user/devices', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $devices = $dbManager->getUserDevices($request->getHeader('token')[0], $request->getHeader('user')[0]);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    }
+    else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+$app->get('/user/measurements', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $devices = $dbManager->getUserMeasurements($request->getHeader('token')[0], $request->getHeader('user')[0]);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    }
+    else {
+        return $response->withJson($devices, 200);
+    }
+});
+
 
 /*
  * login user
