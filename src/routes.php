@@ -122,14 +122,11 @@ $app->post('/sigfox', function (Request $request, Response $response, array $arg
     $dbManager->connect();
     $returnedValue = $dbManager->insertValue($request->getParams());
     if ($returnedValue['error']) {
-
-        $response->withStatus(500);
+        return $response->withJson($returnedValue, 500);
     }
     else {
-        $response->withStatus(200);
+        return $response->withJson($returnedValue, 200);
     }
-
-    return json_encode($returnedValue);
 });
 
 $app->get('/devices', function (Request $request, Response $response, array $args) {
