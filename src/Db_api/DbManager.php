@@ -287,38 +287,33 @@ class DbManager
 
     public function insertValue($raw_data)
     {
-        $data = parser::getData($raw_data->data->value);
+        $data = parser::getData($raw_data['data']['value']);
         $query = 'INSERT INTO bees.measurements(time, temperature_in, weight, proximity, temperature_out,
                   humidity_in, humidity_out, device_name, batery)
                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);';
 
         $result = pg_prepare($this->conn, "my_query", $query);
         $result = pg_execute($this->conn, "my_query", [
-            date('Y-m-d G:i:s'),
-            $data['$teplota_vonku'],
+            date('Y-m-d G:i:s', $raw_data['time']),
+            $data['$teplota_dnu'],
             $data['hmotnost'],
             true,
             $data['teplota_von'],
             $data['vlhkost_von'],
             $data['vlhkost_dnu'],
-            $raw_data->device,
+            $raw_data['id'],
             $data['stav_baterie']
         ]);
-
+        $result['error'] = false;
         if (!$result) {
-            echo "Problem with query ";
-            echo pg_last_error();
-            exit();
+            $result['error'] = true;
+            $result['message'] = pg_last_error();
+            return $result;
         }
 
-        $rows = array();
-        /*while($r =  pg_fetch_assoc($result)) {
-            $rows[] = $r;
-        }
-
-        //https://stackoverflow.com/questions/22089602/create-json-array-using-php
-        print json_encode(array('data'=>$rows));*/
-        return true;
+        $result['error'] = false;
+        $result['message'] = "query was successfully executed";
+        return $result;
     }
 
 

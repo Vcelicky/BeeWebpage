@@ -113,17 +113,19 @@ $app->post('/register/user', function (Request $request, Response $response, arr
 });
 
 $app->post('/sigfox', function (Request $request, Response $response, array $args) {
-    $file = fopen("./POST_log.txt", "w");
-    $body = json_decode($request->getBody()->getContents());
-    fwrite($file, $body);
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
     $dbManager->connect();
+    $returnedValue = $dbManager->insertValue($request->getParams());
+    if ($returnedValue['error']) {
 
-    ob_start();
-    $dbManager->insertValue($body);
-    $returnedValue = ob_get_contents();    // get contents from the buffer
-    ob_end_clean();
+        $response->withStatus(500);
+    }
+    else {
+        $response->withStatus(200);
+    }
+
+    return $returnedValue;
 });
 
 /*
