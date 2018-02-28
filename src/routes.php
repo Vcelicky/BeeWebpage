@@ -49,7 +49,11 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 
 //Portal
 $app->get('/portal', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response, 'portal.phtml');
+
+    if (isset($_SESSION['id']))
+        return $this->renderer->render($response, 'portal.phtml');
+    else
+        return $response->withStatus(401);
 });
 
 /*
@@ -112,19 +116,6 @@ $app->post('/register/user', function (Request $request, Response $response, arr
     echo $returned_value;
 });
 
-$app->post('/sigfox', function (Request $request, Response $response, array $args) {
-    //Get data
-    $allPostPutVars = $request->getParams();
-    $config = $this->config->getConfig();
-    $dbManager = new DbManager($config);
-    $dbManager->connect();
-
-    ob_start();
-    $dbManager->insertValue();
-    $returnedValue = ob_get_contents();    // get contents from the buffer
-    ob_end_clean();
-});
-
 /*
  * login user
  * body arguments: email, password
@@ -143,6 +134,9 @@ $app->post('/login/user', function (Request $request, Response $response, array 
  * Body: user_id, token
  */
 $app->post('/db/devices', function (Request $request, Response $response, array $args) {
+
+    //This is how you get the Session Variable
+//    $session_id = $_SESSION['id'];
 
     $config = $this->config->getConfig();
     $allPostPutVars = $request->getParams();

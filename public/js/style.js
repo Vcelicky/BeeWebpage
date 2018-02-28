@@ -35,6 +35,7 @@ $("#login_button").click(function () {
     };
     $.ajax({
         url: 'https://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/login/user',
+        // url: 'login/user',
         method : 'POST',
         dataType : 'json',
         data : data
@@ -42,6 +43,7 @@ $("#login_button").click(function () {
         .done(function (data) {
             alterLogin(data);
         });
+
 });
 
 // alert response after user tried to login to the site
@@ -61,7 +63,8 @@ function alterLogin(data) {
         setCookie('token', data.token, 1);
         setCookie('user_name', data.user.name, 1);
         setCookie('user_id', data.id, 1);
-        window.location.assign(window.origin + "/BeeWebpage/public/bee-hives/?token=" + data.token + "&user_id=" + data.id);
+        // window.location.assign(window.origin + "/BeeWebpage/public/bee-hives/?token=" + data.token + "&user_id=" + data.id);
+         window.location.assign(window.origin + "/BeeWebpage/public/portal");
     }
 }
 
