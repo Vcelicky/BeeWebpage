@@ -44,7 +44,7 @@ class Tokenizer
                 header('HTTP/1.0 401 Unauthorized');
                 return false;
             }
-            if($decoded->time < time()){
+            if($decoded->time < time() + 60*60){
                 header('HTTP/1.0 401 Unauthorized');
                 return false;
             }
@@ -73,7 +73,7 @@ class Tokenizer
                 header('HTTP/1.0 401 Unauthorized');
                 return false;
             }
-            if($decoded->time < time()){
+            if($decoded->time < time() + 60*60){
                 header('HTTP/1.0 401 Unauthorized');
                 return false;
             }
