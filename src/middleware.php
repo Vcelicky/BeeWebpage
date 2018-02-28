@@ -10,7 +10,7 @@ $menu_footer_midd = function ($request, $response, $next) {
             'href' => '/BeeWebpage/public/',
         ],
         'item1' => [
-            'name' => 'Produkty',
+            'name' => 'O produkte',
             'href' => '/BeeWebpage/public/products',
         ],
         'item2' => [

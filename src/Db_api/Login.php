@@ -40,10 +40,13 @@ class Login
             $response["role_id"] = $user[3];
             $response["user"]["name"] = $user[0];
             $response["user"]["email"] = $user[1];
+            $response["expires"] = time() + (24 * 60 * 60);
 
-            $token = array();
-            $token['id'] = $response["id"];
-            $response["token"] = JWT::encode($token, $this->config['program.token']);
+//            $token = array();
+//            $token['id'] = $response["id"];
+//            $response["token"] = JWT::encode($token, $this->config['program.token']);
+
+            $response["token"] = $this->tokenizer->createToken($response["id"], $response["expires"]);
 
             echo json_encode($response);
         } else {

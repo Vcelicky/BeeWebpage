@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <!--        <link rel="stylesheet" href="css/style.css">-->
     <link href="css/global.css" rel="stylesheet">
+    <link href="css/products.css" rel="stylesheet">
 
 </head>
 <body>
@@ -45,11 +46,58 @@
 </nav>
 
 <div class="container" style="margin-top: 25px;">
-    <div class="row">
+    <div class="container" style="margin-bottom: 25px;">
+        <h1>Využité technológie</h1>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-md-offset-1">
+                <p>
+                    Profesionálny včelár, či ten, ktorý to považuje len za hobby potrebuje mať prehľad o stave svojich včelstiev, pokiaľ možno bez nutných osobných kontrol. Tí, ktorí nemajú pravidelný prístup k úľom ocenia možnosť vzdialenej kontroly a upozornenia na výraznú, ohrozujúcu situáciu, ktorá nastala.  Preto sme navrhli zariadenie, ktorého úloho je monitorovať včelí úľ a pravidelne informovať včelára o jeho stave.
+                </p>
+                <p>
+                    Najdôležitejším faktom v živote včelstva je prítomnosť zdravej plodnej matky. Jednou zo základných súčastí nášho riešenia je poskytovanie informácií o teplote úľa a okolia. V situácii, kedy včelstvu chýba plod si vyžaduje zásah včelára, ktorý túto skutočnosť zistí práve monitorovaním teploty. Ďalším zo sledovaných faktorov je hmotnosť úľa. Pre laika informácia značiaca prítomnosť medu, pre včelára celá alchýmia. Od nutnosti pridávania medníkov na ukladanie nového medu až po potrebu pridania zásob pre prežitie včiel počas zimy.
+                </p>
+                <p>
+                    V neposlednom rade je potrebné zabezpečiť informovanie o prevrátení úľa respektíve v dnešnej dobe aj o ukradnutí celého úľa. Včelstvá väčšinou neumiestňujeme v blízkosti domova, ich miesto je v prírode, mimo každodennej civilizácie. Preto pravidelne aktualizované informácie a upozornenia o hraničných stavoch úľa zjednodušia prácu včelárom. Keďže predpokladáme, že v dnešnej dobe sa včelárstvu venujú aj starší ľudia, ktorí nemajú vytvorený vzťah s modernými technológiami, vytvárame jednoduché riešenia s intuitívnym používaním.
+                </p>
+            </div>
+        </div>
+        <h2>Sigfox technológia</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="imgAbt">
+                    <img width="100%" height="100%" src="images/presentation/sigfox.jpg" />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <p>
+                    Jedná sa o sieť, pomocou ktorej môžu IoT zariadenia medzi sebou komunikovať. Sigfox využíva na komunikáciu úzke frekvenčné kanály (UNB) a bunky tejto siete umožňujú pokryť oveľa väčšie územie než bázové stanice pri GSM. Táto technológia je vybudovaná na bunkovom systéme podobne ako GSM a využíva topológiu hviezda. Dosah každej základňovej stanici je cca 200 km pri priamej viditeľnosti, v teréne kde je viacero prekážok je to 50 km a v lesových oblastiach je to cca 2-10 km. Sieť pracuje vo frekvenčnom pásme 868 MHz v Európe a 902 MHz v USA. Najvyšší vysielací výkon je povolený 25 mW. V tejto technológii je implementovaný protokol, ktorý umožňuje prenášať malé objemy dát a má nízku spotrebu energie, čo je pre IoT ideálne.
+                </p>
+            </div>
+            <div class="col-xs-12 col-md-12 col-md-offset-1" style="margin-top: 20px">
+                <p>
+                    Každý paket je veľký 12 bajtov a každé koncové zariadenie využívajúce technológiu Sigfox by malo poslať denne maximálne 140 takýchto paketov, čo predstavuje jednu správu za približne 10 minút a celkovú dennú kapacitu 1680 bajtov. Problémom pri tomto protokole je negarantovanie prijatia správy. Aby bola ale pravdepodobnosť doručenia čo najvyššia, tak sa správa posiela vždy trikrát a to zakaždým na inú náhodne vybranú frekvenciu. Vysielač potom prijatú správu pošle na server prevádzkovateľa a ten skontroluje jej validitu. Následne sa správa sprístupní klientovi, ktorému je určená buď cez REST API, prípadne sa správa zašle na server klienta cez http callback. Na Slovensku poskytuje technológiu Sigfox len jediný mobilný operátor, ktorým je SimpleCell Networks Slovakia.                </p>
+
+            </div>
+        </div>
+
+
 
     </div>
 
-
+    <div class="container" style="margin-bottom: 25px;">
+        <h2>Monitorovací model</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="imgAbt">
+                    <img width="320" height="220" src="images/presentation/arduino.jpg" />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <p>
+                    Samotné zariadenie pozostáva z mikrokontroléra – Arduina Mega 2560 so Sigfox anténou a meracích senzorov. Na meranie vlhkosti a hmotnosti sme využili digitálne senzory DHT22. Ponúka širší rozsah teplôt a presnejšie merania ako jeho predchodca. Senzor prevrátenia obsahuje 3-osí gyroskop spolu s 3-osím akcelerometrom. Založený je na čipe MPU-6050. Na meranie váhy úľa sme využili elektronický váhový senzor TMOEC, ktorý je prispôsobený na maximálnu váhu 200kg. Celé zariadenie je umiestnené v nepremokavom obale a dostatočne chránené pred včelami.                </p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Login -->
