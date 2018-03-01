@@ -62,12 +62,8 @@ $app->get('/bee-hives/', function (Request $request, Response $response, array $
     $dbManager = new DbManager($config);
     $dbManager->connect();
 
-    ob_start();
-    $dbManager->getUsersDevices($allPostPutVars['user_id'], $allPostPutVars['token']);
-    $returnedValue = ob_get_contents();    // get contents from the buffer
-    ob_end_clean();
-    $devices =  json_decode($returnedValue);
-    return $this->renderer->render($response, 'beehives.phtml', ['user' => $request->getAttribute('user'), 'footer' => $request->getAttribute('footer'), 'devices' => $devices]);
+    $devices = $dbManager->getUserMeasurements($allPostPutVars['token'], $allPostPutVars['user_id'], "36B7B7", 0, 5);
+    return $this->renderer->render($response, 'beehives.phtml', ['user' => $request->getAttribute('user'), 'footer' => $request->getAttribute('footer'), 'devices' => $devices['data']]);
 })->add(function($request, $response, $next) {
     $user = [
         'name' => 'anonymous user'
