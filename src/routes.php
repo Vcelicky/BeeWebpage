@@ -144,9 +144,10 @@ $app->get('/devices', function (Request $request, Response $response, array $arg
 
 $app->get('/user/devices', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
+    $body = json_decode($request->getBody()->getContents());
     $dbManager = new DbManager($config);
     $dbManager->connect();
-    $devices = $dbManager->getUserDevices($request->getHeader('token')[0], $request->getHeader('user')[0]);
+    $devices = $dbManager->getUserDevices($body->token, $body->user_id);
     if ($devices['error']) {
         return $response->withJson($devices, 500);
     }
@@ -158,8 +159,9 @@ $app->get('/user/devices', function (Request $request, Response $response, array
 $app->get('/user/measurements', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
     $dbManager->connect();
-    $devices = $dbManager->getUserMeasurements($request->getHeader('token')[0], $request->getHeader('user')[0]);
+    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id);
     if ($devices['error']) {
         return $response->withJson($devices, 500);
     }
