@@ -426,7 +426,7 @@ class DbManager
                     ]
                 ]);
             }
-            $return_value['Merania'] = $rows;
+            $return_value['data'] = $rows;
         }
         else {
             $return_value['error'] = true;
