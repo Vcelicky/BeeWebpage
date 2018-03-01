@@ -161,7 +161,7 @@ $app->post('/user/measurements', function (Request $request, Response $response,
     $dbManager = new DbManager($config);
     $body = json_decode($request->getBody()->getContents());
     $dbManager->connect();
-    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id, $body->from, $body->to);
+    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id, $body->device_id , $body->from, $body->to);
     if ($devices['error']) {
         return $response->withJson($devices, 500);
     }
@@ -175,7 +175,7 @@ $app->post('/user/measurements/actual', function (Request $request, Response $re
     $dbManager = new DbManager($config);
     $body = json_decode($request->getBody()->getContents());
     $dbManager->connect();
-    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id, 0, 1);
+    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id, $body->device_id, 0, 1);
     if ($devices['error']) {
         return $response->withJson($devices, 500);
     } else {
