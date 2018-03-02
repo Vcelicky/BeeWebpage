@@ -30,7 +30,7 @@ $menu_footer_midd = function ($request, $response, $next) {
 
     $footer = '
                     
-                        <footer class="footer bg-dark">
+                        <footer class="footer bg-light">
                             <div class="container">
                                 <p class="m-0 text-center">Včeličky Team - FIIT STU, 2018</p>
                             </div>

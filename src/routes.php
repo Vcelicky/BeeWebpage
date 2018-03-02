@@ -50,10 +50,10 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 //Portal
 $app->get('/portal', function (Request $request, Response $response, array $args) {
 
-    if (isset($_SESSION['id']))
+//    if (isset($_SESSION['id']))
         return $this->renderer->render($response, 'portal.phtml');
-    else
-        return $response->withStatus(401);
+//    else
+//        return $response->withStatus(401);
 });
 
 /*

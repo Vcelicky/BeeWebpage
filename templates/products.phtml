@@ -7,8 +7,8 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <!--        <link rel="stylesheet" href="css/style.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link href="css/global.css" rel="stylesheet">
     <link href="css/products.css" rel="stylesheet">
 
@@ -16,8 +16,7 @@
 <body>
 
 <!--Navigation-->
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded fixed-top">
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top bg-faded">
     <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
         <img src="images/logo.png" width="50px" height="50px">
     </a>
@@ -32,7 +31,7 @@
             <?php foreach($menu as $key => $value): ?>
 
                 <li class="nav-item">
-                    <a class="nav-link text-primary"
+                    <a class="nav-link"
                        href="<?=$value['href']?>"
                         <?php if(strlen($value['href']) == 0): echo 'data-toggle="modal" data-target="#ModalLoginForm"'; endif; ?>
                     >

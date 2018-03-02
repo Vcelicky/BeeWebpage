@@ -43,7 +43,7 @@ class DbManager
             return 401;
         }
 
-        $query = 'SELECT d.name FROM bees.users u
+        $query = 'SELECT d.uf_name FROM bees.users u
                   JOIN bees.devices d ON u.id = d.user_id
                   WHERE u.id = $1';
 
@@ -283,6 +283,5 @@ class DbManager
         $hash = base64_encode(sha1($password . $salt, true) . $salt);
         return $hash;
     }
-
 
 }
