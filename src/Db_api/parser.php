@@ -11,110 +11,202 @@ namespace src\Db_api;
 class parser
 {
 	public static function getData($data) {
-	if(strlen($data)==11)
-	{
-			$data="0" . $data;
-	}
 
-	if(strlen($data)==10)
-	{
-			$data="00" . $data;
-	}
-
-	if(strlen($data)==9)
-	{
-			$data="000" . $data;
-	}
-
-	if(strlen($data)==8)
-	{
-			$data="0000" . $data;
-	}
-
-	if(strlen($data)==12)
-	{
-        $parsing = str_split($data, 2);
-        $parsing1 = str_split($data, 1);
-
-        $poloha=$parsing1[0];
-        $poloha=hexdec($poloha);
-        $poloha_bin=decbin($poloha);
-        $poloha_upravene=substr($poloha_bin, -4, 1); 	//ok
-
-        if(strlen($poloha_bin)==3)
+        if(strlen($data)==11)
         {
-            $poloha_upravene=0;
+            $data="0" . $data;
         }
 
-        $hmotnost_prve=$parsing1[1];
-        $hmotnost_prve=hexdec($hmotnost_prve);
-        $hmotnost_prve_bin=decbin($hmotnost_prve);
-        $hmotnost_druhe=$parsing1[2];
-        $hmotnost_druhe=hexdec($hmotnost_druhe);
-        $hmotnost_druhe_bin=decbin($hmotnost_druhe);
-        $hmotnost_druhe_bin1=substr($hmotnost_druhe_bin, 0, -1);
-        $hmotnost_bin=$hmotnost_prve_bin . '' . $hmotnost_druhe_bin1;
-        $hmotnost=bindec($hmotnost_bin);								//ok
-
-        $teplota_vonku=$parsing[5];
-        $teplota_vonku=hexdec($teplota_vonku); //ok
-        $teplota_dnu=$parsing[4];
-        $teplota_dnu=hexdec($teplota_dnu);     //ok
-
-        $vlhkost_vonku=$parsing[3];
-        $vlhkost_vonku=hexdec($vlhkost_vonku);
-        $vlhkost_vonku_bin=decbin($vlhkost_vonku) . "\n";
-
-        if(strlen($vlhkost_vonku_bin)==7)
+        if(strlen($data)==10)
         {
-            $vlhkost_vonku_bin="0" . $vlhkost_vonku_bin;
+            $val="00" . $data;
         }
 
-        $bez_prv=substr($vlhkost_vonku_bin, 1);
-        $vlhkost_vonku_upravene=bindec($bez_prv);	//ok
-
-
-        $c1=substr($hmotnost_druhe_bin, -1, 1);		//vypise posledne cislo
-        $c2=hexdec($parsing1[3]);
-        $c2_bin=decbin($c2);
-
-        if(strlen($c2_bin)==3)
+        if(strlen($data)==9)
         {
-            $c2_bin="0" . $c2_bin;
+            $data="000" . $data;
         }
 
-
-        $c3=hexdec($parsing1[4]);
-        $c3_bin=decbin($c3);
-        $c3_oprava=substr($c3_bin, 0, 2);
-
-        if(strlen($c3_oprava)==1)
+        if(strlen($data)==12)
         {
-            $c3_oprava="0" . $c3_oprava;
-        }
+            $parsing = str_split($data, 1);
+            $parsing1 = str_split($data, 2);
+            $poloha=$parsing[0];
+            $poloha_dec=hexdec($poloha);
+            $poloha_bin=decbin($poloha_dec);
+            $poloha_upr=substr($poloha_bin, -1);
 
-        $stav_baterie_bin=$c1 . $c2_bin . $c3_oprava;
-        $stav_baterie=bindec($stav_baterie_bin);			//ok
+            $hmotnost=$parsing[1] . $parsing[2];
+            $hmotnost_dec=hexdec($hmotnost);
+            $hmotnost_bin=decbin($hmotnost_dec);
 
-        $d1=$parsing1[4];
-        $d1=hexdec($d1);
-        $d1_bin=decbin($d1);
-        $d1_orez=substr($d1_bin, 0, 2);
-        $d2=hexdec($parsing1[5]);
-        $d2_bin=decbin($d2);
-        $d3=hexdec($parsing1[6]);
-        $d3_bin=decbin($d3);
-        $d3_op=substr($d3_bin, -4, 1);
-        $vlhkost_dnu_bin=$d1_orez . $d2_bin . $d3_op;
-        $vlhkost_dnu=bindec($vlhkost_dnu_bin);
+            if(strlen($hmotnost_bin)==0)
+            {
+                $hmotnost_bin="00000000" . $hmotnost_bin;
+            }
+
+            if(strlen($hmotnost_bin)==1)
+            {
+                $hmotnost_bin="0000000" . $hmotnost_bin;
+            }
+
+            if(strlen($hmotnost_bin)==2)
+            {
+                $hmotnost_bin="000000" . $hmotnost_bin;
+            }
+
+            if(strlen($hmotnost_bin)==3)
+            {
+                $hmotnost_bin="00000" . $hmotnost_bin;
+            }
+
+            if(strlen($hmotnost_bin)==4)
+            {
+                $hmotnost_bin="0000" . $hmotnost_bin;
+            }
+            if(strlen($hmotnost_bin)==5)
+            {
+                $hmotnost_bin="000" . $hmotnost_bin;
+            }
+
+            if(strlen($hmotnost_bin)==6)
+            {
+                $hmotnost_bin="00" . $hmotnost_bin;
+            }
+
+            if(strlen($hmotnost_bin)==7)
+            {
+                $hmotnost_bin="0" . $hmotnost_bin;
+            }
+
+
+            if(strlen($hmotnost_bin)==8)
+            {
+                $hmotnost_bin=substr($hmotnost_bin, 0, -1);
+            }
+            $hmotnost_opr=bindec($hmotnost_bin);
+
+            $teplota_von=hexdec($parsing1[5]);
+            $teplota_dnu=hexdec($parsing1[4]);
+
+            $vlhkost_von=hexdec($parsing1[3]);
+            $vlhkost_von_bin=decbin($vlhkost_von);
+            if(strlen($vlhkost_von_bin)==8)
+            {
+                $vlhkost_von_bin=substr($vlhkost_von_bin, 1);
+            }
+            $vlhkost_von_opr=bindec($vlhkost_von_bin);
+
+            $bateria_prve=$parsing[2];
+            $bateria_prve_dec=hexdec($bateria_prve);
+            $bateria_prve_bin=decbin($bateria_prve_dec);
+            if(strlen($bateria_prve_bin)==3)
+            {
+                $bateria_prve_bin="0" . $bateria_prve_bin;
+            }
+            if(strlen($bateria_prve_bin)==2)
+            {
+                $bateria_prve_bin="00" . $bateria_prve_bin;
+            }
+            if(strlen($bateria_prve_bin)==1)
+            {
+                $bateria_prve_bin="000" . $bateria_prve_bin;
+            }
+            if(strlen($bateria_prve_bin)==4)
+            {
+                $bateria_c1=substr($bateria_prve_bin, -1);
+            }
+            $bateria_druhe=$parsing[3];
+            $bateria_druhe_dec=hexdec($bateria_druhe);
+            $bateria_druhe_bin=decbin($bateria_druhe_dec);
+            if(strlen($bateria_druhe_bin)==3)
+            {
+                $bateria_druhe_bin="0" . $bateria_druhe_bin;
+            }
+
+            if(strlen($bateria_druhe_bin)==2)
+            {
+                $bateria_druhe_bin="00" . $bateria_druhe_bin;
+            }
+
+            if(strlen($bateria_druhe_bin)==1)
+            {
+                $bateria_druhe_bin="000" . $bateria_druhe_bin;
+            }
+            $bateria_tretie=$parsing[4];
+            $bateria_tretie_dec=hexdec($bateria_tretie);
+            $bateria_tretie_bin=decbin($bateria_tretie_dec);
+            if(strlen($bateria_tretie_bin)==3)
+            {
+                $bateria_tretie_bin="0" . $bateria_tretie_bin;
+            }
+
+            if(strlen($bateria_tretie_bin)==2)
+            {
+                $bateria_tretie_bin="00" . $bateria_tretie_bin;
+            }
+
+            if(strlen($bateria_tretie_bin)==1)
+            {
+                $bateria_tretie_bin="000" . $bateria_tretie_bin;
+            }
+            $bateria_c3=substr($bateria_tretie_bin, 0, 2);
+            $bateria_final_bin=$bateria_c1 . $bateria_druhe_bin . $bateria_c3;
+            $bateria_final_dec=bindec($bateria_final_bin);
+
+            $vlhkost_dnu_prve=$parsing[4];
+            $vlhkost_dnu_prve_dec=hexdec($vlhkost_dnu_prve);
+            $vlhkost_dnu_prve_bin=decbin($vlhkost_dnu_prve_dec);
+            if(strlen($vlhkost_dnu_prve_bin)==3)
+            {
+                $vlhkost_dnu_prve_bin="0" . $vlhkost_dnu_prve_bin;
+            }
+
+            if(strlen($vlhkost_dnu_prve_bin)==2)
+            {
+                $vlhkost_dnu_prve_bin="00" . $vlhkost_dnu_prve_bin;
+            }
+
+            if(strlen($vlhkost_dnu_prve_bin)==1)
+            {
+                $vlhkost_dnu_prve_bin="000" . $vlhkost_dnu_prve_bin;
+            }
+            $vlhkost_dnu_c1=substr($vlhkost_dnu_prve_bin, -2);
+            $vlhkost_dnu_druhe=$parsing[5];
+            $vlhkost_dnu_druhe_dec=hexdec($vlhkost_dnu_druhe);
+            $vlhkost_dnu_druhe_bin=decbin($vlhkost_dnu_druhe_dec);
+            if(strlen($vlhkost_dnu_druhe_bin)==3)
+            {
+                $vlhkost_dnu_druhe_bin="0" . $vlhkost_dnu_druhe_bin;
+            }
+
+            if(strlen($vlhkost_dnu_druhe_bin)==2)
+            {
+                $vlhkost_dnu_druhe_bin="00" . $vlhkost_dnu_druhe_bin;
+            }
+
+            if(strlen($vlhkost_dnu_druhe_bin)==1)
+            {
+                $vlhkost_dnu_druhe_bin="000" . $vlhkost_dnu_druhe_bin;
+            }
+            $vlhkost_dnu_tretie=$parsing[6];
+            $vlhkost_dnu_tretie_dec=hexdec($vlhkost_dnu_tretie);
+            $vlhkost_dnu_tretie_bin=decbin($vlhkost_dnu_tretie_dec);
+            $vlhkost_dnu_c3=0;
+            if(strlen($vlhkost_dnu_tretie_bin)==4)
+            {
+                $vlhkost_dnu_c3=substr($vlhkost_dnu_tretie_bin, 0, 1);
+            }
+            $vlhkost_dnu_final_bin=$vlhkost_dnu_c1 . $vlhkost_dnu_druhe_bin . $vlhkost_dnu_c3;
+            $vlhkost_dnu_final_dec=bindec($vlhkost_dnu_final_bin);
         $parsed_data = [
-            "hmotnost" => $hmotnost,
-            "poloha" => $poloha_upravene,
-            "teplota_von" => $teplota_vonku,
+            "hmotnost" => $hmotnost_opr,
+            "poloha" => $poloha_upr,
+            "teplota_von" => $teplota_von,
             "teplota_dnu" => $teplota_dnu,
-            "vlhkost_von" => $vlhkost_vonku_upravene,
-            "vlhkost_dnu" => $vlhkost_dnu,
-            "stav_baterie" => $stav_baterie
+            "vlhkost_von" => $vlhkost_von_opr,
+            "vlhkost_dnu" => $vlhkost_dnu_final_dec,
+            "stav_baterie" => $bateria_final_dec
         ];
 
         return $parsed_data;
