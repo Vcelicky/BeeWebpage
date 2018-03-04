@@ -50,10 +50,10 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 //Portal
 $app->get('/portal', function (Request $request, Response $response, array $args) {
 
-//    if (isset($_SESSION['id']))
+    if (isset($_SESSION['id']))
         return $this->renderer->render($response, 'portal.phtml');
-//    else
-//        return $response->withStatus(401);
+    else
+        return $response->withStatus(401);
 });
 
 /*
@@ -114,6 +114,14 @@ $app->post('/register/user', function (Request $request, Response $response, arr
     ob_end_clean();
 
     echo $returned_value;
+});
+
+$app->post('/logout', function (Request $request, Response $response, array $args) {
+    ob_start();
+    include (__DIR__ . '/logout.php');
+    $returned_value = ob_get_contents();    // get contents from the buffer
+    ob_end_clean();
+//    echo $returned_value;
 });
 
 /*

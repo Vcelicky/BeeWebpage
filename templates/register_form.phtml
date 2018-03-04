@@ -7,47 +7,47 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
-    <div class="container">
+
+<!--Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top bg-faded">
+    <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
+        <img src="images/logo.png" width="50px" height="50px">
+    </a>
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <!--                        <ul class="navbar-nav">-->
+        <ul class="navbar-nav ml-auto">
+            <?php foreach($menu as $key => $value): ?>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="<?=$value['href']?>"
+                        <?php if(strlen($value['href']) == 0): echo 'data-toggle="modal" data-target="#ModalLoginForm"'; endif; ?>
+                    >
+                        <?=$value['name']?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+</nav>
+
+    <div class="container"style="margin: auto; max-width: 300px;">
         <div class="row">
-            <nav class="navbar navbar-toggleable-md navbar-inverse">
-
-                <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo">
-                    <img src="images/logo.png" width="100px" height="100px">
-                </a>
-
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <?php foreach($menu as $key => $value): ?>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-primary"
-                                   href="<?=$value['href']?>"
-                                    <?php if(strlen($value['href']) == 0): echo 'data-toggle="modal" data-target="#ModalLoginForm"'; endif; ?>
-                                >
-                                    <?=$value['name']?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-
-            </nav>
-        </div>
-
-        <div class="row">
-            <div class="panel panel-primary register-panel">
-                <div class="panel-body">
+<!--            <div class="panel panel-primary register-panel">-->
+<!--                <div class="panel-body">-->
                     <form role="form" id = "register">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-top: 20px">
                             <h2>Registrácia</h2>
                         </div>
                         <div class="form-group">
@@ -76,8 +76,8 @@
                         <hr>
                         <p>Už máte účet? <a href="#" data-toggle="modal" data-target="#ModalLoginForm">Prihlásenie</a></p>
                     </form>
-                </div>
-            </div>
+<!--                </div>-->
+<!--            </div>-->
         </div>
 
     </div>
