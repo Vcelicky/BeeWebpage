@@ -1,3 +1,68 @@
+
+<?php
+
+	$errName ="";
+    $errMessage ="";
+	$errEmail ="";
+	$errPhone ="";
+	if (isset($_POST['submit'])) {
+		$name = $_POST['name'];
+		$email = $_POST['mail'];
+		$phone = $_POST['phone'];
+		
+		if (!preg_match("/^[a-zA-Z á ä č ď dž é í ĺ ľ ó š ť ú ň ý ž ]*$/",$name) || (!$_POST['name'])) {
+			$errName = "Zadali ste nesprávny formát mena!!!"; 
+		}
+		
+		  if (!$_POST['mail'] || !filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) {
+			$errEmail = 'Zadali ste neplatný e-mail!!!';
+		}
+		
+		if (!preg_match("/^[0-9]*$/",$phone) || (!$_POST['phone'])) {
+			$errPhone = "Zadali ste nesprávny formát telefónneho čísla!!!"; 
+		}
+	
+	if (!$errName && !$errEmail && !$errPhone)
+	{
+		$ma = "";
+		$subject = 'KONTAKT Včeličky Team';
+		$result = 'Kontaktný formulár';
+		$text = $_POST["message"];
+		$ma = $_POST["mail"];
+		$prem=0;
+
+		$poa = '<html><body>';
+		$poa .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+		$poa .= "<tr style='background: #eee;'><td><strong>Meno:</strong> </td><td>" . strip_tags($_POST['name']) . "</td></tr>";
+		$poa .= "<tr><td><strong>E-mail:</strong> </td><td>" . strip_tags($_POST['mail']) . "</td></tr>";
+		$poa .= "<tr><td><strong>Telefón:</strong> </td><td>" . strip_tags($_POST['phone']) . "</td></tr>";
+		$poa .= "<tr><td><strong>Odkaz:</strong> </td><td>" . strip_tags($_POST['message']) . "</td></tr>";
+		$poa .= "</table>";
+		$poa .= "</body></html>";
+		$headers  = "MIME-Version: 1.0" . PHP_EOL;
+		$headers .= "Content-Type: text/html; charset=utf-8" . PHP_EOL;
+		$headers .= "From: WEB-Včeličky Team" . PHP_EOL;
+
+if ( Mail("sosnak.matus@gmail.com  ", $result, $poa, $headers) )
+{
+	echo '<script language="javascript">';
+	echo 'alert("Mail bol úspešne odoslaný")';
+	echo '</script>';
+	
+}
+else 
+{
+	echo '<script language="javascript">';
+	echo 'alert("Mail sa nepodarilo odoslať")';
+	echo '</script>';
+}
+		
+    }
+		
+  }
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,15 +122,18 @@
 
                 <div class="col-md-5">
                     <h4><strong>Zadajte údaje</strong></h4>
-                    <form action="/BeeWebpage/src/send_mail.php" target="_blank" method="POST">
+                    <form action="" method="POST">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" value="" placeholder="Meno">
+                            <input type="text" class="form-control" name="name" value="<?php if (isset($_POST['name'])){ echo htmlspecialchars($_POST['name']); } ?>" placeholder="Meno">
+							<?php echo "<p class='text-danger'>$errName</p>";?>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" name="mail" value="" placeholder="E-mail">
+                            <input type="text" class="form-control" name="mail" value="<?php if (isset($_POST['email'])){ echo htmlspecialchars($_POST['mail']); } ?>" placeholder="E-mail">
+							<?php echo "<p class='text-danger'>$errEmail</p>";?>
                         </div>
                         <div class="form-group">
-                            <input type="tel" class="form-control" name="phone" value="" placeholder="Telefón">
+                            <input type="tel" class="form-control" name="phone" value="<?php if (isset($_POST['email'])){ echo htmlspecialchars($_POST['phone']); } ?>" placeholder="Telefón">
+							<?php echo "<p class='text-danger'>$errPhone</p>";?>
                         </div>
                         <div class="form-group">
                             <textarea class="form-control" name="message" rows="3" placeholder="Správa"></textarea>
