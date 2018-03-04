@@ -295,9 +295,9 @@ class DbManager
         $result = pg_prepare($this->conn, "my_query", $query);
         $result = pg_execute($this->conn, "my_query", [
             date('Y-m-d G:i:s', $raw_data['time']),
-            $data['$teplota_dnu'],
+            $data['teplota_dnu'],
             $data['hmotnost'],
-            true,
+            $data['poloha'],
             $data['teplota_von'],
             $data['vlhkost_von'],
             $data['vlhkost_dnu'],
