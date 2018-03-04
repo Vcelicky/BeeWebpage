@@ -42,6 +42,10 @@ $app->get('/contact', function (Request $request, Response $response, array $arg
     return $this->renderer->render($response, 'contact.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
+ $app->post('/contact', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response, 'contact.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+});
+
 //Products
 $app->get('/products', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'products.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
