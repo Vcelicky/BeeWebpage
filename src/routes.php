@@ -66,12 +66,8 @@ $app->get('/bee-hives/', function (Request $request, Response $response, array $
     $dbManager = new DbManager($config);
     $dbManager->connect();
 
-    ob_start();
-    $dbManager->getUsersDevices($allPostPutVars['user_id'], $allPostPutVars['token']);
-    $returnedValue = ob_get_contents();    // get contents from the buffer
-    ob_end_clean();
-    $devices =  json_decode($returnedValue);
-    return $this->renderer->render($response, 'beehives.phtml', ['user' => $request->getAttribute('user'), 'footer' => $request->getAttribute('footer'), 'devices' => $devices]);
+    $devices = $dbManager->getUserMeasurements($allPostPutVars['token'], $allPostPutVars['user_id'], "36B7B7", 0, 5);
+    return $this->renderer->render($response, 'beehives.phtml', ['user' => $request->getAttribute('user'), 'footer' => $request->getAttribute('footer'), 'devices' => $devices['data']]);
 })->add(function($request, $response, $next) {
     $user = [
         'name' => 'anonymous user'
@@ -114,6 +110,77 @@ $app->post('/register/user', function (Request $request, Response $response, arr
     ob_end_clean();
 
     echo $returned_value;
+});
+
+/*
+ * save sigfox data to database
+ * params: sigfox data
+*/
+$app->post('/sigfox', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $returnedValue = $dbManager->insertValue($request->getParams());
+    if ($returnedValue['error']) {
+        return $response->withJson($returnedValue, 500);
+    }
+    else {
+        return $response->withJson($returnedValue, 200);
+    }
+});
+
+$app->post('/devices', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $devices = $dbManager->getAllDevices();
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    }
+    else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+$app->post('/user/devices', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $devices = $dbManager->getUserDevices($body->token, $body->user_id);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    }
+    else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+$app->post('/user/measurements', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id, $body->device_id , $body->from, $body->to);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    }
+    else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+$app->post('/user/measurements/actual', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id, $body->device_id, 0, 1);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    } else {
+        return $response->withJson($devices, 200);
+    }
 });
 
 /*

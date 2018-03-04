@@ -80,9 +80,13 @@
             <a id = "add-apiary" href="#"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
             <?php foreach ($devices as $device): ?>
             <div class = "device">
-                <p> <?=$device->name?> </p>
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <p> cas: <?=$device[0]['cas']?> </p>
+                
+                <ul>
+                <?php foreach ($device as $device_data): ?>
+                    <li> TYP: <?=$device_data['typ']?> HODNOTA: <?=$device_data['hodnota'] ?> </li>
+                <?php endforeach; ?>
+                </ul>
             </div>
             <?php endforeach; ?>
         </div>

@@ -8,6 +8,7 @@
 
 namespace src\Db_api;
 use \Firebase\JWT\JWT;
+use src\Db_api\parser;
 
 class DbManager
 {
@@ -282,6 +283,157 @@ class DbManager
     public function checkhashSSHA($salt, $password) {
         $hash = base64_encode(sha1($password . $salt, true) . $salt);
         return $hash;
+    }
+
+    public function insertValue($raw_data)
+    {
+        $data = parser::getData($raw_data['data']['value']);
+        $query = 'INSERT INTO bees.measurements(time, temperature_in, weight, proximity, temperature_out,
+                  humidity_in, humidity_out, device_name, batery)
+                  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);';
+
+        $result = pg_prepare($this->conn, "my_query", $query);
+        $result = pg_execute($this->conn, "my_query", [
+            date('Y-m-d G:i:s', $raw_data['time']),
+            $data['teplota_dnu'],
+            $data['hmotnost'],
+            $data['poloha'],
+            $data['teplota_von'],
+            $data['vlhkost_von'],
+            $data['vlhkost_dnu'],
+            $raw_data['id'],
+            $data['stav_baterie']
+        ]);
+        $result_data['error'] = false;
+        if (!$result) {
+            $result_data['error'] = true;
+            $result_data['message'] = pg_last_error();
+            return $result_data;
+        }
+
+        $result_data['error'] = false;
+        $result_data['message'] = "query was successfully executed";
+        return $result;
+    }
+
+    public function getAllDevices() {
+        $result = pg_query($this->conn, '
+        SELECT * FROM bees.devices
+        ORDER BY user_id');
+        $return_value['error'] = false;
+        if ($result) {
+            $rows = array();
+            while($r =  pg_fetch_assoc($result)) {
+                $rows[] = $r;
+            }
+            $return_value['data'] = $rows;
+        }
+        else {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+
+        return $return_value;
+    }
+
+    public function getUserDevices($token, $userId) {
+        /*if($this->tokenizer->isValidToken($token, $userId) == false){
+           return [
+               'error'   => true,
+               'status'  => 401,
+               'message' => 'Unauthorized access'
+           ];
+        }*/
+
+        $result = pg_prepare($this->conn, 'devices select', '
+        SELECT * FROM bees.devices d
+        WHERE d.user_id = $1;');
+        $result = pg_execute($this->conn, 'devices select', [$userId]);
+        $return_value['error'] = false;
+        if ($result) {
+            $rows = array();
+            while($r =  pg_fetch_assoc($result)) {
+                $rows[] = $r;
+            }
+            $return_value['data'] = $rows;
+        }
+        else {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+
+        return $return_value;
+
+    }
+
+    public function getUserMeasurements($token, $userId, $deviceId, $from, $to) {
+        /*if($this->tokenizer->isValidToken($token, $userId) == false){
+           return [
+               'error'   => true,
+               'status'  => 401,
+               'message' => 'Unauthorized access'
+           ];
+        }*/
+
+        $result = pg_prepare($this->conn, 'user data select', '
+        SELECT m.time, m.temperature_in, m.weight, m.proximity, m.temperature_out, m.humidity_in,
+         m.humidity_out, m.batery FROM bees.devices d
+                  JOIN bees.measurements m ON d.device_id = m.device_name
+                  WHERE d.user_id = $1 AND m.device_name = $4 
+                  ORDER BY m.time DESC
+                  OFFSET $2
+                  LIMIT $3;');
+        $result = pg_execute($this->conn, 'user data select', [$userId, $from, $to, $deviceId]);
+        $return_value['error'] = false;
+        if ($result) {
+            $rows = [];
+            while($r =  pg_fetch_assoc($result)) {
+                array_push($rows, [
+                    0 => [
+                        'cas' => $r['time'],
+                        'hodnota' => $r['temperature_in'],
+                        'typ' => 'IT'
+                    ],
+                    1 => [
+                        'cas' => $r['time'],
+                        'hodnota' => $r['temperature_out'],
+                        'typ' => 'OT'
+                    ],
+                    2 => [
+                        'cas' => $r['time'],
+                        'hodnota' => $r['humidity_in'],
+                        'typ' => 'IH'
+                    ],
+                    3 => [
+                        'cas' => $r['time'],
+                        'hodnota' => $r['humidity_out'],
+                        'typ' => 'OH'
+                    ],
+                    4 => [
+                        'cas' => $r['time'],
+                        'hodnota' => strcmp($r['proximity'], "t") === 0 ? 'true' : 'false',
+                        'typ' => 'P'
+                    ],
+                    5 => [
+                        'cas' => $r['time'],
+                        'hodnota' => $r['weight'],
+                        'typ' => 'W'
+                    ],
+                    6 => [
+                        'cas' => $r['time'],
+                        'hodnota' => $r['batery'],
+                        'typ' => 'B'
+                    ]
+                ]);
+            }
+            $return_value['data'] = $rows;
+        }
+        else {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+
+        return $return_value;
     }
 
 
