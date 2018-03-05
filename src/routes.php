@@ -42,8 +42,19 @@ $app->get('/contact', function (Request $request, Response $response, array $arg
     return $this->renderer->render($response, 'contact.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
+//Contact_verify_data
  $app->post('/contact', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'contact.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+});
+
+//Order
+$app->get('/order', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response, 'order.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+});
+
+//Order_verify_data
+ $app->post('/order', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response, 'order.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
 //Products

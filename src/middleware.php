@@ -15,7 +15,7 @@ $menu_footer_midd = function ($request, $response, $next) {
         ],
         'item2' => [
             'name' => 'Objednávka',
-            'href' => '#',
+            'href' => '/BeeWebpage/public/order',
         ],
         'item3' => [
             'name' => 'Kontakt',
