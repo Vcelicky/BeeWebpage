@@ -7,15 +7,15 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/bootstrap.css">
-<!--        <link rel="stylesheet" href="css/style.css">-->
+<!--        <link rel="stylesheet" href="css/bootstrap.css">-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="css/global.css" rel="stylesheet">
 
     </head>
     <body>
 
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-faded fixed-top">
-
+<!--    <nav class="navbar navbar-toggleable-md navbar-inverse bg-faded fixed-top">-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top bg-faded">
         <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
             <img src="images/logo.png" width="50px" height="50px">
         </a>
@@ -30,7 +30,7 @@
                 <?php foreach($menu as $key => $value): ?>
 
                     <li class="nav-item">
-                        <a class="nav-link text-primary"
+                        <a class="nav-link"
                            href="<?=$value['href']?>"
                             <?php if(strlen($value['href']) == 0): echo 'data-toggle="modal" data-target="#ModalLoginForm"'; endif; ?>
                         >
@@ -74,14 +74,14 @@
             <div class="card-deck">
                 <div class="card">
                     <img class="card-img-top" src="images/web.jpg" alt="Card image cap">
-                    <div class="card-block">
+                    <div class="card-body">
                         <h4 class="card-title">Webové rozhranie</h4>
                         <p class="card-text">Umožňuje prehľadnú správu včelých úĺov a nameraných údajov. Keďže chceme vyjsť v ústrety aj menej technicky zručným používateľom, navrhli sme riešenie s jednoduchým a priateľským používateľským rozhraním, jednoduchým na ovládanie.     </p>
                     </div>
                 </div>
                 <div class="card">
                     <img class="card-img-top" src="images/phone.jpg" alt="Card image cap">
-                    <div class="card-block">
+                    <div class="card-body">
                         <h4 class="card-title">Mobilná aplikácia</h4>
                         <p class="card-text">Buďte informovaný o dôležitých udalostiach kdekoľvek a kedykolvek.  V prípade prekročenia limitnej hranice veličiny budete upozornený prostredníctvom emailu, notifikácie v aplikácii alebo SMS.</p>
                     </div>
@@ -89,7 +89,7 @@
                 </div>
                 <div class="card">
                     <img class="card-img-top" src="images/hive.jpg" alt="Card image cap">
-                    <div class="card-block">
+                    <div class="card-body">
                         <h4 class="card-title">Meracie zariadenia</h4>
                         <p class="card-text">Využívame Arduino mega 2560, ktoré zhromažďuje informácie zo senzorov. Ide napríklad o senzor teploty, vlhkosti, tenzometer či akcelerometer na odhalenie prevalenia úľa alebo prípadného kradnutia. Na prenos údajov je použítá IoT technológia Sigfox.</p>
                     </div>

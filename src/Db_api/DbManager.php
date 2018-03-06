@@ -8,7 +8,6 @@
 
 namespace src\Db_api;
 use \Firebase\JWT\JWT;
-use src\Db_api\parser;
 
 class DbManager
 {

@@ -127,6 +127,14 @@ $app->post('/register/user', function (Request $request, Response $response, arr
     echo $returned_value;
 });
 
+$app->post('/logout', function (Request $request, Response $response, array $args) {
+    ob_start();
+    include (__DIR__ . '/logout.php');
+    $returned_value = ob_get_contents();    // get contents from the buffer
+    ob_end_clean();
+//    echo $returned_value;
+});
+
 /*
  * save sigfox data to database
  * params: sigfox data
