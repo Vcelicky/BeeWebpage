@@ -35,6 +35,7 @@ $("#login_button").click(function () {
     };
     $.ajax({
         url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/login/user',
+        // url: 'login/user',
         method : 'POST',
         dataType : 'json',
         data : data
