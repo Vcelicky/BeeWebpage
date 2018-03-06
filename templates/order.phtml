@@ -24,10 +24,10 @@
 			$errPhone = "Zadali ste nesprávny formát telefónneho čísla!!!"; 
 		}
 	
-	if (!$errName && !$errEmail && !$errPhone && !errCount)
+	if (!$errName && !$errEmail && !$errPhone && !$errCount)
 	{
 		$ma = "";
-		$subject = 'KONTAKT Včeličky Team';
+		$subject = 'OBJEDNÁVKA Včeličky Team';
 		$result = 'Objednávka';
 		$text = $_POST["message"];
 		$ma = $_POST["mail"];
@@ -38,6 +38,7 @@
 		$poa .= "<tr style='background: #eee;'><td><strong>Meno:</strong> </td><td>" . strip_tags($_POST['name']) . "</td></tr>";
 		$poa .= "<tr><td><strong>E-mail:</strong> </td><td>" . strip_tags($_POST['mail']) . "</td></tr>";
 		$poa .= "<tr><td><strong>Telefón:</strong> </td><td>" . strip_tags($_POST['phone']) . "</td></tr>";
+        $poa .= "<tr><td><strong>Počet úľov:</strong> </td><td>" . strip_tags($_POST['count']) . "</td></tr>";
 		$poa .= "<tr><td><strong>Odkaz:</strong> </td><td>" . strip_tags($_POST['message']) . "</td></tr>";
 		$poa .= "</table>";
 		$poa .= "</body></html>";
