@@ -23,6 +23,10 @@
 		if (!preg_match("/^[0-9]*$/",$phone) || (!$_POST['phone'])) {
 			$errPhone = "Zadali ste nesprávny formát telefónneho čísla!!!"; 
 		}
+		
+		if (!preg_match("/^[0-9]*$/",$count) || (!$_POST['count'])) {
+			$errCount = "Zadali ste nesprávny formát počtu úľov!!!"; 
+		}
 	
 	if (!$errName && !$errEmail && !$errPhone && !$errCount)
 	{
@@ -46,7 +50,7 @@
 		$headers .= "Content-Type: text/html; charset=utf-8" . PHP_EOL;
 		$headers .= "From: WEB-Včeličky Team" . PHP_EOL;
 
-if ( Mail("sosnak.matus@gmail.com  ", $result, $poa, $headers) )
+if ( Mail("fiittp20@gmail.com  ", $result, $poa, $headers) )
 {
 	echo '<script language="javascript">';
 	echo 'alert("Mail bol úspešne odoslaný")';
@@ -142,7 +146,7 @@ else
                     </form>
                 </div>
 				<div class="col-md-7">
-                  <img src="/BeeWebpage/public/images/bee0.jpg" class="img-rounded" alt="Cinque Terre" style="margin-right: -10px;">
+					<img src="/BeeWebpage/public/images/bee0.jpg" class="img-rounded" alt="Cinque Terre" style="/*! margin-right: -10px; */width: 100%;height: auto;">
                 </div>
             </div>
         </div>
