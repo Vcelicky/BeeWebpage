@@ -137,26 +137,6 @@ function createHives(result){
 
 }
 
-function createHiveHtml(id, name, location){
-
-    html = '<div class="card"> \
-            <div class="card-body"> \
-                <div class="clearfix"> \
-                <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
-                <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
-                <div class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
-                </div> \
-                <div class="b-b-1 pt-3"></div> \
-                <hr> \
-                <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
-                <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">View More</a> \
-                </div> \
-            </div>\
-        </div>'
-
-    return html;
-}
-
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
