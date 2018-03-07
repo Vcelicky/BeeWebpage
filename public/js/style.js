@@ -27,6 +27,7 @@ $("#login_button").click(function () {
     var loginForm = document.getElementById("login");
     var email = loginForm["0"].value;
     var pass = loginForm["1"].value;
+    var actualURL = window.location.host;
 
     data = {
         email: email,
@@ -34,8 +35,8 @@ $("#login_button").click(function () {
 
     };
     $.ajax({
-        url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/login/user',
-        // url: 'login/user',
+        // url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/login/user',
+        url: 'login/user',
         method : 'POST',
         dataType : 'json',
         data : data

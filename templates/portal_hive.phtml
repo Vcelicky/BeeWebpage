@@ -10,18 +10,14 @@
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!--    <link rel="apple-touch-icon" href="apple-icon.png">-->
-<!--    <link rel="shortcut icon" href="favicon.ico">-->
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<!--    <link rel="stylesheet" href="css/bootstrap.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Custom Theme Style -->
-    <link href="css/portal.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/cs-skin-elastic.css">
+    <link href="../css/portal.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/themify-icons.css">
+    <link rel="stylesheet" href="../css/cs-skin-elastic.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -34,8 +30,8 @@
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand" href="./"><img src="images/logo_portal1.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="./"><img src="images/logo_portal2.png" alt="Logo"></a>
+            <a class="navbar-brand" href="./"><img src="../images/logo_portal1.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="./"><img src="../images/logo_portal2.png" alt="Logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
                 <i class="fa fa-bars"></i>
             </button>
@@ -45,7 +41,7 @@
             <ul class="nav navbar-nav">
                 <li class="active">
                     <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-dashboard"></i>Manažment úľov </a>
-<!--                    <a href="#"> <i class="menu-icon fa fa-address-card"></i>Moje merania </a>-->
+                    <!--                    <a href="#"> <i class="menu-icon fa fa-address-card"></i>Moje merania </a>-->
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -103,7 +99,7 @@
             <div class="col-sm-5">
                 <div class="user-area dropdown float-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
+                        <img class="user-avatar rounded-circle" src="../images/admin.jpg" alt="User Avatar">
                     </a>
 
                     <div class="user-menu dropdown-menu">
@@ -153,54 +149,33 @@
         </div>
     </div>
 
-<!--    Put content here:-->
-    <div id="div.hives" class="col-12 col-lg-12">
-<!--        <div class="card">-->
-<!--            <div class="card-body">-->
-<!--                <div class="clearfix">-->
-<!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
-<!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie1</div>-->
-<!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Bratislava</div>-->
-<!--                </div>-->
-<!--                <div class="b-b-1 pt-3"></div>-->
-<!--                <hr>-->
-<!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
-<!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="card">-->
-<!--            <div class="card-body">-->
-<!--                <div class="clearfix">-->
-<!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
-<!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie2</div>-->
-<!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Trnava</div>-->
-<!--                </div>-->
-<!--                <div class="b-b-1 pt-3"></div>-->
-<!--                <hr>-->
-<!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
-<!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="card">-->
-<!--            <div class="card-body">-->
-<!--                <div class="clearfix">-->
-<!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
-<!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie13</div>-->
-<!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Sliač</div>-->
-<!--                </div>-->
-<!--                <div class="b-b-1 pt-3"></div>-->
-<!--                <hr>-->
-<!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
-<!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-    </div><!--/.col-->
+    <!--    Put content here:-->
 
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Detail úľa</strong>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Čas</th>
+                        <th>Vnútorná teplota</th>
+                        <th>Vonkajšia teplota</th>
+                        <th>Vnútorná vlhkost</th>
+                        <th>Vonkajšia vlhkost</th>
+                        <th>Prevrátenie</th>
+                        <th>Hmotnosť</th>
+                        <th>Batéria</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </div> <!-- .content -->
 </div><!-- /#right-panel -->
@@ -208,12 +183,25 @@
 <!-- Right Panel -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/tether.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"</script>
 
-<script src="js/portal.js"></script>
-<script src="js/portal_main.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../js/portal_hive.js"></script>
+
+<!--Datatables:-->
+<script src="../js/data-table/datatables.min.js"></script>
+<script src="../js//data-table/dataTables.bootstrap.min.js"></script>
+<script src="../js/data-table/dataTables.buttons.min.js"></script>
+<script src="../js/data-table/buttons.bootstrap.min.js"></script>
+<script src="../js/data-table/jszip.min.js"></script>
+<script src="../js/data-table/pdfmake.min.js"></script>
+<script src="../js/data-table/vfs_fonts.js"></script>
+<script src="../js/data-table/buttons.html5.min.js"></script>
+<script src="../js/data-table/buttons.print.min.js"></script>
+<script src="../js/data-table/buttons.colVis.min.js"></script>
+<!--<script src="../js/data-table/datatables-init.js"></script>-->
 
 </body>
 </html>
