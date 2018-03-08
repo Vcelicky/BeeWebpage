@@ -315,7 +315,14 @@ class DbManager
         return $result;
     }
 
-    public function getAllDevices() {
+    public function getAllDevices($token, $userId) {
+        if($this->tokenizer->isValidToken($token, $userId) == false){
+            return [
+                'error'   => true,
+                'status'  => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
         $result = pg_query($this->conn, '
         SELECT * FROM bees.devices
         ORDER BY user_id');
@@ -336,13 +343,13 @@ class DbManager
     }
 
     public function getUserDevices($token, $userId) {
-        /*if($this->tokenizer->isValidToken($token, $userId) == false){
+        if($this->tokenizer->isValidToken($token, $userId) == false){
            return [
                'error'   => true,
                'status'  => 401,
                'message' => 'Unauthorized access'
            ];
-        }*/
+        }
 
         $result = pg_prepare($this->conn, 'devices select', '
         SELECT * FROM bees.devices d
@@ -366,13 +373,13 @@ class DbManager
     }
 
     public function getUserMeasurements($token, $userId, $deviceId, $from, $to) {
-        /*if($this->tokenizer->isValidToken($token, $userId) == false){
+        if($this->tokenizer->isValidToken($token, $userId) == false){
            return [
                'error'   => true,
                'status'  => 401,
                'message' => 'Unauthorized access'
            ];
-        }*/
+        }
 
         $result = pg_prepare($this->conn, 'user data select', '
         SELECT m.time, m.temperature_in, m.weight, m.proximity, m.temperature_out, m.humidity_in,
