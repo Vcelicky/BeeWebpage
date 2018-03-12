@@ -97,7 +97,7 @@ function createHiveHtml(id, name, location){
                 <div class="b-b-1 pt-3"></div> \
                 <hr> \
                 <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
-                <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">View More</a> \
+                <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť detail</a> \
                 </div> \
             </div>\
         </div>'

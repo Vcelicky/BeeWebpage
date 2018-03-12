@@ -13,6 +13,9 @@ window.onload = function() {
       user_element.innerText = user_name;
   }
 
+    document.getElementById('input-email').focus();
+    document.getElementById('input-email').select();
+
 };
 
 $("#log_out_button").click(function() {

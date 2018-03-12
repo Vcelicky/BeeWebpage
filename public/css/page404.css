@@ -90,16 +90,9 @@ hr:after {
 }
 
 .cloud {
-    width: 350px; height: 120px;
-
-    background: url('../images/logo_portal2.png');
-
-    /*background: #FFF;*/
-    /*background: linear-gradient(top, #FFF 100%);*/
-    /*background: -webkit-linear-gradient(top, #FFF 100%);*/
-    /*background: -moz-linear-gradient(top, #FFF 100%);*/
-    /*background: -ms-linear-gradient(top, #FFF 100%);*/
-    /*background: -o-linear-gradient(top, #FFF 100%);*/
+    width: 100px; height: 100px;
+    background: url('../images/logo.svg');
+    background-size: 100px 100px;
 
     border-radius: 100px;
     -webkit-border-radius: 100px;
@@ -114,21 +107,22 @@ hr:after {
 .cloud:after, .cloud:before {
     content: '';
     position: absolute;
-    background: #FFF;
+    background: url('../images/logo.svg');
     z-index: -1
 }
 
 .cloud:after {
-    width: 100px; height: 100px;
-    top: -50px; left: 50px;
-
+    width: 50px; height: 50px;
+    top: -150px; left: 50px;
+    background-size: 50px 50px;
     border-radius: 100px;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
 }
 
 .cloud:before {
-    width: 180px; height: 180px;
+    width: 40px; height: 40px;
+    background-size: 40px 40px;
     top: -90px; right: 50px;
 
     border-radius: 200px;
@@ -138,14 +132,14 @@ hr:after {
 
 .x1 {
     top:-50px;
-    left:100px;
+    left:300px;
     -webkit-transform: scale(0.3);
     -moz-transform: scale(0.3);
     transform: scale(0.3);
-    opacity: 0.9;
-    -webkit-animation: moveclouds 15s linear infinite;
-    -moz-animation: moveclouds 15s linear infinite;
-    -o-animation: moveclouds 15s linear infinite;
+    opacity: 0.6;
+    -webkit-animation: moveclouds 12s linear infinite;
+    -moz-animation: moveclouds 12s linear infinite;
+    -o-animation: moveclouds 12s linear infinite;
 }
 
 .x1_5{
@@ -154,6 +148,7 @@ hr:after {
     -webkit-transform: scale(0.3);
     -moz-transform: scale(0.3);
     transform: scale(0.3);
+    opacity: 0.6;
     -webkit-animation: moveclouds 17s linear infinite;
     -moz-animation: moveclouds 17s linear infinite;
     -o-animation: moveclouds 17s linear infinite;
@@ -177,7 +172,7 @@ hr:after {
     -webkit-transform: scale(0.6);
     -moz-transform: scale(0.6);
     transform: scale(0.6);
-    opacity: 0.8;
+    opacity: 0.6;
 
     -webkit-animation: moveclouds 25s linear infinite;
     -moz-animation: moveclouds 25s linear infinite;
@@ -190,7 +185,7 @@ hr:after {
     -webkit-transform: scale(0.75);
     -moz-transform: scale(0.75);
     transform: scale(0.75);
-    opacity: 0.75;
+    opacity: 0.6;
 
     -webkit-animation: moveclouds 18s linear infinite;
     -moz-animation: moveclouds 18s linear infinite;
