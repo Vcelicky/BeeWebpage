@@ -64,7 +64,6 @@ function alterLogin(data) {
         setCookie('token', data.token, 1);
         setCookie('user_name', data.user.name, 1);
         setCookie('user_id', data.id, 1);
-        // window.location.assign(window.origin + "/BeeWebpage/public/bee-hives/?token=" + data.token + "&user_id=" + data.id);
          window.location.assign(window.origin + "/BeeWebpage/public/portal");
     }
 }
