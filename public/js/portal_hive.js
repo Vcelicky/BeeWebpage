@@ -27,7 +27,7 @@ $( document ).ready(function() {
         $('.search-trigger').parent('.header-left').removeClass('open');
     });
 
-    getMeasurements();
+    ajaxGetMeasurements();
 
 });
 
@@ -51,7 +51,7 @@ function logout() {
     });
 }
 
-function getMeasurements() {
+function ajaxGetMeasurements() {
     var loc = window.location.origin;
     var id = location.href.match(/([^\/]*)\/*$/)[1];
 
