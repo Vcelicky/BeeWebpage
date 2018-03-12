@@ -94,7 +94,7 @@ function ajaxGetMeasurement(id) {
         }
     }).done(function (data) {
         console.log(data);
-        createMeasurement(data, id);
+        createMeasurementHtml(data, id);
     });
 }
 
@@ -116,14 +116,13 @@ function createHiveHtml(id, name, location){
     html = '<div class="card"> \
             <div class="card-body"> \
                 <div class="clearfix"> \
-                <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
-                <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
-                <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
-                <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
-                <div class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
+                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
+                    <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
+                    <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
+                    <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \n' +
+            '       <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
                 </div> \
-                <div class="b-b-1 pt-3"></div> \
-                <hr> \
+                <hr>  \
                 <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
                 <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť detail</a> \
                 </div> \
@@ -133,8 +132,8 @@ function createHiveHtml(id, name, location){
     return html;
 }
 
-//Get
-function createMeasurement(result, id){
+//Create measurement Html for device
+function createMeasurementHtml(result, id){
     var data = result.data;
 
     console.log(data[0]);
@@ -143,14 +142,13 @@ function createMeasurement(result, id){
     var div = document.getElementById('measurement-'+id);
     var div2 = document.getElementById('measurement2-'+id);
 
+    proximity = "Neprevrátený";
+    if(data[0][4].hodnota =='true'){
+        proximity='<span class="text-danger">Prevrátený</span>';
+    }
+
     div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkost: "+data[0][3].hodnota+"";
-    div2.innerHTML = "Pohyb úľa: "+data[0][4].hodnota+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
-}
-
-//Add measu
-function createMeasurementHtml(it, ot, ){
-
-
+    div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
 }
 
 function getCookie(cname) {
