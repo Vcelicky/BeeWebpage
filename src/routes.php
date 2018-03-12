@@ -72,49 +72,6 @@ $app->get('/portal', function (Request $request, Response $response, array $args
 });
 
 /*
- * Render site for signed up beekeeper with his devices
- *
- */
-$app->get('/bee-hives/', function (Request $request, Response $response, array $args) {
-    $allPostPutVars = $request->getParams();
-    $config = $this->config->getConfig();
-    $dbManager = new DbManager($config);
-    $dbManager->connect();
-
-    $devices = $dbManager->getUserMeasurements($allPostPutVars['token'], $allPostPutVars['user_id'], "36B7B7", 0, 5);
-    return $this->renderer->render($response, 'beehives.phtml', ['user' => $request->getAttribute('user'), 'footer' => $request->getAttribute('footer'), 'devices' => $devices['data']]);
-})->add(function($request, $response, $next) {
-    $user = [
-        'name' => 'anonymous user'
-    ];
-
-    $footer = '
-                    
-                    <div id="footer-bottom" class="row">
-                        
-                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                                <div class="copyright">
-                                    © 2017, All rights reserved.
-                                </div>
-                            </div>
-                            <div class="copyright-text col-md-6 col-sm-6 col-xs-12">
-                                <div class="design">
-                                    Designed by: Vcelicky TEAM
-                                </div>
-                            </div>
-                        
-                    </div>
-            ';
-
-    $request = $request->withAttribute('user', $user);
-    $request = $request->withAttribute('footer', $footer);
-    $response = $next($request, $response);
-
-
-    return $response;
-});
-
-/*
  * register user
  * body arguments: name, email, password
 */
@@ -152,11 +109,12 @@ $app->post('/sigfox', function (Request $request, Response $response, array $arg
     }
 });
 
-$app->post('/devices', function (Request $request, Response $response, array $args) {
+$app->get('/devices', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
+    $body = json_decode($request->getBody()->getContents());
     $dbManager = new DbManager($config);
     $dbManager->connect();
-    $devices = $dbManager->getAllDevices();
+    $devices = $dbManager->getAllDevices($body->token, $body->user_id);
     if ($devices['error']) {
         return $response->withJson($devices, 500);
     }
@@ -165,7 +123,7 @@ $app->post('/devices', function (Request $request, Response $response, array $ar
     }
 });
 
-$app->post('/user/devices', function (Request $request, Response $response, array $args) {
+$app->get('/user/devices', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $body = json_decode($request->getBody()->getContents());
     $dbManager = new DbManager($config);
@@ -179,7 +137,7 @@ $app->post('/user/devices', function (Request $request, Response $response, arra
     }
 });
 
-$app->post('/user/measurements', function (Request $request, Response $response, array $args) {
+$app->get('/user/measurements', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
     $body = json_decode($request->getBody()->getContents());
@@ -193,7 +151,7 @@ $app->post('/user/measurements', function (Request $request, Response $response,
     }
 });
 
-$app->post('/user/measurements/actual', function (Request $request, Response $response, array $args) {
+$app->get('/user/measurements/actual', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
     $body = json_decode($request->getBody()->getContents());

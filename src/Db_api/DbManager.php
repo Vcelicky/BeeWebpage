@@ -298,8 +298,8 @@ class DbManager
             $data['hmotnost'],
             $data['poloha'],
             $data['teplota_von'],
-            $data['vlhkost_von'],
             $data['vlhkost_dnu'],
+            $data['vlhkost_von'],
             $raw_data['id'],
             $data['stav_baterie']
         ]);
@@ -385,11 +385,9 @@ class DbManager
         SELECT m.time, m.temperature_in, m.weight, m.proximity, m.temperature_out, m.humidity_in,
          m.humidity_out, m.batery FROM bees.devices d
                   JOIN bees.measurements m ON d.device_id = m.device_name
-                  WHERE d.user_id = $1 AND m.device_name = $4 
-                  ORDER BY m.time DESC
-                  OFFSET $2
-                  LIMIT $3;');
-        $result = pg_execute($this->conn, 'user data select', [$userId, $from, $to, $deviceId]);
+                  WHERE d.user_id = $1 AND m.device_name = $2 AND m.time BETWEEN $3 AND $4
+                  ORDER BY m.time DESC;');
+        $result = pg_execute($this->conn, 'user data select', [$userId, $deviceId, $from, $to]);
         $return_value['error'] = false;
         if ($result) {
             $rows = [];
