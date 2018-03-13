@@ -117,7 +117,7 @@ $app->post('/sigfox', function (Request $request, Response $response, array $arg
     }
 });
 
-$app->get('/devices', function (Request $request, Response $response, array $args) {
+$app->post('/devices', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $body = json_decode($request->getBody()->getContents());
     $dbManager = new DbManager($config);
@@ -131,7 +131,7 @@ $app->get('/devices', function (Request $request, Response $response, array $arg
     }
 });
 
-$app->get('/user/devices', function (Request $request, Response $response, array $args) {
+$app->post('/user/devices', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $body = json_decode($request->getBody()->getContents());
     $dbManager = new DbManager($config);
@@ -145,7 +145,7 @@ $app->get('/user/devices', function (Request $request, Response $response, array
     }
 });
 
-$app->get('/user/measurements', function (Request $request, Response $response, array $args) {
+$app->post('/user/measurements', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
     $body = json_decode($request->getBody()->getContents());
@@ -159,12 +159,12 @@ $app->get('/user/measurements', function (Request $request, Response $response, 
     }
 });
 
-$app->get('/user/measurements/actual', function (Request $request, Response $response, array $args) {
+$app->post('/user/measurements/actual', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
     $body = json_decode($request->getBody()->getContents());
     $dbManager->connect();
-    $devices = $dbManager->getUserMeasurements($body->token, $body->user_id, $body->device_id, 0, 1);
+    $devices = $dbManager->getActualUserMeasurements($body->token, $body->user_id, $body->device_id);
     if ($devices['error']) {
         return $response->withJson($devices, 500);
     } else {
