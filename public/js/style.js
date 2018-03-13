@@ -12,9 +12,7 @@ window.onload = function() {
   if ((user_element != null) && (user_name != null)) {
       user_element.innerText = user_name;
   }
-
-    document.getElementById('input-email').focus();
-    document.getElementById('input-email').select();
+  
 
 };
 
