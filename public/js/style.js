@@ -13,6 +13,9 @@ window.onload = function() {
       user_element.innerText = user_name;
   }
 
+    document.getElementById('input-email').focus();
+    document.getElementById('input-email').select();
+
 };
 
 $("#log_out_button").click(function() {
@@ -27,6 +30,7 @@ $("#login_button").click(function () {
     var loginForm = document.getElementById("login");
     var email = loginForm["0"].value;
     var pass = loginForm["1"].value;
+    var actualURL = window.location.host;
 
     data = {
         email: email,
@@ -63,7 +67,6 @@ function alterLogin(data) {
         setCookie('token', data.token, 1);
         setCookie('user_name', data.user.name, 1);
         setCookie('user_id', data.id, 1);
-        // window.location.assign(window.origin + "/BeeWebpage/public/bee-hives/?token=" + data.token + "&user_id=" + data.id);
          window.location.assign(window.origin + "/BeeWebpage/public/portal");
     }
 }

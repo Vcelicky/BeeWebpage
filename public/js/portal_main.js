@@ -1,4 +1,5 @@
-    $( document ).ready(function() {
+//Javascript file for main portal page only
+$( document ).ready(function() {
 
 	"use strict";
 
@@ -26,22 +27,14 @@
 		$('.search-trigger').parent('.header-left').removeClass('open');
 	});
 
-	// getDevices();
+	ajaxGetDevices();
 });
 
 $("#log_out_button").click(function() {
-    // deleteCookie("token");
-    // deleteCookie("user_name");
-    // deleteCookie("user_id");
-    // deleteCookie("PHPSESSID");
     logout();
     window.location.assign(window.origin + "/BeeWebpage/public");
 
 });
-
-function deleteCookie(name) {
-    document.cookie = name + '=; Max-Age=0';
-}
 
 function logout() {
         var loc = window.location.origin;
@@ -57,25 +50,119 @@ function logout() {
         });
     }
 
-function getDevices() {
+function ajaxGetDevices() {
 	var loc = window.location.origin;
 
     data = {
-        user_id: 45,
-        token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjMifQ.NWOjv_uDNmgUU4sYWN3-wkCCjo4d-berGfRWC3FQ-9g"
-
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id')
     };
 
 	$.ajax({
 		url: loc + '/BeeWebpage/public/user/devices',
-        // url:  'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/user/devices',
 		method : 'POST',
-        data : data,
-        contentType:'application/json; charset=utf-8',
-        dataType:'json'
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
 	}).done(function (data) {
-		console.log(data);
+	    console.log(data);
+        createHives(data);
 	});
 }
 
+function ajaxGetMeasurement(id) {
+    var loc = window.location.origin;
 
+
+    console.log("Id:" +id);
+
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : id
+    };
+
+    $.ajax({
+        url: loc + '/BeeWebpage/public/user/measurements/actual',
+        method : 'POST',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        console.log(data);
+        createMeasurementHtml(data, id);
+    });
+}
+
+function createHives(result){
+    var data = result.data;
+    var div = document.getElementById('div.hives');
+    div.innerHTML = "";
+
+    //Foreach Hive
+    for (index = 0; index < data.length; ++index) {
+        div.innerHTML += createHiveHtml(data[index].device_id,data[index].uf_name, data[index].location);
+        ajaxGetMeasurement(data[index].device_id);
+    }
+
+}
+
+function createHiveHtml(id, name, location){
+
+    html = '<div class="card"> \
+            <div class="card-body"> \
+                <div class="clearfix"> \
+                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
+                    <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
+                    <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
+                    <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \n' +
+            '       <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                </div> \
+                <hr>  \
+                <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
+                <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť detail</a> \
+                </div> \
+            </div>\
+        </div>'
+
+    return html;
+}
+
+//Create measurement Html for device
+function createMeasurementHtml(result, id){
+    var data = result.data;
+
+    console.log(data[0]);
+    console.log(data[0][0].hodnota);
+
+    var div = document.getElementById('measurement-'+id);
+    var div2 = document.getElementById('measurement2-'+id);
+
+    proximity = "Neprevrátený";
+    if(data[0][4].hodnota =='true'){
+        proximity='<span class="text-danger">Prevrátený</span>';
+    }
+
+    div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkost: "+data[0][3].hodnota+"";
+    div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
+}
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i <ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+}

@@ -2,4 +2,4 @@ config.json
 vendor/
 .htaccess
 public/.htaccess
-.idea/
+.idea/workspace.xml

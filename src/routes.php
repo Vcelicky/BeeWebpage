@@ -71,6 +71,15 @@ $app->get('/portal', function (Request $request, Response $response, array $args
         return $response->withStatus(401);
 });
 
+//Portal - Hive
+$app->get('/portal/{id}', function (Request $request, Response $response, array $args) {
+
+    if (isset($_SESSION['id']))
+        return $this->renderer->render($response, 'portal_hive.phtml');
+    else
+        return $response->withStatus(401);
+});
+
 /*
  * register user
  * body arguments: name, email, password
@@ -89,7 +98,6 @@ $app->post('/logout', function (Request $request, Response $response, array $arg
     include (__DIR__ . '/logout.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
-//    echo $returned_value;
 });
 
 /*

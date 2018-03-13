@@ -29,6 +29,26 @@ $container['config'] = function () {
     return new \DavidePastore\Slim\Config\Config('./../config.json');
 };
 
+
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container) {
+        $notFoundPage = file_get_contents(__DIR__ . '/../templates/page404.html');
+
+        return $container['response']
+            ->withStatus(404)
+            ->withHeader('Content-Type', 'text/html')
+            ->write($notFoundPage);
+
+    };
+};
+
+//$container['notFoundHandler'] = function ($container) {
+//    return function ($request, $response) use ($container) {
+//       return $container['response']->withStatus(404);
+////        return $c['view']->render($response,__DIR__ . '/../templates/index.phtml')->withStatus(404);
+//    };
+//};
+
 // Register middleware for all routes
 // If you are implementing per-route checks you must not add this
 $app->add($container->get('config'));
