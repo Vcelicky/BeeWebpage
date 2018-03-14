@@ -61,12 +61,13 @@ function ajaxGetMeasurements() {
         'token' : getCookie('token'),
         'user_id' : getCookie('user_id'),
         'device_id' : id,
-        'from': "0",
-        'to': "100"
+        "from": "2017-03-14",
+        "to": "2018-03-14"
     };
 
     $.ajax({
-        url: loc + '/BeeWebpage/public/user/measurements',
+        // url: loc + '/BeeWebpage/public/user/measurements',
+        url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/user/measurements',
         method : 'POST',
         data : JSON.stringify(data),
         dataType:'json',
