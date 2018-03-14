@@ -66,8 +66,8 @@ function ajaxGetMeasurements() {
     };
 
     $.ajax({
-        // url: loc + '/BeeWebpage/public/user/measurements',
-        url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/user/measurements',
+        url: loc + '/BeeWebpage/public/user/measurements',
+        // url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/user/measurements',
         method : 'POST',
         data : JSON.stringify(data),
         dataType:'json',
