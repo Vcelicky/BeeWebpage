@@ -1,4 +1,7 @@
 //Javascript file for main portal page only
+
+var devicesMeasurements = {};
+
 $( document ).ready(function() {
 
 	"use strict";
@@ -72,6 +75,101 @@ function ajaxGetDevices() {
 	});
 }
 
+function getDeviceData(device, fromTime, toTime) {
+    // remember actual date from actual data !!!
+    var currentTime = getTime(new Date());
+    var currentDate = new Date();
+    var lastDayTime = getTime(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 3));
+
+    var data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : device,
+        'from' : lastDayTime,
+        'to' : currentTime
+    };
+
+    $.ajax({
+        url: window.location.origin + '/BeeWebpage/public/user/measurements',
+        method : 'POST',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        devicesMeasurements[ device ] = data.data;
+        graphData = [];
+        var max = 30;
+        if (data.data.length < 30) {
+            max = 0;
+        }
+        for (i =0; i < max; i++) {
+            date = data.data[i][0].cas.toString();
+            graphData.push({
+                x : new moment(new Date(data.data[i][0].cas.toString())),
+                y : data.data[i][0].hodnota
+            });
+        }
+        if (graphData.length > 0) {
+
+            var ctx = document.getElementById("chart-" + device);
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        data: graphData,
+                        borderColor: "#3e95cd",
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type : 'time',
+                            time: {
+                                displayFormats: {
+                                    minute: 'h:mm a'
+                                }
+                            }
+                        }]
+                    }
+                },
+                legend: false
+            });
+
+            console.log(myLineChart.data);
+        }
+        //console.log(data);
+        //createHives(data);
+    });
+
+}
+
+function getTime(date) {
+    formatDate = date.getFullYear() + '-';
+    var month = date.getMonth() + 1;
+    if (month.toString().length == 1) {
+        month = '0' + month;
+    }
+    var day = date.getDate();
+    if (day.toString().length == 1) {
+        day = '0' + day;
+    }
+    var hours = date.getHours();
+    if (hours.toString().length == 1) {
+        hours = '0' + hours;
+    }
+    var minutes = date.getMinutes();
+    if (minutes.toString().length == 1) {
+        minutes = '0' + minutes;
+    }
+    formatDate = formatDate + month + '-' + day +
+        ' ' + hours + ':' + minutes + ':00';
+
+    return formatDate;
+}
+
 function ajaxGetMeasurement(id) {
     var loc = window.location.origin;
 
@@ -94,6 +192,7 @@ function ajaxGetMeasurement(id) {
         }
     }).done(function (data) {
         console.log(data);
+        devicesMeasurements[ id ].actual_time = data.data[0][0].cas;
         createMeasurementHtml(data, id);
     });
 }
@@ -127,8 +226,20 @@ function createHiveHtml(id, name, location){
                 <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť detail</a> \
                 </div> \
             </div>\
-        </div>'
+            <div class="chart-container"> \
+                <canvas id="chart-' + id + '"></canvas> \
+                <a class="carousel-control-prev" href="#" role="button" data-slide="prev"> \
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span> \
+                    <span class="sr-only">Previous</span> \
+                </a> \
+                <a class="carousel-control-next" href="#" role="button" data-slide="next"> \
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span> \
+                    <span class="sr-only">Next</span> \
+                </a> \
+            </div> \
+        </div>';
 
+    getDeviceData(id, '11', '12');
     return html;
 }
 

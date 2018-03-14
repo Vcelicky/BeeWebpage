@@ -2238,3 +2238,11 @@ header .form-inline .search-form.close {
         padding: 5px; } }
 
 /*# sourceMappingURL=style.css.map */
+
+/*graph styles*/
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 50vh;
+    width: 50vw;
+}
