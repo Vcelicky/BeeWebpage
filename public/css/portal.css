@@ -2240,9 +2240,17 @@ header .form-inline .search-form.close {
 /*# sourceMappingURL=style.css.map */
 
 /*graph styles*/
-.chart-container {
+.chart-space {
     position: relative;
     margin: auto;
-    height: 50vh;
     width: 50vw;
+}
+
+.chart-space-arrows {
+    height: 50vh;
+    width: 100%;
+}
+
+.arrow {
+    color: black;
 }

@@ -1,9 +1,12 @@
 //Javascript file for main portal page only
 
+// loaded data for choose devices
 var devicesMeasurements = {};
 
-$( document ).ready(function() {
+// number of elements to show in graph
+var graphStep = 20;
 
+$( document ).ready(function() {
 	"use strict";
 
 	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
@@ -30,6 +33,7 @@ $( document ).ready(function() {
 		$('.search-trigger').parent('.header-left').removeClass('open');
 	});
 
+    $(window).resize(checkSize);
 	ajaxGetDevices();
 });
 
@@ -75,49 +79,45 @@ function ajaxGetDevices() {
 	});
 }
 
-function getDeviceData(device, fromTime, toTime) {
-    // remember actual date from actual data !!!
-    var currentTime = getTime(new Date());
-    var currentDate = new Date();
-    var lastDayTime = getTime(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 3));
-
-    var data = {
-        'token' : getCookie('token'),
-        'user_id' : getCookie('user_id'),
-        'device_id' : device,
-        'from' : lastDayTime,
-        'to' : currentTime
-    };
-
-    $.ajax({
-        url: window.location.origin + '/BeeWebpage/public/user/measurements',
-        method : 'POST',
-        data : JSON.stringify(data),
-        dataType:'json',
-        headers : {
-            'Content-Type' : 'application/json'
+function showGraph(deviceElement, deviceId) {
+    //console.log(deviceElement.childNodes[1].className);
+    if (deviceElement.childNodes[1].className === "fa fa-caret-right") {
+        deviceElement.childNodes[1].className = "fa fa-caret-down";
+        console.log(document.getElementById("chart-section-" + deviceId).getElementsByTagName("canvas"));
+        document.getElementById("chart-section-" + deviceId).className = "d-block";
+        if (document.getElementById("chart-" + deviceId.toString()).className.length === 0) {
+            getDeviceData(deviceId, '', devicesMeasurements.actual_time);
+            while (typeof devicesMeasurements[ deviceId ] === "undefined");
+            addNewDoubleChart(deviceId, 1, "Teplota");
         }
-    }).done(function (data) {
-        devicesMeasurements[ device ] = data.data;
+    }
+    else {
+        deviceElement.childNodes[1].className = "fa fa-caret-right";
+        document.getElementById("chart-section-" + deviceId).className = "d-none";
+    }
+}
+
+function addNewChart(device, type, title) {
+    var ctx = document.getElementById("chart-" + device);
+    amountOfData = devicesMeasurements[ device ].data.length;
+    if (amountOfData > 0) {
         graphData = [];
-        var max = 30;
-        if (data.data.length < 30) {
-            max = 0;
+        step = amountOfData;
+        if (graphStep <= amountOfData) {
+            step = graphStep;
         }
-        for (i =0; i < max; i++) {
-            date = data.data[i][0].cas.toString();
+        for (i =0; i < step; i++) {
             graphData.push({
-                x : new moment(new Date(data.data[i][0].cas.toString())),
-                y : data.data[i][0].hodnota
+                x : new moment(new Date(devicesMeasurements[ device ].data[i][0].cas.toString())),
+                y : devicesMeasurements[ device ].data[i][type].hodnota
             });
         }
         if (graphData.length > 0) {
-
-            var ctx = document.getElementById("chart-" + device);
-            var myLineChart = new Chart(ctx, {
+            devicesMeasurements[ device ].chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     datasets: [{
+                        label : title,
                         data: graphData,
                         borderColor: "#3e95cd",
                         fill: false
@@ -126,7 +126,7 @@ function getDeviceData(device, fromTime, toTime) {
                 options: {
                     scales: {
                         xAxes: [{
-                            type : 'time',
+                            type: 'time',
                             time: {
                                 displayFormats: {
                                     minute: 'h:mm a'
@@ -134,14 +134,186 @@ function getDeviceData(device, fromTime, toTime) {
                             }
                         }]
                     }
-                },
-                legend: false
+                }
+            });
+        }
+    }
+    else {
+        /*!!! alert when no data available for device */
+    }
+    checkSize();
+}
+
+function addNewDoubleChart(device, type, title) {
+    var ctx = document.getElementById("chart-" + device);
+    amountOfData = devicesMeasurements[ device ].data.length;
+    if (amountOfData > 0) {
+        graphData1 = [];
+        graphData2 = [];
+        labels = [];
+        step = amountOfData;
+        if (graphStep <= amountOfData) {
+            step = graphStep;
+        }
+        for (i =0; i < step; i++) {
+            graphData1.push({
+                x : new moment(new Date(devicesMeasurements[ device ].data[i][0].cas.toString())),
+                y : devicesMeasurements[ device ].data[i][type - 1].hodnota
             });
 
-            console.log(myLineChart.data);
+            graphData2.push({
+                x : new moment(new Date(devicesMeasurements[ device ].data[i][0].cas.toString())),
+                y : devicesMeasurements[ device ].data[i][type].hodnota
+            });
         }
-        //console.log(data);
-        //createHives(data);
+        if (graphData1.length > 0) {
+            devicesMeasurements[ device ].chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                            label : title + " vonku",
+                            data: graphData1,
+                            borderColor: "#3e95cd",
+                            fill: false
+                        },
+                        {
+                            label : title + " vnutri",
+                            data: graphData2,
+                            borderColor: "#3e95cd",
+                            fill: false
+                        }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    minute: 'h:mm a'
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+    else {
+        /*!!! alert when no data available for device */
+    }
+    checkSize();
+}
+
+function updateChartData(device, way) {
+    var get = true;
+    localStep = graphStep;
+    var graphData1 = [];
+    var graphData2 = [];
+    while (get) {
+        var amountOfData = devicesMeasurements[ device ].data.length;
+        if (amountOfData > 0) {
+            step = amountOfData;
+            dif = devicesMeasurements[ device ].actual_index + (localStep * way);
+            if (dif > amountOfData){
+
+                dif -=amountOfData;
+                for (i = devicesMeasurements[ device ].actual_index; i < dif; i++) {
+                    graphData1.push({
+                        x: new moment(new Date(devicesMeasurements[device].data[i][0].cas.toString())),
+                        y: devicesMeasurements[device].data[i][type - 1].hodnota
+                    });
+
+                    graphData2.push({
+                        x: new moment(new Date(devicesMeasurements[device].data[i][0].cas.toString())),
+                        y: devicesMeasurements[device].data[i][type].hodnota
+                    });
+                }
+                localStep -= dif;
+            }
+
+            if (dif < 0) {
+                dif+= localStep;
+                for (i = devicesMeasurements[ device ].actual_index; i < dif; i++) {
+                    graphData1.push({
+                        x: new moment(new Date(devicesMeasurements[device].data[i][0].cas.toString())),
+                        y: devicesMeasurements[device].data[i][type - 1].hodnota
+                    });
+
+                    graphData2.push({
+                        x: new moment(new Date(devicesMeasurements[device].data[i][0].cas.toString())),
+                        y: devicesMeasurements[device].data[i][type].hodnota
+                    });
+                }
+
+                localStep -= dif;
+            }
+
+            if (dif != 0) {
+                if (way > 0) {
+                    getDeviceData(device, devicesMeasurements[ device ].to_date, new moment(new Date(devicesMeasurements[ device ].to_date)).add(1, "days").format("YYYY-MM-DD"));
+                    devicesMeasurements[ device ].actual_index = dif;
+                }
+                else {
+                    getDeviceData(device, '',devicesMeasurements[ device ].from_date);
+                    devicesMeasurements[ device ].actual_index = devicesMeasurements.data.length - dif;
+                }
+
+            }
+            else {
+                get = false;
+            }
+        }
+    }
+
+    devicesMeasurements[ device ].chart.data.datasets = [{
+        label : title + " vonku",
+        data: graphData1,
+        borderColor: "#3e95cd",
+        fill: false
+        },
+        {
+            label : title + " vnutri",
+            data: graphData2,
+            borderColor: "#3e95cd",
+            fill: false
+        }];
+
+    devicesMeasurements[ device ].chart.update({
+        duration : 1200
+    })
+}
+
+function getDeviceData(device, fromTime, toTime) {
+    if (typeof devicesMeasurements[ device ] === "undefined") {
+        devicesMeasurements[ device ] = {};
+    }
+    var from = "";
+    if (fromTime.length === 0) {
+        from = new moment(new Date(toTime)).add(-3 , "days").format("YYYY-MM-DD");
+        devicesMeasurements.from_date = from;
+    }
+    devicesMeasurements.to_date = toTime;
+
+    var data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : device,
+        'from' : from,
+        'to' : toTime
+    };
+
+    $.ajax({
+        url: window.location.origin + '/BeeWebpage/public/user/measurements',
+        method : 'POST',
+        data : JSON.stringify(data),
+        dataType:'json',
+        async: false,
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        devicesMeasurements[ device ]["data"] = data.data;
+        devicesMeasurements[ device ].actual_index = 0;
     });
 
 }
@@ -192,7 +364,9 @@ function ajaxGetMeasurement(id) {
         }
     }).done(function (data) {
         console.log(data);
-        devicesMeasurements[ id ].actual_time = data.data[0][0].cas;
+        if (data.data.length > 0) {
+            devicesMeasurements.actual_time = data.data[0][0].cas;
+        }
         createMeasurementHtml(data, id);
     });
 }
@@ -212,35 +386,119 @@ function createHives(result){
 
 function createHiveHtml(id, name, location){
 
-    html = '<div class="card"> \
-            <div class="card-body"> \
-                <div class="clearfix"> \
-                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
-                    <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
-                    <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
-                    <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \n' +
-            '       <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
-                </div> \
-                <hr>  \
-                <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
-                <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť detail</a> \
-                </div> \
+    html = '<div class="col-12 col-lg-12">\
+                <div class="card"> \
+                    <div class="card-body"> \
+                        <div class="clearfix"> \
+                            <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
+                            <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
+                            <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
+                            <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                            <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                        </div> \
+                        <hr>  \
+                        <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
+                            <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť namerané údaje</a> \
+                            <a \
+                                class="font-weight-bold font-xs btn-block text-muted small"\
+                                href="#"\
+                                onclick=\'showGraph(this, \"'+id.toString()+'\")\'>\
+                                <i class="fa fa-caret-right"></i>\
+                                Zobraziť grafy meraní\
+                            </a>\
+                        </div> \
+                    </div> \
+                </div>\
             </div>\
-            <div class="chart-container"> \
-                <canvas id="chart-' + id + '"></canvas> \
-                <a class="carousel-control-prev" href="#" role="button" data-slide="prev"> \
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span> \
-                    <span class="sr-only">Previous</span> \
-                </a> \
-                <a class="carousel-control-next" href="#" role="button" data-slide="next"> \
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span> \
-                    <span class="sr-only">Next</span> \
-                </a> \
-            </div> \
-        </div>';
-
-    getDeviceData(id, '11', '12');
+            <div id="chart-section-' + id + '" class="d-none">\
+                <div class="col-md-8 offset-md-2">\
+                    <ul class="nav nav-tabs"> \
+                        <li class="nav-item">\
+                            <a \
+                                class="nav-link active" \
+                                href="#" \
+                                onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes; \
+                                           for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
+                                           this.className = \"nav-link active\";\
+                                           document.getElementById(\"graph-title-' + id +'\").textContent = \"Teplota\";\
+                                           addNewDoubleChart(\"'+id.toString()+'\", 1, \"Teplota\", 2)\'\
+                            >Teplota</a>\
+                        </li> \
+                        <li class="nav-item">\
+                            <a\
+                                class="nav-link" \
+                                href="#" \
+                                onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes;\
+                                           for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
+                                           this.className = \"nav-link active\";\
+                                           document.getElementById(\"graph-title-' + id +'\").textContent = \"Vlhkosť\";\
+                                           addNewDoubleChart(\"'+id.toString()+'\", 2, \"Vlhkosť\")\'\
+                            >Vlhkosť</a>\
+                        </li> \
+                        <li class="nav-item">\
+                            <a\
+                                class="nav-link" \
+                                href="#" \
+                                onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes;\
+                                           for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
+                                           this.className = \"nav-link active\";\
+                                           document.getElementById(\"graph-title-' + id +'\", 1).textContent = \"Hmotnost\";\
+                                           addNewChart(\"'+id.toString()+'\", 5, \"Hnotnost\")\'\
+                            >Hmotnost</a>\
+                        </li> \
+                        <li class="nav-item">\
+                            <a\
+                                class="nav-link" \
+                                href="#" \
+                                onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes;\
+                                           for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
+                                           this.className = \"nav-link active\";\
+                                           document.getElementById(\"graph-title-' + id +'\").textContent = \"Baterka\";\
+                                           addNewChart(\"'+id.toString()+'\", 6, \"Baterka\")\'\
+                            >Baterka</a>\
+                        </li> \
+                    </ul> \
+                    <div class="chart-space"> \
+                        <a class="carousel-control-prev chart-space-arrow-left" onclick=\'updateChartData(\"'+id+'\", -1)\' href="#" role="button" data-slide="prev"> \
+                            <span class="ti-arrow-left arrow" aria-hidden="true"></span> \
+                        </a> \
+                        <a class="carousel-control-prev chart-space-arrow-right" onclick=\'updateChartData(\"'+id+'\", 1)\' href="#" role="button" data-slide="prev"> \
+                            <span class="ti-arrow-right arrow" aria-hidden="true"></span> \
+                        </a> \
+                        <h4 id="graph-title-' + id + '" class="mb-3">Teplota</h4> \
+                        <canvas id="chart-' + id + '"></canvas> \
+                    </div> \
+                </div>\
+            </div>';
     return html;
+}
+
+function checkSize(){
+
+    if (window.innerWidth < 576) {
+        $(".chart-space").width("auto");
+        $(".chart-space-arrow-left")
+            .css("left", "0px")
+            .css("bottom", "unset");
+        $(".chart-space-arrow-right")
+            .css("right", "0px")
+            .css("left", "unset")
+            .css("bottom", "unset");
+    }
+    else {
+        $(".chart-space").width("width: 50vw");
+        const width = Math.round($(".chart-space-arrow-left").width());
+        $(".chart-space-arrow-left").css("left", "-" + width + "px");
+        $(".chart-space-arrow-right")
+            .css("right", "-" + width + "px")
+            .css("left", "unset");
+    }
+}
+
+
+function arrowsPosition(element) {
+    console.log(element);
+    var a = 1;
 }
 
 //Create measurement Html for device
