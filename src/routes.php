@@ -65,10 +65,10 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 //Portal
 $app->get('/portal', function (Request $request, Response $response, array $args) {
 
-    //if (isset($_SESSION['id']))
+    if (isset($_SESSION['id']))
         return $this->renderer->render($response, 'portal.phtml');
-    //else
-      //  return $response->withStatus(401);
+    else
+        return $response->withStatus(401);
 });
 
 //Portal - Hive
@@ -109,12 +109,12 @@ $app->post('/sigfox', function (Request $request, Response $response, array $arg
     $dbManager = new DbManager($config);
     $dbManager->connect();
     $returnedValue = $dbManager->insertValue($request->getParams());
-    //if ($returnedValue['error']) {
+    if ($returnedValue['error']) {
         return $response->withJson($returnedValue, 500);
-    //}
-    //else {
-      //  return $response->withJson($returnedValue, 200);
-    //}
+    }
+    else {
+        return $response->withJson($returnedValue, 200);
+    }
 });
 
 $app->post('/devices', function (Request $request, Response $response, array $args) {
