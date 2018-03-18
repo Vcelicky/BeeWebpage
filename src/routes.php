@@ -4,6 +4,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use src\Carrot_api\Api;
 use src\Db_api\DbManager;
+use src\Db_api\DbManagerAdmin;
 
 $app->get('/', function (Request $request, Response $response, array $args) {
 
@@ -65,8 +66,16 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 //Portal
 $app->get('/portal', function (Request $request, Response $response, array $args) {
 
-    if (isset($_SESSION['id']))
-        return $this->renderer->render($response, 'portal.phtml');
+    if (isset($_SESSION['id'])){
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 1)
+            return $this->renderer->render($response, 'portal.phtml');
+        else if ($_SESSION['role_id'] == 2){
+            return $this->renderer->render($response, 'portal_admin.phtml');
+        }}
+
+    }
+
     else
         return $response->withStatus(401);
 });
@@ -75,7 +84,12 @@ $app->get('/portal', function (Request $request, Response $response, array $args
 $app->get('/portal/{id}', function (Request $request, Response $response, array $args) {
 
     if (isset($_SESSION['id']))
-        return $this->renderer->render($response, 'portal_hive.phtml');
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 1)
+                return $this->renderer->render($response, 'portal_hive.phtml');
+            else if ($_SESSION['role_id'] == 2){
+                return $this->renderer->render($response, 'portalAdmin_hive.phtml');
+            }}
     else
         return $response->withStatus(401);
 });
