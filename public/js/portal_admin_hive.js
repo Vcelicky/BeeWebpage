@@ -1,4 +1,6 @@
-//Javascript file for main portal page only
+/**
+ * Javascript file for Hive Detail when Admin is logged in
+ */
 $( document ).ready(function() {
 
     "use strict";
@@ -59,14 +61,13 @@ function ajaxGetMeasurements() {
 
     data = {
         'token' : getCookie('token'),
-        'user_id' : getCookie('user_id'),
         'device_id' : id,
         "from": "2017-03-14",
         "to": "2050-03-14"
     };
 
     $.ajax({
-        url: loc + '/BeeWebpage/public/user/measurements',
+        url: loc + '/BeeWebpage/public/admin/measurements',
         // url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/user/measurements',
         method : 'POST',
         data : JSON.stringify(data),
@@ -77,7 +78,7 @@ function ajaxGetMeasurements() {
     }).done(function (data) {
         console.log(data);
         createDataTable(data);
-       // createUsers(data);
+        // createUsers(data);
     });
 }
 
@@ -123,7 +124,7 @@ function createDataTable(response){
             { "data": "W"},
             { "data": "B"}
         ]
-     });
+    });
 }
 
 function createHives(result){
