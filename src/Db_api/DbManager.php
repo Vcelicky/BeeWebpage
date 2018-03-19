@@ -385,10 +385,10 @@ class DbManager
         SELECT m.time, m.temperature_in, m.weight, m.proximity, m.temperature_out, m.humidity_in,
          m.humidity_out, m.batery FROM bees.devices d
                   JOIN bees.measurements m ON d.device_id = m.device_name
-                  WHERE m.device_name = $2
+                  WHERE d.user_id = $1 AND m.device_name = $2
                   ORDER BY m.time DESC
                   LIMIT 1;');
-        $result = pg_execute($this->conn, 'user data select', [$deviceId]);
+        $result = pg_execute($this->conn, 'user data select', [$userId, $deviceId]);
         $return_value['error'] = false;
         if ($result) {
             $rows = [];
