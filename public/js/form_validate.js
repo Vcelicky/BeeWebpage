@@ -1,3 +1,5 @@
+// actual url this variable is used fo acomplished compatibility between localhosts and server
+var actualURL = window.location.origin + "/BeeWebpage/public";
 $(document).ready(function(){
 
     $('#register').validate(
@@ -31,24 +33,24 @@ $(document).ready(function(){
                 }
 
             },
-            //successful
+            //successful validation
             unhighlight: function(element) {
-                const id = element.id
+                const id = element.id;
                 $('label[for="' + id + '"]').removeClass('text-danger').addClass("col-form-label text-success");
                 $(element).removeClass('is-invalid').addClass("form-control is-valid");
             },
-            // error
+            // error validation
             highlight: function(element) {
                 console.log("NOW");
                 console.log(element.id);
-                const id = element.id
+                const id = element.id;
                 $('label[for="' + id + '"]').removeClass('text-success').addClass("col-form-label text-danger");
                 $(element).removeClass('is-valid').addClass("form-control is-invalid");
             },
             submitHandler:function(){
                 var registerForm = document.getElementById("register");
 
-                data = {
+                var data = {
                     email : registerForm["1"].value,
                     password : registerForm["4"].value,
                     name : registerForm["0"].value,
@@ -56,7 +58,7 @@ $(document).ready(function(){
 
                 };
                 $.ajax({
-                    url: 'https://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/register/user',
+                    url: actualURL + '/register/user',
                     method : 'POST',
                     dataType : 'json',
                     data : data
@@ -71,6 +73,9 @@ $(document).ready(function(){
     // take care of error message and for successful registration
     function alterRegister(data) {
         if (data.error) {
+            /**
+             * @param {{error_msg:string}} data
+             */
             $("<div class= \"alert alert-danger\">\n" +
                 "<strong>Chyba!</strong>" + data.error_msg + "\n" +
                 "</div>").insertBefore("#register");

@@ -1,4 +1,8 @@
+// actual url this variable is used fo acomplished compatibility between localhosts and server
+var actualURL = window.location.origin + "/BeeWebpage/public";
+
 window.onload = function() {
+
   var footer = $('#footer-bottom');
   if ((screen.height - $("body").height() - footer.height()) < 10) {
   	footer.css("position", "relative");
@@ -28,7 +32,6 @@ $("#login_button").click(function () {
     var loginForm = document.getElementById("login");
     var email = loginForm["0"].value;
     var pass = loginForm["1"].value;
-    var actualURL = window.location.host;
 
     data = {
         email: email,
@@ -36,7 +39,7 @@ $("#login_button").click(function () {
 
     };
     $.ajax({
-        url: 'http://team20-17.studenti.fiit.stuba.sk/BeeWebpage/public/login/user',
+        url: actualURL + '/login/user',
         // url: 'login/user',
         method : 'POST',
         dataType : 'json',
@@ -65,7 +68,7 @@ function alterLogin(data) {
         setCookie('token', data.token, 1);
         setCookie('user_name', data.user.name, 1);
         setCookie('user_id', data.id, 1);
-         window.location.assign(window.origin + "/BeeWebpage/public/portal");
+        window.location.assign(actualURL + "/portal");
     }
 }
 
