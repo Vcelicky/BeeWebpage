@@ -99,18 +99,12 @@ $app->get('/portal/{id}', function (Request $request, Response $response, array 
  * body arguments: name, email, password
 */
 $app->post('/register/user', function (Request $request, Response $response, array $args) {
-    $originResponse = $response;
     ob_start();
     include (__DIR__ . '/API/register.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
 
-    $returned_value = json_decode($returned_value, true);
-    if ($returned_value['error']) {
-        return $originResponse->withJson($returned_value, 400);
-    } else {
-        return $originResponse->withJson($returned_value,  200);
-    }
+    echo $returned_value;
 });
 
 $app->post('/logout', function (Request $request, Response $response, array $args) {
@@ -197,18 +191,12 @@ $app->post('/user/measurements/actual', function (Request $request, Response $re
  * body arguments: email, password
 */
 $app->post('/login/user', function (Request $request, Response $response, array $args) {
-    $originResponse = $response;
     ob_start();
     include (__DIR__ . '/API/login.php');
     $returned_value = ob_get_contents();    // get contents from the buffer
     ob_end_clean();
 
-    $returned_value = json_decode($returned_value, true);
-    if ($returned_value['error']) {
-        return $originResponse->withJson($returned_value, 403);
-    } else {
-        return $originResponse->withJson($returned_value,  200);
-    }
+    echo $returned_value;
 });
 
 /**
