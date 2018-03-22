@@ -16,6 +16,10 @@ $(document).ready(function(){
                     emailvalidation: true,
                     sameEmail: true
                 },
+                signupTelnumber: {
+                    required: true,
+                    phonevalidation: true
+                },
                 signupPassword: {
                     required: true,
                     minlength: 8
@@ -27,24 +31,28 @@ $(document).ready(function(){
                 }
 
             },
-            highlight: function(element) {
-                $(element).closest('.form-group').removeClass('success').addClass('error');
+            //successful
+            unhighlight: function(element) {
+                const id = element.id
+                $('label[for="' + id + '"]').removeClass('text-danger').addClass("col-form-label text-success");
+                $(element).removeClass('is-invalid').addClass("form-control is-valid");
             },
-            success: function(element) {
-                element
-                    .text('OK!').addClass('valid')
-                    .closest('.form-group').removeClass('error').addClass('success');
+            // error
+            highlight: function(element) {
+                console.log("NOW");
+                console.log(element.id);
+                const id = element.id
+                $('label[for="' + id + '"]').removeClass('text-success').addClass("col-form-label text-danger");
+                $(element).removeClass('is-valid').addClass("form-control is-invalid");
             },
             submitHandler:function(){
                 var registerForm = document.getElementById("register");
-                var name = registerForm["0"].value;
-                var email = registerForm["1"].value;
-                var password = registerForm["3"].value;
 
                 data = {
-                    email : email,
-                    password : password,
-                    name : name
+                    email : registerForm["1"].value,
+                    password : registerForm["4"].value,
+                    name : registerForm["0"].value,
+                    phone : registerForm["3"].value
 
                 };
                 $.ajax({
@@ -65,27 +73,42 @@ $(document).ready(function(){
         if (data.error) {
             $("<div class= \"alert alert-danger\">\n" +
                 "<strong>Chyba!</strong>" + data.error_msg + "\n" +
-                "</div>").insertBefore(".register-panel .panel-body");
+                "</div>").insertBefore("#register");
 
             $('html, body').animate({
-                scrollTop: $(".register-panel").offset().top
+                scrollTop: $("#register").offset().top
             }, 1000);
 
             setTimeout(function(){
-            var alert = $(".register-panel .alert");
+            var alert = $("#register .alert");
             alert.fadeOut();
             alert.remove();
             }, 5000);
         }
         else {
-            // home utl
-            location.href='/public';
+            $("<div class= \"alert alert-success\">\n" +
+                "Registrácia prebehla úspešne\n" +
+                "</div>").insertBefore("#register");
+
+            $('html, body').animate({
+                scrollTop: $("#register").offset().top
+            }, 1000);
+
+            window.setTimeout("location=(window.origin + \"/BeeWebpage/public\");",5000);
         }
     }
 
     $.validator.addMethod("emailvalidation",
         function(value, element) {
             var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+            return $.trim(value).match(pattern) ? true : false;
+        }
+    );
+
+    $.validator.addMethod("phonevalidation",
+        function(value, element) {
+            var pattern = /^\+[0-9]{3}\s*[0-9]{3}\s*[0-9]{3}\s*[0-9]{3}$/;
 
             return $.trim(value).match(pattern) ? true : false;
         }
@@ -110,6 +133,7 @@ $(document).ready(function(){
         sameEmail: "Prosím zadajte rovnaký email",
         samePass: "Prosím zadajte rovnaké heslo",
         email: "Prosím zadajte email v korektnom stave.",
+        phonevalidation: "Prosim zadajte telefonne cislo v korektnom tvare",
         minlength: jQuery.validator.format("Prosím zadajte minimálne {0} znakov.")
     });
 

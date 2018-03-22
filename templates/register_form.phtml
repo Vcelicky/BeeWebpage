@@ -54,23 +54,32 @@
                             <h2>Registrácia</h2>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="signupName">Vaše meno</label>
-                            <input name="signupName" id="signupName" type="text" maxlength="50" class="form-control">
+                            <label class="control-label" for="signupName">* Vaše meno</label>
+                            <input name="signupName" id="signupName" type="text" placeholder="Michal Novák" maxlength="50" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="signupEmail">Email</label>
+                            <label class="control-label" for="signupEmail">* Email</label>
                             <input name="signupEmail" id="signupEmail" type="email" maxlength="50" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="signupEmailagain">Zopakovať email</label>
+                            <label class="control-label" for="signupEmailagain">* Zopakovať email</label>
                             <input name="signupEmailagain" id="signupEmailagain" type="email" maxlength="50" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="signupPassword">Heslo</label>
+                            <label class="control-label" for="signupTelnumber">* Telefónne číslo</label>
+                            <input
+                                    name="signupTelnumber" id="signupTelnumber"
+                                    type="text" maxlength="16"
+                                    placeholder="+421 123 456 789"
+                                    class="form-control"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="signupPassword">* Heslo</label>
                             <input name="signupPassword" id="signupPassword" type="password" maxlength="25" class="form-control" placeholder="minimalne 8 znakov" length="40">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="signupPasswordagain">Zopakovať heslo</label>
+                            <label class="control-label" for="signupPasswordagain">* Zopakovať heslo</label>
                             <input name="signupPasswordagain" id="signupPasswordagain" type="password" maxlength="25" class="form-control">
                         </div>
                         <div class="form-group">

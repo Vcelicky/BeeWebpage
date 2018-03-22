@@ -6,22 +6,23 @@ $db = new DB_Functions();
 // json response array
 $response = array("error" => FALSE);
  
-if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
+if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['phone'])) {
  
     // receiving the post params
     $name =  $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $phone = $_POST['phone'];
  
     // check if user is already existed with the same email
     if ($db->isUserExisted($email)) {
         // user already existed
         $response["error"] = TRUE;
-        $response["error_msg"] = "User already existed with " . $email;
+        $response["error_msg"] = "Používateľ už existuje" . $email;
         echo json_encode($response);
     } else {
         // create a new user
-        $user = $db->storeUser($name, $email, $password);
+        $user = $db->storeUser($name, $email, $password, $phone);
         if ($user) {
             // user stored successfully
             $response["error"] = FALSE;
@@ -33,13 +34,13 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
         } else {
             // user failed to store
             $response["error"] = TRUE;
-            $response["error_msg"] = "Unknown error occurred in registration!";
+            $response["error_msg"] = "Vyskytla sa chyba pri registrácií";
             echo json_encode($response);
         }
     }
 } else {
     $response["error"] = TRUE;
-    $response["error_msg"] = "Required parameters (name, email or password) is missing!";
+    $response["error_msg"] = "Niektorý povinný parameter nie je vyplnený";
     echo json_encode($response);
 }
 ?>
