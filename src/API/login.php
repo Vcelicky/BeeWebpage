@@ -40,13 +40,13 @@ if (isset($_POST['email']) && isset($_POST['password']) && (strlen($_POST['email
     } else {
         // user is not found with the credentials
         $response["error"] = TRUE;
-        $response["error_msg"] = "Login credentials are wrong. Please try again!";
+        $response["error_msg"] = "Zadali ste nesprávne meno alebo heslo";
         echo json_encode($response);
     }
 } else {
     // required post params is missing
     $response["error"] = TRUE;
-    $response["error_msg"] = "Required parameters email or password is missing!";
+    $response["error_msg"] = "Zadajte prosím všetky parametre";
     echo json_encode($response);
 }
 ?>
