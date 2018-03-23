@@ -106,25 +106,85 @@ function createDataTable(response){
 
     objects.data = array;
 
-    $('#bootstrap-data-table').DataTable( {
+    var table = $('#bootstrap-data-table').DataTable( {
         "processing": true,
-        "dom": '<"pull-left"f><"pull-right"l>tip',
-        searching: true,
+        "bAutoWidth": false,
+        "dom": '<"pull-left"f><"pull-left"l>tip',
+        searching: false,
         "data": objects.data,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Slovak.json"
         },
+        "createdRow": function(row, data ) {
+            if (data["P"] == "true" ) {
+                $(row).addClass('red');
+            }
+        },
         "columns": [
             { "data": "Time"},
-            { "data": "IT"},
-            { "data": "OT"},
-            { "data": "IH"},
-            { "data": "OH"},
-            { "data": "P"},
-            { "data": "W"},
-            { "data": "B"}
+            {"data":"IT",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"°C");
+                }
+            },
+            {"data":"OT",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"°C");
+                }
+            },
+            {"data":"IH",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            },
+            {"data":"OH",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            },
+            {"data":"P",
+                "render":function(data) {
+                    if(data=="true"){
+                        return "Prevrátený";
+                    }
+                    else if (data=="false")
+                        return ("Neprevrátený");
+                    else
+                        return "";
+                }
+            },
+            {"data":"W",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+" kg");
+                }
+            },
+            {"data":"B",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            }
         ]
     });
+
+    table.order([ 0, 'desc' ]);
 }
 
 function createHives(result){

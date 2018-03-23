@@ -31,6 +31,49 @@ $( document ).ready(function() {
 
 });
 
+$('.ot').editable('/test/ot',{
+    width:"20px",
+    style   : 'display: inline',
+    tooltip   : 'Kliknutím upraviť'
+    }
+);
+
+$('.it').editable('/test/it',{
+        width:"20px",
+        style   : 'display: inline',
+        tooltip   : 'Kliknutím upraviť'
+    }
+);
+
+$('.oh').editable('/test/oh',{
+        width:"20px",
+        style   : 'display: inline',
+        tooltip   : 'Kliknutím upraviť'
+    }
+);
+
+$('.ih').editable('/test/ih',{
+        width:"20px",
+        style   : 'display: inline',
+        tooltip   : 'Kliknutím upraviť'
+    }
+);
+
+$('.bat').editable('/test/battery',{
+        width:"20px",
+        style   : 'display: inline',
+        tooltip   : 'Kliknutím upraviť'
+    }
+);
+
+$('.weight').editable('/test/weight',{
+        width:"20px",
+        style   : 'display: inline',
+        tooltip   : 'Kliknutím upraviť'
+    }
+);
+
+
 $("#log_out_button").click(function() {
     logout();
     window.location.assign(window.origin + "/BeeWebpage/public");
@@ -55,7 +98,7 @@ function ajaxGetMeasurements() {
     var loc = window.location.origin;
     var id = location.href.match(/([^\/]*)\/*$/)[1];
 
-    console.log("Id:" +id);
+    // console.log("Id:" +id);
 
     data = {
         'token' : getCookie('token'),
@@ -75,7 +118,7 @@ function ajaxGetMeasurements() {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        console.log(data);
+        // console.log(data);
         createDataTable(data);
        // createUsers(data);
     });
@@ -105,37 +148,87 @@ function createDataTable(response){
 
     objects.data = array;
 
-    $('#bootstrap-data-table').DataTable( {
+    var table = $('#bootstrap-data-table').DataTable( {
         "processing": true,
-        "dom": '<"pull-left"f><"pull-right"l>tip',
-        searching: true,
+        "bAutoWidth": false,
+        "dom": '<"pull-left"f><"pull-left"l>tip',
+        searching: false,
         "data": objects.data,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Slovak.json"
         },
+        "createdRow": function(row, data ) {
+            if (data["P"] == "true" ) {
+                // $(row).addClass('red');
+                // $('td', row).eq(5).css('background-color', 'pink');
+                $('td', row).eq(5).addClass('red');
+            }
+        },
         "columns": [
             { "data": "Time"},
-            { "data": "IT"},
-            { "data": "OT"},
-            { "data": "IH"},
-            { "data": "OH"},
-            { "data": "P"},
-            { "data": "W"},
-            { "data": "B"}
+            {"data":"IT",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"°C");
+                }
+            },
+            {"data":"OT",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"°C");
+                }
+            },
+            {"data":"IH",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            },
+            {"data":"OH",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            },
+            {"data":"P",
+                "render":function(data) {
+                    if(data=="true"){
+                        return "Prevrátený";
+                    }
+                    else if (data=="false")
+                        return ("Neprevrátený");
+                    else
+                        return "";
+                }
+            },
+            {"data":"W",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+" kg");
+                }
+            },
+            {"data":"B",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            }
         ]
      });
-}
 
-function createHives(result){
-    var data = result.data;
-    var div = document.getElementById('div.hives');
-    div.innerHTML = "";
-
-    for (index = 0; index < data.length; ++index) {
-        console.log(data[index]);
-        div.innerHTML += createUserHtml(data[index].device_id,data[index].uf_name, data[index].location);
-    }
-
+    table.order([ 0, 'desc' ]);
 }
 
 function getCookie(cname) {

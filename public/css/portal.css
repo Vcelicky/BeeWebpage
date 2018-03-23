@@ -2237,4 +2237,8 @@ header .form-inline .search-form.close {
     .right-panel .content #bootstrap-data-table_wrapper .table td, .right-panel .content #bootstrap-data-table_wrapper .table th {
         padding: 5px; } }
 
+.red {
+    background-color: #ff5e56 !important;
+}
+
 /*# sourceMappingURL=style.css.map */
