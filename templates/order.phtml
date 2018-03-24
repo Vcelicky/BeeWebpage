@@ -1,214 +1,170 @@
-
-<?php
-
-	$errName ="";
-    $errMessage ="";
-	$errEmail ="";
-	$errPhone ="";
-	$errCount ="";
-	if (isset($_POST['submit'])) {
-		$name = $_POST['name'];
-		$email = $_POST['mail'];
-		$phone = $_POST['phone'];
-		$count = $_POST['count'];
-		
-		if (!preg_match("/^[a-zA-Z á ä č ď dž é í ĺ ľ ó š ť ú ň ý ž ]*$/",$name) || (!$_POST['name'])) {
-			$errName = "Zadali ste nesprávny formát mena!!!"; 
-		}
-		
-		  if (!$_POST['mail'] || !filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) {
-			$errEmail = 'Zadali ste neplatný e-mail!!!';
-		}
-		
-		if (!preg_match("/^[0-9]*$/",$phone) || (!$_POST['phone'])) {
-			$errPhone = "Zadali ste nesprávny formát telefónneho čísla!!!"; 
-		}
-		
-		if (!preg_match("/^[0-9]*$/",$count) || (!$_POST['count'])) {
-			$errCount = "Zadali ste nesprávny formát počtu úľov!!!"; 
-		}
-	
-	if (!$errName && !$errEmail && !$errPhone && !$errCount)
-	{
-		$ma = "";
-		$subject = 'OBJEDNÁVKA Včeličky Team';
-		$result = 'Objednávka';
-		$text = $_POST["message"];
-		$ma = $_POST["mail"];
-		$prem=0;
-
-		$poa = '<html><body>';
-		$poa .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
-		$poa .= "<tr style='background: #eee;'><td><strong>Meno:</strong> </td><td>" . strip_tags($_POST['name']) . "</td></tr>";
-		$poa .= "<tr><td><strong>E-mail:</strong> </td><td>" . strip_tags($_POST['mail']) . "</td></tr>";
-		$poa .= "<tr><td><strong>Telefón:</strong> </td><td>" . strip_tags($_POST['phone']) . "</td></tr>";
-        $poa .= "<tr><td><strong>Počet úľov:</strong> </td><td>" . strip_tags($_POST['count']) . "</td></tr>";
-		$poa .= "<tr><td><strong>Odkaz:</strong> </td><td>" . strip_tags($_POST['message']) . "</td></tr>";
-		$poa .= "</table>";
-		$poa .= "</body></html>";
-		$headers  = "MIME-Version: 1.0" . PHP_EOL;
-		$headers .= "Content-Type: text/html; charset=utf-8" . PHP_EOL;
-		$headers .= "From: WEB-Včeličky Team" . PHP_EOL;
-
-if ( Mail("fiittp20@gmail.com  ", $result, $poa, $headers) )
-{
-	echo '<script language="javascript">';
-	echo 'alert("Mail bol úspešne odoslaný")';
-	echo '</script>';
-	
-}
-else 
-{
-	echo '<script language="javascript">';
-	echo 'alert("Mail sa nepodarilo odoslať")';
-	echo '</script>';
-}
-		
-    }
-		
-  }
-?>
-
-
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 <head>
-    <!-- Required meta tags -->
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bee Manager</title>
+    <meta name="description" content="BeeAdmin portal - Hive detail">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" href="images/avicon.ico">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/avicon.ico">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<!--    <link rel="stylesheet" href="css/bootstrap.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/global.css">
+
+    <!-- Custom Theme Style -->
+    <link href="../public/css/portal.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../public/css/themify-icons.css">
+    <link rel="stylesheet" href="../public/css/cs-skin-elastic.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top bg-faded">
-    <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
-        <img src="images/logo.png" width="50px" height="50px">
-    </a>
 
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- Left Panel -->
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <!--                        <ul class="navbar-nav">-->
-        <ul class="navbar-nav ml-auto">
-            <?php foreach($menu as $key => $value): ?>
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="../portal"><img src="../public/images/logo_portal1.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="../portal"><img src="../public/images/logo_portal2.png" alt="Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="<?=$value['href']?>"
-                        <?php if(strlen($value['href']) == 0): echo 'data-toggle="modal" data-target="#ModalLoginForm"'; endif; ?>
-                    >
-                        <?=$value['name']?>
-                    </a>
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-dashboard"></i>Manažment úľov </a>
+					<a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-dashboard"></i>Vytvorenie objednávky </a>
+                    <!--                    <a href="#"> <i class="menu-icon fa fa-address-card"></i>Moje merania </a>-->
                 </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
+            </ul>
+        </div><!-- /.navbar-collapse -->
 
-</nav>
+    </nav>
+</aside><!-- /#left-panel -->
 
-<div style="margin-top: 40px">
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5">
-                    <h4><strong>Objednávací formulár</strong></h4>
-                    <form action="" method="POST">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="name" value="<?php if (isset($_POST['name'])){ echo htmlspecialchars($_POST['name']); } ?>" placeholder="Meno">
-							<?php echo "<p class='text-danger'>$errName</p>";?>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="mail" value="<?php if (isset($_POST['email'])){ echo htmlspecialchars($_POST['mail']); } ?>" placeholder="E-mail">
-							<?php echo "<p class='text-danger'>$errEmail</p>";?>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" class="form-control" name="phone" value="<?php if (isset($_POST['email'])){ echo htmlspecialchars($_POST['phone']); } ?>" placeholder="Telefón">
-							<?php echo "<p class='text-danger'>$errPhone</p>";?>
-                        </div>
-						<div class="form-group">
-                            <input type="text" class="form-control" name="count" value="<?php if (isset($_POST['count'])){ echo htmlspecialchars($_POST['count']); } ?>" placeholder="Počet úľov">
-							<?php echo "<p class='text-danger'>$errCount</p>";?>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" name="message" rows="3" placeholder="Požiadavky"></textarea>
-                        </div>
-                        <button class="btn btn-default" type="submit" name="submit">
-                            <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Odoslať
+<!-- Left Panel -->
+
+<!-- Right Panel -->
+
+<div id="right-panel" class="right-panel">
+
+    <!-- Header-->
+    <header id="header" class="header">
+
+        <div class="header-menu">
+
+            <div class="col-sm-7">
+                <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                <div class="header-left">
+                    <button class="search-trigger"><i class="fa fa-search"></i></button>
+                    <div class="form-inline">
+                        <form class="search-form">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
+                            <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="dropdown for-notification">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell"></i>
+                            <span class="count bg-danger">5</span>
                         </button>
-                    </form>
+                        <div class="dropdown-menu" aria-labelledby="notification">
+                            <p class="red">You have 3 Notification</p>
+                            <a class="dropdown-item media bg-flat-color-1" href="#">
+                                <i class="fa fa-check"></i>
+                                <p>Server #1 overloaded.</p>
+                            </a>
+                            <a class="dropdown-item media bg-flat-color-4" href="#">
+                                <i class="fa fa-info"></i>
+                                <p>Server #2 overloaded.</p>
+                            </a>
+                            <a class="dropdown-item media bg-flat-color-5" href="#">
+                                <i class="fa fa-warning"></i>
+                                <p>Server #3 overloaded.</p>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
-				<div class="col-md-7">
-					<img src="/BeeWebpage/public/images/bee0.jpg" class="img-rounded" alt="Cinque Terre" style="/*! margin-right: -10px; */width: 100%;height: auto;">
+            </div>
+
+            <div class="col-sm-5">
+                <div class="user-area dropdown float-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="user-avatar rounded-circle" src="../public/images/admin.jpg" alt="User Avatar">
+                    </a>
+
+                    <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
+
+                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+
+                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
+
+                        <a class="nav-link" id="log_out_button" href="#"><i class="fa fa-power -off"></i>Logout</a>
+                    </div>
+                </div>
+
+                <div class="language-select dropdown" id="language-select">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
+                        <i class="flag-icon flag-icon-us"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="language" >
+                        <div class="dropdown-item">
+                            <span class="flag-icon flag-icon-fr"></span>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-es"></i>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-us"></i>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-it"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </header><!-- /header -->
+
+    <!--    Put content here:-->
+    <div class="content mt-3">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Modal HTML Markup -->
-    <div id="ModalLoginForm" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title text-xs-center">Prihlásenie</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form" id = "login">
-                        <div class="form-group">
-                            <label class="control-label">Email</label>
-                            <div>
-                                <input type="email" class="form-control input-lg" name="email" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Heslo</label>
-                            <div>
-                                <input type="password" class="form-control input-lg" name="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Zapamätaj si
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <a class="btn btn-link" href="">Zabudli ste heslo?</a>
-                                <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer text-xs-center">
-                    Nemáte účet? <br><a href="/BeeWebpage/public/register"> Zaregistrujte sa »</a>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+
+</div> <!-- .content -->
+</div><!-- /#right-panel -->
+
+<!-- Right Panel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="../public/js/jquery.min.js"></script>
+<script src="../public/js/tether.min.js"></script>
+<script src="../public/js/jquery.jeditable.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
 
-    <?php echo $footer;?>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/tether.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-    <script src="js/form_validate.js"></script>
-    <script src="js/style.js"></script>
+<!--<script src="../js/data-table/datatables-init.js"></script>-->
 
 </body>
 </html>
-
