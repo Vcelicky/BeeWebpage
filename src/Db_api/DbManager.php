@@ -509,5 +509,134 @@ class DbManager
         return $return_value;
     }
 
+    public function setLimitValues($token, $userId, $deviceId, $it_u, $it_d, $ot_u, $ot_d, $ih_u, $ih_d, $oh_u, $oh_d, $w, $b)
+    {
+        if ($this->tokenizer->isValidToken($token, $userId) == false) {
+            return [
+                'error' => true,
+                'status' => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
+
+        $result = pg_prepare($this->conn, 'user data select', '
+        UPDATE bees.devices
+        SET temperature_in_up_limit=$2, temperature_in_down_limit=$3, weight_limit=$4, temperature_out_up_limit = $5,  
+        temperature_out_down_limit=$6, humidity_in_up_limit= $7, humidity_in_down_limit=$8, humidity_out_up_limit=$9, humidity_out_down_limit=$10, batery_limit=$11
+        WHERE bees.devices.device_id=$1;');
+        $result = pg_execute($this->conn, 'user data select', [$deviceId, $it_u, $it_d, $w, $ot_u, $ot_d, $ih_u, $ih_d ,$oh_u, $oh_d, $b]);
+        $return_value['error'] = false;
+
+        if (!$result) {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+        return $return_value;
+    }
+
+    public function resetLimitValues($token, $userId, $deviceId)
+    {
+        if ($this->tokenizer->isValidToken($token, $userId) == false) {
+            return [
+                'error' => true,
+                'status' => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
+
+        $result = pg_prepare($this->conn, 'user data select', '
+        UPDATE bees.devices
+        SET temperature_in_up_limit=DEFAULT, temperature_in_down_limit=DEFAULT, weight_limit=DEFAULT, temperature_out_up_limit =DEFAULT,  temperature_out_down_limit =DEFAULT, 
+        humidity_in_up_limit=DEFAULT, humidity_in_down_limit=DEFAULT, humidity_out_up_limit=DEFAULT, humidity_out_down_limit=DEFAULT, batery_limit=DEFAULT
+        WHERE bees.devices.device_id=$1;');
+        $result = pg_execute($this->conn, 'user data select', [$deviceId]);
+        $return_value['error'] = false;
+
+        if (!$result) {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+        return $return_value;
+    }
+
+    public function updateDeviceName($token, $userId, $deviceId, $name)
+    {
+        if ($this->tokenizer->isValidToken($token, $userId) == false) {
+            return [
+                'error' => true,
+                'status' => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
+
+        $result = pg_prepare($this->conn, 'user data select', '
+        UPDATE bees.devices
+        SET uf_name = $2
+        WHERE bees.devices.device_id=$1;');
+        $result = pg_execute($this->conn, 'user data select', [$deviceId, $name]);
+        $return_value['error'] = false;
+
+        if (!$result) {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+        return $return_value;
+    }
+
+    public function updateDeviceLocation($token, $userId, $deviceId, $location)
+    {
+        if ($this->tokenizer->isValidToken($token, $userId) == false) {
+            return [
+                'error' => true,
+                'status' => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
+
+        $result = pg_prepare($this->conn, 'user data select', '
+        UPDATE bees.devices
+        SET location = $2
+        WHERE bees.devices.device_id=$1;');
+        $result = pg_execute($this->conn, 'user data select', [$deviceId, $location]);
+        $return_value['error'] = false;
+
+        if (!$result) {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+        return $return_value;
+    }
+
+    public function getDeviceInfo($token, $userId, $deviceId)
+    {
+        if($this->tokenizer->isValidToken($token, $userId) == false){
+            return [
+                'error'   => true,
+                'status'  => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
+
+        $result = pg_prepare($this->conn, 'devices select', '
+        SELECT d.uf_name, d.location, d.coordinates, d.temperature_in_up_limit, d.temperature_in_down_limit, d.weight_limit, d.temperature_out_up_limit, 
+        d.temperature_out_down_limit, d.humidity_in_up_limit, d.humidity_in_down_limit, d.humidity_out_up_limit, d.humidity_out_down_limit, d.batery_limit FROM bees.devices d
+        WHERE d.device_id = $1');
+        $result = pg_execute($this->conn, 'devices select', [$deviceId]);
+        $return_value['error'] = false;
+        if ($result) {
+            $rows = array();
+            while($r =  pg_fetch_assoc($result)) {
+                $rows = $r;
+            }
+            $return_value['data'] = $rows;
+        }
+        else {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+
+        return $return_value;
+    }
+
 
 }

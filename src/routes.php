@@ -186,6 +186,86 @@ $app->post('/user/measurements/actual', function (Request $request, Response $re
     }
 });
 
+/**
+ * Sets limits of device
+ */
+$app->put('/user/device/limits', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->setLimitValues($body->token, $body->user_id, $body->device_id, $body->it_u, $body->it_d, $body->ot_u, $body->ot_d, $body->ih_u, $body->ih_d, $body->oh_u, $body->oh_d, $body->w, $body->b);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    } else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+/**
+ * Resets limits od device
+ */
+$app->put('/user/device/limits/reset', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->resetLimitValues($body->token, $body->user_id, $body->device_id);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    } else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+/**
+ * Updates device name
+ */
+$app->put('/user/device/name', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->updateDeviceName($body->token, $body->user_id, $body->id, $body->value);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    } else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+/**
+ * Updates device location
+ */
+$app->put('/user/device/location', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->updateDeviceLocation($body->token, $body->user_id,$body->id, $body->value);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    } else {
+        return $response->withJson($devices, 200);
+    }
+});
+
+/**
+ * Returns all device parameters
+ */
+$app->post('/user/device', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->getDeviceInfo($body->token, $body->user_id, $body->device_id);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    } else {
+        return $response->withJson($devices, 200);
+    }
+});
+
 /*
  * login user
  * body arguments: email, password
