@@ -24,10 +24,11 @@ class DB_Functions {
      * Storing new user
      * returns user details
      */
-    public function storeUser($name, $email, $password) {
+    public function storeUser($name, $email, $password, $phone) {
         $salt = uniqid(mt_rand(), true);
         $crpypted = Sha3::hash($salt . $password, 512);
-        $result  = pg_query($this->conn, "INSERT INTO bees.users (name, email, id, role_id, password_hash, password_salt) VALUES ('".$name."', '".$email."',  default, 1, '".$crpypted."', '".$salt."')");
+        $result  = pg_query($this->conn, "INSERT INTO bees.users (name, email, id, role_id, password_hash, password_salt, phone)
+          VALUES ('".$name."', '".$email."',  default, 1, '".$crpypted."', '".$salt."', '".$phone."')");
         if ($result) {
             $id_row = pg_query_params($this->conn, "SELECT * FROM bees.users WHERE email = $1" , array($email));
             $id = pg_fetch_row($id_row);

@@ -4,7 +4,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use src\Carrot_api\Api;
 use src\Db_api\DbManager;
-use src\Db_api\DbManagerAdmin;
+use Slim\Http\Body;
 
 $app->get('/', function (Request $request, Response $response, array $args) {
 
