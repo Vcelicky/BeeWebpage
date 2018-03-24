@@ -389,12 +389,16 @@ function createHiveHtml(id, name, location){
     html = '<div class="col-12 col-lg-12">\
                 <div class="card"> \
                     <div class="card-body"> \
-                        <div class="clearfix"> \
-                            <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
-                            <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
-                            <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
-                            <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
-                            <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                        <div class="clearfix margin-bottom-sm"> \
+                            <div class="col-lg-2">\
+                                <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
+                                <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
+                                <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
+                            </div>\
+                            <div class="col-lg-10">\
+                                <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \n' +
+                        '       <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                            </div>\
                         </div> \
                         <hr>  \
                         <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \

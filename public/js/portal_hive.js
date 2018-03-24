@@ -1,5 +1,10 @@
 //Javascript file for main portal page only
+var device_id;
+var loc;
+
 $( document ).ready(function() {
+    device_id = location.href.match(/([^\/]*)\/*$/)[1];
+    loc = window.location.origin;
 
     "use strict";
 
@@ -28,8 +33,141 @@ $( document ).ready(function() {
     });
 
     ajaxGetMeasurements();
+    ajaxGetDeviceInfo();
 
 });
+
+$('.hive').editable(function(value, settings) {
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'id' : device_id,
+        "value": value
+    };
+
+    console.log(data);
+
+    $.ajax({
+        url: loc+'/BeeWebpage/public/user/device/name',
+        method : 'PUT',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        alert("Názov úľa bol úspešne zmenený");
+    });
+
+    return(value);
+}, {
+    style   : 'display: inline',
+    id : this.id,
+    tooltip   : 'Kliknutím upraviť'
+});
+
+$('.location').editable(function(value, settings) {
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'id' : device_id,
+        "value": value
+    };
+
+    console.log(data);
+
+    $.ajax({
+        url: loc+'/BeeWebpage/public/user/device/location',
+        method : 'PUT',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        alert("Lokácia úľa bola úspešne zmenená");
+    });
+
+    return(value);
+}, {
+    style   : 'display: inline',
+    id : this.id,
+    tooltip   : 'Kliknutím upraviť'
+});
+
+
+$( "#save" ).click(function() {
+    var it = document.getElementById("it-u").value;
+    var ot = document.getElementById("ot-u").value;
+    var oh = document.getElementById("oh-u").value;
+    var ih = document.getElementById("ih-u").value;
+    var itD = document.getElementById("it-d").value;
+    var otD = document.getElementById("ot-d").value;
+    var ohD = document.getElementById("oh-d").value;
+    var ihD = document.getElementById("ih-d").value;
+    var b = document.getElementById("b").value;
+    var w = document.getElementById("w").value;
+
+
+
+    var loc = window.location.origin;
+
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : device_id,
+        "it_u": it,
+        "ot_u": ot,
+        "oh_u": oh,
+        "ih_u": ih,
+        "it_d": itD,
+        "ot_d": otD,
+        "oh_d": ohD,
+        "ih_d": ihD,
+        "b": b,
+        "w": w
+    };
+
+    console.log(data);
+
+    $.ajax({
+        url: loc + '/BeeWebpage/public/user/device/limits',
+        method : 'PUT',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        alert("Hraničné hodnoty boli úspešne zmenené");
+    });
+
+});
+
+$( "#reset" ).click(function() {
+    var loc = window.location.origin;
+
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : device_id
+    };
+
+    $.ajax({
+        url: loc + '/BeeWebpage/public/user/device/limits/reset',
+        method : 'PUT',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        alert("Hraničné hodnoty boli úspešne zresetované");
+        location.reload();
+
+    });
+});
+
 
 $("#log_out_button").click(function() {
     logout();
@@ -55,7 +193,7 @@ function ajaxGetMeasurements() {
     var loc = window.location.origin;
     var id = location.href.match(/([^\/]*)\/*$/)[1];
 
-    console.log("Id:" +id);
+    // console.log("Id:" +id);
 
     data = {
         'token' : getCookie('token'),
@@ -75,9 +213,7 @@ function ajaxGetMeasurements() {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        console.log(data);
         createDataTable(data);
-       // createUsers(data);
     });
 }
 
@@ -105,38 +241,130 @@ function createDataTable(response){
 
     objects.data = array;
 
-    $('#bootstrap-data-table').DataTable( {
+    var table = $('#bootstrap-data-table').DataTable( {
         "processing": true,
-        "dom": '<"pull-left"f><"pull-right"l>tip',
-        searching: true,
+        "bAutoWidth": false,
+        "dom": '<"pull-left"f><"pull-left"l>tip',
+        searching: false,
         "data": objects.data,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Slovak.json"
         },
+        "createdRow": function(row, data ) {
+            if (data["P"] == "true" ) {
+                // $(row).addClass('red');
+                // $('td', row).eq(5).css('background-color', 'pink');
+                $('td', row).eq(5).addClass('red');
+            }
+        },
         "columns": [
             { "data": "Time"},
-            { "data": "IT"},
-            { "data": "OT"},
-            { "data": "IH"},
-            { "data": "OH"},
-            { "data": "P"},
-            { "data": "W"},
-            { "data": "B"}
+            {"data":"IT",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"°C");
+                }
+            },
+            {"data":"OT",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"°C");
+                }
+            },
+            {"data":"IH",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            },
+            {"data":"OH",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            },
+            {"data":"P",
+                "render":function(data) {
+                    if(data=="true"){
+                        return "Prevrátený";
+                    }
+                    else if (data=="false")
+                        return ("Neprevrátený");
+                    else
+                        return "";
+                }
+            },
+            {"data":"W",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+" kg");
+                }
+            },
+            {"data":"B",
+                "render":function(data) {
+                    if(data==null)
+                        return "";
+                    else
+                        return (data+"%");
+                }
+            }
         ]
      });
+
+    table.order([ 0, 'desc' ]);
 }
 
-function createHives(result){
+function ajaxGetDeviceInfo() {
+    var loc = window.location.origin;
+
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : device_id
+    };
+
+    $.ajax({
+        url: loc + '/BeeWebpage/public/user/device',
+        method : 'POST',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        console.log(data);
+        createHiveInfo(data);
+    });
+}
+
+function createHiveInfo(result){
     var data = result.data;
-    var div = document.getElementById('div.hives');
-    div.innerHTML = "";
 
-    for (index = 0; index < data.length; ++index) {
-        console.log(data[index]);
-        div.innerHTML += createUserHtml(data[index].device_id,data[index].uf_name, data[index].location);
-    }
+    document.getElementById("loc").innerHTML=data.location;
+    document.getElementById("name").innerHTML=data.uf_name;
+    document.getElementById("it-u").value=data.temperature_in_up_limit;
+    document.getElementById("ot-u").value=data.temperature_out_up_limit;
+    document.getElementById("oh-u").value=data.humidity_out_up_limit;
+    document.getElementById("ih-u").value=data.humidity_in_up_limit;
+    document.getElementById("it-d").value=data.temperature_in_down_limit;;
+    document.getElementById("ot-d").value=data.temperature_out_down_limit;;
+    document.getElementById("oh-d").value=data.humidity_out_down_limit;
+    document.getElementById("ih-d").value=data.humidity_in_down_limit;;
+    document.getElementById("b").value=data.batery_limit;
+    document.getElementById("w").value=data.weight_limit;
 
 }
+
 
 function getCookie(cname) {
     var name = cname + "=";
