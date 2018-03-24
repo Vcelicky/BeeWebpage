@@ -10,8 +10,8 @@
     <meta name="description" content="BeeAdmin portal - Hive detail">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" href="../images/avicon.ico">
-    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="..public/images/avicon.ico">
+    <link rel="icon" href="..public/images/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -33,8 +33,8 @@
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand" href="../portal"><img src="../public/images/logo_portal1.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="../portal"><img src="../public/images/logo_portal2.png" alt="Logo"></a>
+            <a class="navbar-brand" href="../public/portal"><img src="../public/images/logo_portal1.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="../public/portal"><img src="../public/images/logo_portal2.png" alt="Logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
                 <i class="fa fa-bars"></i>
             </button>
@@ -147,6 +147,42 @@
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-12">
+				 <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><strong>Objednávací formulár</strong></h4>
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" value="<?php if (isset($_POST['name'])){ echo htmlspecialchars($_POST['name']); } ?>" placeholder="Meno úľa" style="margin-top: 10px;" type="text">
+							<?php echo "<p class='text-danger'>$errName</p>";?>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="address" value="<?php if (isset($_POST['address'])){ echo htmlspecialchars($_POST['address']); } ?>" placeholder="Adresa úľa">
+							<?php echo "<p class='text-danger'>$errEmail</p>";?>
+                        </div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+							<label class="form-check-label" for="inlineCheckbox1">SMS</label>
+						</div>
+						<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+								<label class="form-check-label" for="inlineCheckbox2">E-MAIL</label>
+						</div>
+						<br>
+                        <div class="form-group" style="padding-top: 10px;">
+                            <textarea class="form-control" name="message" rows="3" placeholder="Požiadavky"></textarea>
+                        </div>
+                       <button class="btn btn-default" type="submit" name="submit" style="border-color: black;">
+                            <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Odoslať
+                    </form>
+                </div>
+				<div class="col-md-7">
+					<img src="/BeeWebpage/public/images/bee0.jpg" class="img-rounded" alt="Cinque Terre" style="/*! margin-right: -10px; */width: 100%;height: auto;">
+                </div>
+            </div>
+        </div>
+    </section>
                     
                 </div>
             </div>
