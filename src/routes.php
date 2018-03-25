@@ -48,14 +48,20 @@ $app->get('/contact', function (Request $request, Response $response, array $arg
     return $this->renderer->render($response, 'contact.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
-//Order
-$app->get('/order', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response, 'order.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
-});
+//create_order
 
-//Order_verify_data
- $app->post('/order', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response, 'order.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+$app->get('/create_order', function (Request $request, Response $response, array $args) {
+	
+     if (isset($_SESSION['id'])){
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 1)
+            return $this->renderer->render($response, 'order.phtml');
+       }
+
+    }
+
+    else
+        return $response->withStatus(401);
 });
 
 //Products
