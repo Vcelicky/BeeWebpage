@@ -64,6 +64,20 @@ $app->get('/create_order', function (Request $request, Response $response, array
         return $response->withStatus(401);
 });
 
+$app->get('/order_management', function (Request $request, Response $response, array $args) {
+	
+     if (isset($_SESSION['id'])){
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 2)
+            return $this->renderer->render($response, 'order_show.phtml');
+       }
+
+    }
+
+    else
+        return $response->withStatus(401);
+});
+
 //Products
 $app->get('/products', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'products.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
