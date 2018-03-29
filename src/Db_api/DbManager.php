@@ -285,53 +285,75 @@ class DbManager
     }
 
     public function addNotificationMessage($item) {
-        $returned_message = [];
+        $returned_message = [
+            "title" => "",
+            "body"  => ""
+        ];
 
-        $message_topic = preg_split('/_/', key(current($item)));
+        $message_topic = preg_split('/_/', key($item));
 
         if (count($message_topic) < 2) {
             // weight message
-            if (strcmp(key(current($item)), "weight") === 0) {
-                $returned_message["title"] = "Prekrocenie hranice hmotnosti";
+            if (strcmp(key($item), "weight") === 0) {
+                $returned_meessage["title"] = "Prekrocenie hranice hmotnosti";
                 $returned_message["body"]  = "Hmotnost vcelinu je " . $item["weight"]["value"];
             }
 
             // battery
-            if (strcmp(key(current($item)), "battery") === 0) {
+            if (strcmp(key($item), "battery") === 0) {
                 $returned_message["title"] = "Hodnota baterie";
                 $returned_message["body"]  = "Hodnota baterie je " . $item["battery"]["value"];
             }
 
             //proximity
-            if (strcmp(key(current($item)), "poloha") === 0) {
+            if (strcmp(key($item), "poloha") === 0) {
                 $returned_message["title"] = "Vcelin sa prevratil";
                 $returned_message["body"]  = "";
             }
         }
         else {
-            $returned_message["title"] = $message_topic[0] . " " . $message_topic[1] . "prekrocila hranicu";
-            $returned_message["body"]  = $message_topic[0] . "ma hodnotu" . $item["battery"]["value"];
+            $returned_message["title"] = $message_topic[0] . " " . $message_topic[1] . " prekrocila hranicu";
+            $returned_message["body"]  = $message_topic[0] . " ma hodnotu " . $item["battery"]["value"];
         }
 
         return $returned_message;
     }
 
-    public function addNotification($user_id, $hive_id, $time, $message) {
+    public function addNotification($hive_id, $notifications, $time) {
+        $user_id = $notifications["user_id"];
+        $hive_name = $notifications["hive_name"];
+        $error = false;
+        array_pop($notifications);
+        array_pop($notifications);
+        $query =   'INSERT INTO bees.notifications(title_text, body_text, hive_id, hive_name, user_id, time)
+                    VALUES ($1, $2, $3, $4, $5, $6);';
+        $notification_query = pg_prepare($this->conn, "notification insertion", $query);
+
+        foreach ($notifications as $notification) {
+            $message = $this->addNotificationMessage($notification);
+            $result = pg_execute($this->conn, "notification insertion", [
+                $message["title"],
+                $message["body"],
+                $hive_id,
+                $hive_name,
+                $user_id,
+                date('Y-m-d G:i:s', $time)
+            ]);
+
+            if (!$result) {
+                error_log(pg_last_error(), true);
+                $error = true;
+            }
+        }
+
+        return $error;
 
     }
-    public function checkNotification($data = null, $device_id = "36B7B0") {
-        $data = [
-            "hmotnost" => 60,
-            "poloha" => false,
-            "teplota_von" => -30,
-            "teplota_dnu" => 100,
-            "vlhkost_von" => -10,
-            "vlhkost_dnu" => 100,
-            "stav_baterie" => 1
-        ];
-        $result = [];
+    public function checkNotification($data, $device_id) {
+        $result = false;
 
-        $query = 'SELECT  d.uf_name,
+        $query = 'SELECT  d.user_id,
+                          d.uf_name,
                           d.weight_limit,
                           d.temperature_out_down_limit,
                           d.temperature_out_up_limit,
@@ -350,13 +372,13 @@ class DbManager
         $limits = pg_fetch_row($devices_limits);
 
         if ($limits) {
-            $device_name = $limits[0];
+            $result = [];
             $devices_limits = pg_prepare($this->conn, 'device limits query', $query);
             // first check weight and batery
-            if ($data['hmotnost'] > $limits[0]) {
+            if ($data['hmotnost'] > $limits[2]) {
                 array_push($result, ['weight' => ['value' => $data['hmotnost'], 'type' => '']]);
             }
-            if($data['stav_baterie'] > $limits[count($limits) - 1]) {
+            if($data['stav_baterie'] < $limits[count($limits) - 1]) {
                 array_push($result, ['battery' => ['value' => $data['stav_baterie'], 'type' => '']]);
             }
 
@@ -367,7 +389,7 @@ class DbManager
             array_pop($data);
 
             // check up and down limits of temperature and humidity
-            $limit_item = 2;
+            $limit_item = 3;
             foreach ($data as $key => $data_item) {
                 if ($data_item < $limits[$limit_item]) {
                     array_push($result, [$key => ['value' => $data_item, 'type' => 'down']]);
@@ -381,7 +403,8 @@ class DbManager
 
             //check if any notification was added
             if (count($result) > 0) {
-                $result['hive_name'] = $limits[0];
+                $result['user_id']   = $limits[0];
+                $result['hive_name'] = $limits[1];
             }
 
         }
@@ -391,6 +414,12 @@ class DbManager
     public function insertValue($raw_data)
     {
         $data = parser::getData($raw_data['data']['value']);
+        // check notifications
+        $notifications = $this->checkNotification($data,  $raw_data['id']);
+        if ($notifications) {
+            $this->addNotification($raw_data['id'], $notifications, $raw_data['time']);
+        }
+
         $query = 'INSERT INTO bees.measurements(time, temperature_in, weight, proximity, temperature_out,
                   humidity_in, humidity_out, device_name, batery)
                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);';
@@ -407,16 +436,14 @@ class DbManager
             $raw_data['id'],
             $data['stav_baterie']
         ]);
-        $result_data['error'] = false;
+        $result_data = "";
         if (!$result) {
-            $result_data['error'] = true;
-            $result_data['message'] = pg_last_error();
+            $result_data = pg_last_error();
             return $result_data;
         }
 
-        $result_data['error'] = false;
-        $result_data['message'] = "query was successfully executed";
-        return $result;
+        $result_data = "query was successfully executed";
+        return $result_data;
     }
 
     public function getAllDevices($token, $userId) {
