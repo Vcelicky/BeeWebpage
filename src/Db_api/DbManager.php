@@ -284,6 +284,38 @@ class DbManager
         return $hash;
     }
 
+    public function addNotificationMessage($item) {
+        $returned_message = [];
+
+        $message_topic = preg_split('/_/', key(current($item)));
+
+        if (count($message_topic) < 2) {
+            // weight message
+            if (strcmp(key(current($item)), "weight") === 0) {
+                $returned_message["title"] = "Prekrocenie hranice hmotnosti";
+                $returned_message["body"]  = "Hmotnost vcelinu je " . $item["weight"]["value"];
+            }
+
+            // battery
+            if (strcmp(key(current($item)), "battery") === 0) {
+                $returned_message["title"] = "Hodnota baterie";
+                $returned_message["body"]  = "Hodnota baterie je " . $item["battery"]["value"];
+            }
+
+            //proximity
+            if (strcmp(key(current($item)), "poloha") === 0) {
+                $returned_message["title"] = "Vcelin sa prevratil";
+                $returned_message["body"]  = "";
+            }
+        }
+        else {
+            $returned_message["title"] = $message_topic[0] . " " . $message_topic[1] . "prekrocila hranicu";
+            $returned_message["body"]  = $message_topic[0] . "ma hodnotu" . $item["battery"]["value"];
+        }
+
+        return $returned_message;
+    }
+
     public function addNotification($user_id, $hive_id, $time, $message) {
 
     }
@@ -299,7 +331,8 @@ class DbManager
         ];
         $result = [];
 
-        $query = 'SELECT  d.weight_limit,
+        $query = 'SELECT  d.uf_name,
+                          d.weight_limit,
                           d.temperature_out_down_limit,
                           d.temperature_out_up_limit,
                           d.temperature_in_down_limit,
@@ -317,12 +350,14 @@ class DbManager
         $limits = pg_fetch_row($devices_limits);
 
         if ($limits) {
+            $device_name = $limits[0];
+            $devices_limits = pg_prepare($this->conn, 'device limits query', $query);
             // first check weight and batery
             if ($data['hmotnost'] > $limits[0]) {
                 array_push($result, ['weight' => ['value' => $data['hmotnost'], 'type' => '']]);
             }
             if($data['stav_baterie'] > $limits[count($limits) - 1]) {
-                array_push($result, ['batery' => ['value' => $data['stav_baterie'], 'type' => '']]);
+                array_push($result, ['battery' => ['value' => $data['stav_baterie'], 'type' => '']]);
             }
 
             // remove checked data rows
@@ -332,7 +367,7 @@ class DbManager
             array_pop($data);
 
             // check up and down limits of temperature and humidity
-            $limit_item = 1;
+            $limit_item = 2;
             foreach ($data as $key => $data_item) {
                 if ($data_item < $limits[$limit_item]) {
                     array_push($result, [$key => ['value' => $data_item, 'type' => 'down']]);
@@ -342,6 +377,11 @@ class DbManager
                     array_push($result, [$key => ['value' => $data_item, 'type' => 'up']]);
                 }
                 $limit_item++;
+            }
+
+            //check if any notification was added
+            if (count($result) > 0) {
+                $result['hive_name'] = $limits[0];
             }
 
         }
