@@ -284,6 +284,70 @@ class DbManager
         return $hash;
     }
 
+    public function addNotification($user_id, $hive_id, $time, $message) {
+
+    }
+    public function checkNotification($data = null, $device_id = "36B7B0") {
+        $data = [
+            "hmotnost" => 60,
+            "poloha" => false,
+            "teplota_von" => -30,
+            "teplota_dnu" => 100,
+            "vlhkost_von" => -10,
+            "vlhkost_dnu" => 100,
+            "stav_baterie" => 1
+        ];
+        $result = [];
+
+        $query = 'SELECT  d.weight_limit,
+                          d.temperature_out_down_limit,
+                          d.temperature_out_up_limit,
+                          d.temperature_in_down_limit,
+                          d.temperature_in_up_limit,
+                          d.humidity_out_down_limit,
+                          d.humidity_out_up_limit,
+                          d.humidity_in_down_limit,
+                          d.humidity_in_up_limit,
+                          d.batery_limit								
+                 FROM bees.devices d
+                 WHERE d.device_id = $1;';
+
+        $devices_limits = pg_prepare($this->conn, 'device limits query', $query);
+        $devices_limits = pg_execute($this->conn, 'device limits query', [$device_id]);
+        $limits = pg_fetch_row($devices_limits);
+
+        if ($limits) {
+            // first check weight and batery
+            if ($data['hmotnost'] > $limits[0]) {
+                array_push($result, ['weight' => ['value' => $data['hmotnost'], 'type' => '']]);
+            }
+            if($data['stav_baterie'] > $limits[count($limits) - 1]) {
+                array_push($result, ['batery' => ['value' => $data['stav_baterie'], 'type' => '']]);
+            }
+
+            // remove checked data rows
+            $data = array_reverse($data);
+            array_pop($data);
+            $data = array_reverse($data);
+            array_pop($data);
+
+            // check up and down limits of temperature and humidity
+            $limit_item = 1;
+            foreach ($data as $key => $data_item) {
+                if ($data_item < $limits[$limit_item]) {
+                    array_push($result, [$key => ['value' => $data_item, 'type' => 'down']]);
+                }
+                $limit_item++;
+                if ($data_item > $limits[$limit_item]) {
+                    array_push($result, [$key => ['value' => $data_item, 'type' => 'up']]);
+                }
+                $limit_item++;
+            }
+
+        }
+        return $result;
+    }
+
     public function insertValue($raw_data)
     {
         $data = parser::getData($raw_data['data']['value']);
