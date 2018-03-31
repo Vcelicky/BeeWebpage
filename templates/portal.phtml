@@ -3,6 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,8 +25,6 @@
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
-    <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
-    <script src="./../node_modules/chart.js/dist/Chart.js"></script>
 </head>
 <body>
 
@@ -46,8 +45,8 @@
             <ul class="nav navbar-nav">
                 <li class="active">
                     <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-dashboard"></i>Manažment úľov </a>
-					<a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-dashboard"></i>Vytvorenie objednávky </a>
-<!--                    <a href="#"> <i class="menu-icon fa fa-address-card"></i>Moje merania </a>-->
+                    <a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-dashboard"></i>Vytvorenie objednávky </a>
+                    <!--                    <a href="#"> <i class="menu-icon fa fa-address-card"></i>Moje merania </a>-->
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -77,25 +76,13 @@
                         </form>
                     </div>
 
-                    <div class="dropdown for-notification">
+                    <div class="dropdown for-notification keep-open">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bell"></i>
-                            <span class="count bg-danger">5</span>
+                            <span class="count bg-danger"></span>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="notification">
-                            <p class="red">You have 3 Notification</p>
-                            <a class="dropdown-item media bg-flat-color-1" href="#">
-                                <i class="fa fa-check"></i>
-                                <p>Server #1 overloaded.</p>
-                            </a>
-                            <a class="dropdown-item media bg-flat-color-4" href="#">
-                                <i class="fa fa-info"></i>
-                                <p>Server #2 overloaded.</p>
-                            </a>
-                            <a class="dropdown-item media bg-flat-color-5" href="#">
-                                <i class="fa fa-warning"></i>
-                                <p>Server #3 overloaded.</p>
-                            </a>
+                        <div id = "dropdown-notification" class="dropdown-menu" aria-labelledby="notification">
+                            <p class="red"></p>
                         </div>
                     </div>
 
@@ -155,52 +142,74 @@
         </div>
     </div>
 
-<!--    Put content here:-->
+    <!--Notification modal window-->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id = "notificationModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="ti-trash"></span>
+                        <span>Vymaž</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    Put content here:-->
     <div id="div.hives">
-<!--        <div class="card">-->
-<!--            <div class="card-body">-->
-<!--                <div class="clearfix">-->
-<!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
-<!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie1</div>-->
-<!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Bratislava</div>-->
-<!--                </div>-->
-<!--                <div class="b-b-1 pt-3"></div>-->
-<!--                <hr>-->
-<!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
-<!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="card">-->
-<!--            <div class="card-body">-->
-<!--                <div class="clearfix">-->
-<!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
-<!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie2</div>-->
-<!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Trnava</div>-->
-<!--                </div>-->
-<!--                <div class="b-b-1 pt-3"></div>-->
-<!--                <hr>-->
-<!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
-<!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="card">-->
-<!--            <div class="card-body">-->
-<!--                <div class="clearfix">-->
-<!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
-<!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie13</div>-->
-<!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Sliač</div>-->
-<!--                </div>-->
-<!--                <div class="b-b-1 pt-3"></div>-->
-<!--                <hr>-->
-<!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
-<!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="card">-->
+        <!--            <div class="card-body">-->
+        <!--                <div class="clearfix">-->
+        <!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
+        <!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie1</div>-->
+        <!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Bratislava</div>-->
+        <!--                </div>-->
+        <!--                <div class="b-b-1 pt-3"></div>-->
+        <!--                <hr>-->
+        <!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
+        <!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!---->
+        <!--        <div class="card">-->
+        <!--            <div class="card-body">-->
+        <!--                <div class="clearfix">-->
+        <!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
+        <!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie2</div>-->
+        <!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Trnava</div>-->
+        <!--                </div>-->
+        <!--                <div class="b-b-1 pt-3"></div>-->
+        <!--                <hr>-->
+        <!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
+        <!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!---->
+        <!--        <div class="card">-->
+        <!--            <div class="card-body">-->
+        <!--                <div class="clearfix">-->
+        <!--                    <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i>-->
+        <!--                    <div class="h5 text-secondary mb-0 mt-1">test zariadenie13</div>-->
+        <!--                    <div class="text-muted text-uppercase font-weight-bold font-xs small">Sliač</div>-->
+        <!--                </div>-->
+        <!--                <div class="b-b-1 pt-3"></div>-->
+        <!--                <hr>-->
+        <!--                <div class="more-info pt-2" style="margin-bottom:-10px;">-->
+        <!--                    <a class="font-weight-bold font-xs btn-block text-muted small" href="#">View More</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div><!--/.col-->
 
 
@@ -208,12 +217,16 @@
 </div><!-- /#right-panel -->
 <!-- Right Panel -->
 
+<script src="./../node_modules/chart.js/dist/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"</script>
 <script src="js/portal.js"></script>
+<script src="js/notifications.js"></script>
 <script src="js/portal_main.js"></script>
+<script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
+
 
 </body>
 </html>
