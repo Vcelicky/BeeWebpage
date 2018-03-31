@@ -130,6 +130,43 @@
             </div>
         </div>
     </div>
+	
+	<table class="table table-condensed"><tr><th>ID</th><th>name</th><th>e-mail</th><th>phone</th><th>device_count</th><th>notes</th></tr>
+	
+	<?php 
+
+$host = "147.175.149.151"; 
+$user = "postgres"; 
+$pass = "smenajlepsi"; 
+$db = "tp"; 
+
+$con = pg_connect("host=$host dbname=$db user=$user password=$pass")
+    or die("Could not connect to server\n"); 
+
+$query = "SELECT * FROM bees.orders"; 
+
+$rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
+
+
+	
+while ($ro = pg_fetch_object($rs)) {
+	
+	 echo "<tr><td>$ro->id</td>
+				<td>$ro->name</td>
+				<td>$ro->email</td>
+				<td>$ro->phone</td>
+				<td>$ro->device_count</td>
+				<td>$ro->notes</td>
+				</tr>";
+}
+
+
+
+pg_close($con); 
+
+?>
+
+</table>;
 
     <!--    Put content here:-->
    
