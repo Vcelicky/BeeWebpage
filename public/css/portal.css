@@ -1232,8 +1232,6 @@ header .form-inline .search-form.close {
     box-shadow: none;
     top: 49px !important; }
 .header-left .dropdown .dropdown-menu p {
-    color: whitesmoke;
-
     font-size: 15px;
     margin: 0;
     padding: 5px 15px; }
@@ -1267,14 +1265,12 @@ header .form-inline .search-form.close {
     padding: 5px 15px !important;
     text-overflow: ellipsis; }
 .for-notification .dropdown-menu .dropdown-item i {
-    color: #ffc107;
     float: left;
     font-size: 14px;
     margin: 5px 5px 0 0;
     text-align: left;
     width: 20px; }
 .for-notification .dropdown-menu .dropdown-item p {
-    color :  whitesmoke;
     padding: 0 !important;
     text-overflow: ellipsis; }
 
@@ -2291,4 +2287,18 @@ div.hive {
 
 .arrow {
     color: black;
+}
+
+/*Notification*/
+
+#dropdown-notification ul {
+    list-style-type: none;
+}
+
+.dropdown p {
+    color: white;
+}
+
+.dropdown i {
+    color: #ffc107;
 }
