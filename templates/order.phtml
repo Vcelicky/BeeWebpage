@@ -4,8 +4,22 @@
 	$errAddress ="";
 
 	if (isset($_POST['submit'])) {
+		$id=$_COOKIE['user_id'];
 		$name = $_POST['name'];
 		$address = $_POST['address'];
+		$message = $_POST['message'];
+		$sms = 0;
+		$email = 0;
+		
+		if (isset($_POST['e-mail'])) 
+		{
+			$email=true;
+		}
+		
+		if (isset($_POST['sms'])) 
+		{
+			$sms=true;
+		}
 	
 		if (!preg_match("/^[a-zA-Z á ä č ď dž é í ĺ ľ ó š ť ú ň ý ž ]*$/",$name) || (!$_POST['name'])) {
 			$errName = "Zadali ste nesprávny formát mena!"; 
@@ -54,17 +68,21 @@
 		$headers .= "From: WEB-Včeličky Team" . PHP_EOL;
 if ( Mail("sosnak.matus@gmail.com ", $result, $poa, $headers) )
 {
-//	echo '<script src="../public/js/portal_order.js"> logout(); </script>';
 	echo '<script language="javascript">';
-	echo 'alert("Objednávka bola odoslaná na potvrdenie!")';
+	echo 'alert("Objednávka bola úspešne odoslaná!")';
 	echo '</script>';	
 	
-echo '<script type="text/javascript">',
-     'send();',
-     '</script>'
-;
-	
-	
+	$host = "147.175.149.151"; 
+	$user = "postgres"; 
+	$pass = "smenajlepsi"; 
+	$db = "tp"; 
+
+	$con = pg_connect("host=$host dbname=$db user=$user password=$pass")
+		or die("Could not connect to server\n"); 
+
+	$query = "INSERT INTO bees.orders VALUES ($id, '$name', '$address', '$message', '$sms', '$email', false);"; 
+		$rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
+		pg_close($con); 	
 	$_POST = array();
 }
 else 
