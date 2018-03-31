@@ -491,7 +491,7 @@ function checkSize(){
     }
     else {
         $(".chart-space").width("width: 50vw");
-        const width = Math.round($(".chart-space-arrow-left").width());
+        var width = Math.round($(".chart-space-arrow-left").width());
         $(".chart-space-arrow-left").css("left", "-" + width + "px");
         $(".chart-space-arrow-right")
             .css("right", "-" + width + "px")
