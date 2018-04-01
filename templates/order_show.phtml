@@ -143,7 +143,7 @@ $db = "tp";
 $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die("Could not connect to server\n"); 
 
-$query = "SELECT name, hive_name, hive_address, notes FROM bees.users JOIN bees.orders ON (orders.id=users.id);"; 
+$query = "SELECT name, hive_name, hive_address, notes FROM bees.users JOIN bees.orders ON (orders.id=users.id) ORDER BY name;"; 
 
 $rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
 
