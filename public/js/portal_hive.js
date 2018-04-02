@@ -45,7 +45,7 @@ $('.hive').editable(function(value, settings) {
         "value": value
     };
 
-    console.log(data);
+    // console.log(data);
 
     $.ajax({
         url: loc+'/BeeWebpage/public/user/device/name',
@@ -74,7 +74,7 @@ $('.location').editable(function(value, settings) {
         "value": value
     };
 
-    console.log(data);
+    // console.log(data);
 
     $.ajax({
         url: loc+'/BeeWebpage/public/user/device/location',
@@ -128,7 +128,7 @@ $( "#save" ).click(function() {
         "w": w
     };
 
-    console.log(data);
+    // console.log(data);
 
     $.ajax({
         url: loc + '/BeeWebpage/public/user/device/limits',
@@ -342,7 +342,7 @@ function ajaxGetDeviceInfo() {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        console.log(data);
+        // console.log(data);
         createHiveInfo(data);
     });
 }
