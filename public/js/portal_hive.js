@@ -108,39 +108,71 @@ $( "#save" ).click(function() {
     var b = document.getElementById("b").value;
     var w = document.getElementById("w").value;
 
+    var error = {};
+    if(!(it<100 && it>=-50 && itD<100 && itD>=-50 && it>itD))
+        error.it=true;
+    if(!(ot<100 && ot>=-50 && otD<100 && otD>=-50 && ot>otD))
+        error.ot=true;
+    if(!(oh<100 && oh>0 && ohD<100 && ohD>=0 && oh>ohD))
+        error.oh=true;
+    if(!(ih<100 && ih>0 && ihD<100 && ihD>=0 && ih>ihD))
+        error.ih=true;
+    if(!(b>0 && b<50))
+        error.b=true;
+    if(!(w>0 && w<100))
+        error.w=true;
 
+     var message = getErrorMessage(error);
 
-    var loc = window.location.origin;
+    if(message=="") {
+        var loc = window.location.origin;
 
-    data = {
-        'token' : getCookie('token'),
-        'user_id' : getCookie('user_id'),
-        'device_id' : device_id,
-        "it_u": it,
-        "ot_u": ot,
-        "oh_u": oh,
-        "ih_u": ih,
-        "it_d": itD,
-        "ot_d": otD,
-        "oh_d": ohD,
-        "ih_d": ihD,
-        "b": b,
-        "w": w
-    };
+        data = {
+            'token': getCookie('token'),
+            'user_id': getCookie('user_id'),
+            'device_id': device_id,
+            "it_u": it,
+            "ot_u": ot,
+            "oh_u": oh,
+            "ih_u": ih,
+            "it_d": itD,
+            "ot_d": otD,
+            "oh_d": ohD,
+            "ih_d": ihD,
+            "b": b,
+            "w": w
+        };
 
-    // console.log(data);
+        // console.log(data);
 
-    $.ajax({
-        url: loc + '/BeeWebpage/public/user/device/limits',
-        method : 'PUT',
-        data : JSON.stringify(data),
-        dataType:'json',
-        headers : {
-            'Content-Type' : 'application/json'
-        }
-    }).done(function (data) {
-        alert("Hraničné hodnoty boli úspešne zmenené");
-    });
+        $.ajax({
+            url: loc + '/BeeWebpage/public/user/device/limits',
+            method: 'PUT',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).done(function (data) {
+            var box = $('#alert-succ');
+            box.show();
+            box.html("<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a> <strong>Hraničné hodnoty boli úspešne zmenené</strong> "+message+"");
+
+            setTimeout(function(){
+                $(".myAlert-bottom").hide();
+            }, 5000);
+        });
+    }
+    else{
+        var box = $('#alert-fail');
+        box.show();
+        box.html("<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a> <strong>Zmena neúspešná!</strong> "+message+"");
+
+        setTimeout(function(){
+            $(".myAlert-bottom").hide();
+        }, 30000);
+
+    }
 
 });
 
@@ -363,6 +395,24 @@ function createHiveInfo(result){
     document.getElementById("b").value=data.batery_limit;
     document.getElementById("w").value=data.weight_limit;
 
+}
+
+function getErrorMessage(error){
+    var message = "";
+    if(error.it)
+        message+= "Vnútorná teplota musí byť hodnota z intervalu <-50, 100>. ";
+    if(error.ot)
+        message+= "Vonkajšia teplota musí byť hodnota z intervalu <-50, 100>. ";
+    if(error.oh)
+        message+= "Vonkajšia vlhkosť musí byť hodnota z intervalu <0, 100>. ";
+    if(error.ih)
+        message+= "Vnútorná vlhkosť musí byť hodnota z intervalu <0, 100>. ";
+    if(error.b)
+        message+= "Batéria musí byť hodnota z intervalu <0, 50>. ";
+    if(error.w)
+        message+= "Hmotnosť musí byť hodnota z intervalu <0, 100>. ";
+
+    return message;
 }
 
 

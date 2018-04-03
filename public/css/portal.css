@@ -12,6 +12,20 @@
 --------------------------------------------------------- */
 /* Bootstrap */
 @import url(animate.css);
+
+/*Custom*/
+
+.myAlert-bottom{
+    position: fixed;
+    bottom: 20px;
+    left:2%;
+    width: 96%;
+}
+
+.alert{
+    display: none;
+}
+
 .gaugejs-wrap {
     position: relative;
     margin: 0 auto; }
