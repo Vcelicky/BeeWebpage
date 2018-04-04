@@ -63,6 +63,20 @@ $app->get('/create_order', function (Request $request, Response $response, array
         return $response->withStatus(401);
 });
 
+$app->post('/create_order', function (Request $request, Response $response, array $args) {
+	
+     if (isset($_SESSION['id'])){
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 1)
+            return $this->renderer->render($response, 'order.phtml');
+       }
+
+    }
+
+    else
+        return $response->withStatus(401);
+});
+
 $app->get('/order_management', function (Request $request, Response $response, array $args) {
 	
      if (isset($_SESSION['id'])){
