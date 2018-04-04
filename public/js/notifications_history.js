@@ -36,26 +36,6 @@ $( document ).ready(function() {
 
 });
 
-$("#log_out_button").click(function() {
-    logout();
-    window.location.assign(window.origin + "/BeeWebpage/public");
-
-});
-
-function logout() {
-    var loc = window.location.origin;
-    $.ajax({
-        url: loc + '/BeeWebpage/public/logout',
-        method : 'POST',
-        dataType : 'json',
-        headers : {
-            'Content-Type' : 'application/json'
-        }
-    }).done(function () {
-        window.location.assign(window.origin + "/BeeWebpage/public");
-    });
-}
-
 function getNotifications() {
     data = {
         'token' : getCookie('token'),
@@ -153,4 +133,22 @@ function getCookie(cname) {
     return "";
 }
 
+$("#log_out_button").click(function() {
+    logout();
+    window.location.assign(window.origin + "/BeeWebpage/public");
 
+});
+
+function logout() {
+    var loc = window.location.origin;
+    $.ajax({
+        url: loc + '/BeeWebpage/public/logout',
+        method : 'POST',
+        dataType : 'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function () {
+        window.location.assign(window.origin + "/BeeWebpage/public");
+    });
+}
