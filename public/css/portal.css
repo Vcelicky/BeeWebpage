@@ -2288,3 +2288,17 @@ div.hive {
 .arrow {
     color: black;
 }
+
+/*Notification*/
+
+#dropdown-notification ul {
+    list-style-type: none;
+}
+
+.dropdown p {
+    color: white;
+}
+
+.dropdown i {
+    color: #ffc107;
+}
