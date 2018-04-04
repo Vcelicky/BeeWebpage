@@ -86,7 +86,7 @@ function showGraph(deviceElement, deviceId) {
         console.log(document.getElementById("chart-section-" + deviceId).getElementsByTagName("canvas"));
         document.getElementById("chart-section-" + deviceId).className = "d-block";
         if (document.getElementById("chart-" + deviceId.toString()).className.length === 0) {
-            getDeviceData(deviceId, '', devicesMeasurements.actual_time);
+            getDeviceData(deviceId, '', devicesMeasurements[ deviceId ].actual_time);
             while (typeof devicesMeasurements[ deviceId ] === "undefined");
             addNewDoubleChart(deviceId, 1, "Teplota");
         }
@@ -365,7 +365,10 @@ function ajaxGetMeasurement(id) {
     }).done(function (data) {
         console.log(data);
         if (data.data.length > 0) {
-            devicesMeasurements.actual_time = data.data[0][0].cas;
+            if (typeof devicesMeasurements[ id ] === "undefined") {
+                devicesMeasurements[ id ] = {};
+            }
+            devicesMeasurements[ id ].actual_time = data.data[0][0].cas;
         }
         createMeasurementHtml(data, id);
     });
