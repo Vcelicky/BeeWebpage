@@ -183,8 +183,11 @@ $( document ).ready(function() {
             if (dropdown.find(".dropdown-item").length === 1) {
                 reload = true;
             }
+            notification_status =  document.getElementById("nav-a-" + item).classList;
+            if (notification_status.contains("bg-danger")) {
+                unreadNotifications--;
+            }
             dropdown.find("#nav-a-" + item.toString()).fadeOut(1000, function() { $(this).remove(); });
-            unreadNotifications--;
             let notification_element = document.getElementsByClassName("for-notification");
             if (unreadNotifications >= 0) {
                 notification_element [0].childNodes[1].childNodes[3].innerHTML = unreadNotifications;
@@ -195,5 +198,21 @@ $( document ).ready(function() {
             }
         });
 
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     }
 });
