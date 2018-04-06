@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Custom Theme Style -->
-    <link href="../css/portal.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/themify-icons.css">
-    <link rel="stylesheet" href="../css/cs-skin-elastic.css">
+    <link href="css/portal.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/cs-skin-elastic.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -33,8 +33,8 @@
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand" href="../portal"><img src="../images/logo_portal1.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="../portal"><img src="../images/logo_portal2.png" alt="Logo"></a>
+            <a class="navbar-brand" href="../public/portal"><img src="images/logo_portal1.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="../public/portal"><img src="images/logo_portal2.png" alt="Logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
                 <i class="fa fa-bars"></i>
             </button>
@@ -44,8 +44,8 @@
             <ul class="nav navbar-nav">
                 <li class="active">
                     <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-dashboard"></i>Manažment úľov </a>
-					<a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-dashboard"></i>Vytvorenie objednávky </a>
-                    <a href="/BeeWebpage/public/notifications"> <i class="menu-icon fas fa-history"></i>Historia notifikácií</a>
+                    <a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-dashboard"></i>Vytvorenie objednávky </a>
+                    <a href="/BeeWebpage/public/notifications"> <i class="menu-icon fa fa-history"></i>Historia notifikácií</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -107,7 +107,7 @@
 										echo "<a>$id &ensp;</a>";
 				?>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="user-avatar rounded-circle" src="../images/admin.jpg" alt="User Avatar">
+                        <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
                     </a>
 
                     <div class="user-menu dropdown-menu">
@@ -161,90 +161,16 @@
                                     <div class="hive" id="name"></div>
                                     <div class="location" id="loc"></div>
                                 </div>
-                                <div class="col-lg-10">
-                                    <div class="col-lg-12"><b>Hraničné hodnoty:</b></div>
-
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vonkajšia teplota MAX</span>
-                                            <input id="ot-u" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vonkajšia vlhkosť MAX</span>
-                                            <input id="oh-u" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vnútorná teplota MAX</span>
-                                            <input id="it-u" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vnútorná vlhkosť MAX</span>
-                                            <input id="ih-u" type="text" class="form-control" name="msg" value="">
-                                        </div></div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vonkajšia teplota MIN</span>
-                                            <input id="ot-d" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vonkajšia vlhkosť MIN</span>
-                                            <input id="oh-d" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vnútorná teplota MIN</span>
-                                            <input id="it-d" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vnútorná vlhkosť MIN</span>
-                                            <input id="ih-d" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-battery-quarter"></i> Batéria MIN</span>
-                                            <input id="b" type="text" class="form-control" name="msg"value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-balance-scale"></i> Hmotnosť MAX</span>
-                                            <input id="w" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3" style="margin-top: 10px;">
-                                        <button type="button" id="save" class="btn btn-info btn-sm p pull-right"><i class="fa fa-save"></i>&nbsp; Uložiť</button>
-                                    </div>
-                                    <div class="col-lg-3" style="margin-top: 10px;">
-                                        <button type="button" id="reset" class="btn btn-info btn-sm p"><i class="fa fa-exchange"></i>&nbsp; Obnoviť predvolené hodnoty</button>
-                                    </div>
-                                </div>
-                            <hr>
                             </div>
 
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                 <thead>
-                                    <tr>
-                                        <th>Čas</th>
-                                        <th>Vnútorná teplota</th>
-                                        <th>Vonkajšia teplota</th>
-                                        <th>Vnútorná vlhkost</th>
-                                        <th>Vonkajšia vlhkost</th>
-                                        <th>Prevrátenie</th>
-                                        <th>Hmotnosť</th>
-                                        <th>Batéria</th>
-                                    </tr>
+                                <tr>
+                                    <th>Čas</th>
+                                    <th>Upozornenie</th>
+                                    <th>Sprava</th>
+                                    <th>Vcelin</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
@@ -255,32 +181,30 @@
             </div>
         </div>
 
-</div> <!-- .content -->
+    </div> <!-- .content -->
 </div><!-- /#right-panel -->
 
 <!-- Right Panel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-<script src="../js/jquery.min.js"></script>
-<script src="../js/tether.min.js"></script>
-<script src="../js/jquery.jeditable.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-<script src="../js/portal.js"></script>
-<script src="../js/portal_hive.js"></script>
-<script src="./../../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
-<script src="../js/notifications.js"></script>
-
+<script src="js/portal.js"></script>
+<script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/notifications_history.js"></script>
 <!--Datatables:-->
-<script src="../js/data-table/datatables.min.js"></script>
-<script src="../js//data-table/dataTables.bootstrap.min.js"></script>
-<script src="../js/data-table/dataTables.buttons.min.js"></script>
-<script src="../js/data-table/buttons.bootstrap.min.js"></script>
-<script src="../js/data-table/jszip.min.js"></script>
+<script src="js/data-table/datatables.min.js"></script>
+<script src="js//data-table/dataTables.bootstrap.min.js"></script>
+<script src="js/data-table/dataTables.buttons.min.js"></script>
+<script src="js/data-table/buttons.bootstrap.min.js"></script>
+<script src="js/data-table/jszip.min.js"></script>
 <!--<script src="../js/data-table/pdfmake.min.js"></script>-->
-<script src="../js/data-table/vfs_fonts.js"></script>
-<script src="../js/data-table/buttons.html5.min.js"></script>
-<script src="../js/data-table/buttons.print.min.js"></script>
-<script src="../js/data-table/buttons.colVis.min.js"></script>
+<script src="js/data-table/vfs_fonts.js"></script>
+<script src="js/data-table/buttons.html5.min.js"></script>
+<script src="js/data-table/buttons.print.min.js"></script>
+<script src="js/data-table/buttons.colVis.min.js"></script>
 <!--<script src="../js/data-table/datatables-init.js"></script>-->
 
 </body>

@@ -144,7 +144,7 @@ else
                 <li class="active">
                     <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-dashboard"></i>Manažment úľov </a>
 					<a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-dashboard"></i>Vytvorenie objednávky </a>
-                    <!--                    <a href="#"> <i class="menu-icon fa fa-address-card"></i>Moje merania </a>-->
+                    <a href="/BeeWebpage/public/notifications"> <i class="menu-icon fa fa-history"></i>Historia notifikácií</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -201,6 +201,10 @@ else
 
             <div class="col-sm-5">
                 <div class="user-area dropdown float-right">
+				<?php 
+							$id=$_COOKIE['user_name'];
+										echo "<a>$id &ensp;</a>";
+				?>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="../public/images/admin.jpg" alt="User Avatar">
                     </a>
@@ -299,6 +303,8 @@ else
 <script src="../public/js/jquery.jeditable.js"></script>
 <script src="../public/js/portal.js"></script>
 <script src="../public/js/portal_main.js"></script>
+<script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
+<script src="js/notifications.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
