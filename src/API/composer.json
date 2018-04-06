@@ -3,7 +3,6 @@
     "description": "Api is used for login and register",
     "homepage": "https://github.com/Vcelicky/API",
     "require": {
-        "formaldehid/php-sha3": "^1.0",
-        "firebase/php-jwt": "^5.0"
+        "formaldehid/php-sha3": "^1.0"
     }
 }

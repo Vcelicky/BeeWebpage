@@ -4,10 +4,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use src\Carrot_api\Api;
 use src\Db_api\DbManager;
-use Slim\Http\Body;
+use src\Db_api\DbNotification;
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-
     return $this->renderer->render($response, 'index.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
@@ -64,6 +63,20 @@ $app->get('/create_order', function (Request $request, Response $response, array
         return $response->withStatus(401);
 });
 
+$app->post('/create_order', function (Request $request, Response $response, array $args) {
+	
+     if (isset($_SESSION['id'])){
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 1)
+            return $this->renderer->render($response, 'order.phtml');
+       }
+
+    }
+
+    else
+        return $response->withStatus(401);
+});
+
 $app->get('/order_management', function (Request $request, Response $response, array $args) {
 	
      if (isset($_SESSION['id'])){
@@ -85,7 +98,6 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 
 //Portal
 $app->get('/portal', function (Request $request, Response $response, array $args) {
-
     if (isset($_SESSION['id'])){
         if(isset($_SESSION['role_id'])){
             if($_SESSION['role_id'] == 1)
@@ -376,11 +388,41 @@ $app->post('/order/new', function ($request, $response, $args) {
     return $response->withStatus($return);
 });
 
-//Deprecated
-$app->post('/order/new2', function ($request, $response, $args) {
+$app->get('/notifications', function (Request $request, Response $response, array $args) {
+    if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['role_id'])) {
+            if ($_SESSION['role_id'] == 1)
+                return $this->renderer->render($response, 'notifications_history.phtml');
+        }
+    }
+
+    else
+        return $response->withStatus(401);
+});
+
+$app->post('/user/notifications', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
-    $allPostPutVars = $request->getParams();
-    $dbManager = new DbManager($config);
-    $dbManager->connect();
-    $dbManager->createOrder2($allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
+    $body = json_decode($request->getBody()->getContents());
+    $not = new DbNotification($config);
+    $notifications = $not->getUserNotifications($body->user_id, $body->token, $body->limit, $body->offset);
+
+    return $response->withJson($notifications['data'], $notifications['status']);
+});
+
+$app->delete('/user/notification/delete', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $body = json_decode($request->getBody()->getContents());
+    $not = new DbNotification($config);
+    $notifications = $not->deleteNotification($body->user_id, $body->token, $body->id);
+
+    return $response->withJson($notifications['data'], $notifications['status']);
+});
+
+$app->post('/user/notification/seen', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $body = json_decode($request->getBody()->getContents());
+    $not = new DbNotification($config);
+    $notifications = $not->changeNotification($body->user_id, $body->token, $body->id);
+
+    return $response->withJson($notifications['data'], $notifications['status']);
 });
