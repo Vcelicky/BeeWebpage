@@ -10,16 +10,16 @@
 		$email = $_POST['mail'];
 		$phone = $_POST['phone'];
 		
-		if (!preg_match("/^[a-zA-Z á ä č ď dž é í ĺ ľ ó š ť ú ň ý ž ]*$/",$name) || (!$_POST['name'])) {
-			$errName = "Zadali ste nesprávny formát mena!!!"; 
+		if (!preg_match("/^[a-zA-Z á Á ä č Č ď Ď dž Dž é É í ĺ ľ Ľ ó Ó ó š Š ť Ť ú Ú ň Ň ý ž Ž ]*$/",$name) || (!$_POST['name'])) {
+			$errName = "Zadali ste nesprávny formát mena! (príklad: Janko Mrkvička)";
 		}
 		
 		  if (!$_POST['mail'] || !filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) {
-			$errEmail = 'Zadali ste neplatný e-mail!!!';
+			$errEmail = 'Zadali ste neplatný e-mail! (príklad: moj@mail.com)';
 		}
 		
 		if (!preg_match("/^[0-9]*$/",$phone) || (!$_POST['phone'])) {
-			$errPhone = "Zadali ste nesprávny formát telefónneho čísla!!!"; 
+			$errPhone = "Zadali ste nesprávny formát telefónneho čísla! (príklad: 0905123456)";
 		}
 	
 	if (!$errName && !$errEmail && !$errPhone)
