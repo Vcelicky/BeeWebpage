@@ -5,6 +5,7 @@
 var actualURL = window.location.origin + "/BeeWebpage/public";
 var notifications = [];
 var unreadNotifications = 0;
+var notificationDetail = false;
 
 function eventFire(el, etype){
     if (el.fireEvent) {
@@ -17,10 +18,16 @@ function eventFire(el, etype){
     }
 }
 
-$('.dropdown').on({
-    "shown.bs.dropdown": function() { this.closable = false; },
-    "click":             function() { this.closable = true; },
-    "hide.bs.dropdown":  function() { return this.closable; }
+$('.dropdown.for-notification').on({
+    "shown.bs.dropdown": function() { if (document.getElementById("notificationModal").classList.length == 2) {
+        this.closable = false;
+    }},
+    "click":             function() { if (document.getElementById("notificationModal").classList.length == 2) {
+        this.closable = true;
+    }},
+    "hide.bs.dropdown":  function() { if (document.getElementById("notificationModal").classList.length == 3) {
+        return this.closable;
+    }}
 });
 
 $('#notification').on('DOMSubtreeModified',function(event){
@@ -91,6 +98,7 @@ $( document ).ready(function() {
     /* show detail of selected notification */
     function showNotification(not_number) {
         var modal = document.getElementById("notificationModal");
+        console.log(modal);
         modal.childNodes[1].childNodes[1].childNodes[1].childNodes[1].innerHTML = notifications[not_number].title_text;
         modal.childNodes[1].childNodes[1].childNodes[3].innerText = "včelín: " + notifications[not_number].hive_name + "\n" +
             notifications[not_number].body_text;
@@ -128,7 +136,7 @@ $( document ).ready(function() {
             new_not_el.className = not_seen_class;
             new_not_el.href = "#";
             new_not_el.id = "nav-a-" + notification;
-            new_not_el.onclick = function (e) { e.stopPropagation(); showNotification(notification); };
+            new_not_el.onclick = function (e) { e.stopPropagation(); notificationDetail = true; showNotification(notification); };
 
             let ul_el = document.createElement("ul");
             let li_first_el = document.createElement("li");
