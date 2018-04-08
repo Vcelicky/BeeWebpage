@@ -441,7 +441,7 @@ class DbManager
     }
 
     public function getUserMeasurements($token, $userId, $deviceId, $from, $to) {
-        if($this->tokenizer->isValidToken($token, $userId) == false){
+        if((isset($_SESSION['role_id']) && ($_SESSION['role_id'] === 1)) && ($this->tokenizer->isValidToken($token, $userId) == false)){
            return [
                'error'   => true,
                'status'  => 401,
