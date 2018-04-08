@@ -101,6 +101,16 @@ $app->get('/order_management', function (Request $request, Response $response, a
         return $response->withStatus(401);
 });
 
+$app->post('/portal', function (Request $request, Response $response, array $args) {
+	
+     if (isset($_SESSION['id'])){ 
+            return $this->renderer->render($response, 'portal_admin.phtml');
+    }
+
+    else
+        return $response->withStatus(401);
+});
+
 //Products
 $app->get('/products', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'products.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
