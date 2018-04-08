@@ -104,6 +104,7 @@ $( document ).ready(function() {
             notifications[not_number].body_text;
         modal.childNodes[1].childNodes[1].childNodes[5].childNodes[3].onclick = function() {deleteNotification(not_number);};
         $('#notificationModal').modal('show');
+        modal.className= "modal fade show";
 
         var notification_status = document.getElementById("nav-a-" + not_number).classList;
         if (notification_status.contains("bg-danger")) {

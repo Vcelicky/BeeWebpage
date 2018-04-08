@@ -90,11 +90,16 @@
 
             <div class="col-sm-5">
                 <div class="user-area dropdown float-right">
-			
-				<?php 
-							$id=$_COOKIE['user_name'];
-										echo "<a>$id &ensp;</a>";
-				?>
+
+                    <?php
+                    $id=$_COOKIE['user_name'];
+                    echo "<a style='
+                    position: relative;
+                    top: 5px;
+                    left: 20px;
+                    '>$id &ensp;
+                </a>";
+                    ?>
 			
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
@@ -135,30 +140,30 @@
         </div>
 
     </header><!-- /header -->
-    <!--Notification modal window-->
-    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="notificationModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id = "notificationModalBody">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                        <span class="ti-trash"></span>
-                        <span>Vymaž</span>
-                    </button>
+    <!--    Put content here:-->
+    <div class="content mt-3">
+        <!--Notification modal window-->
+        <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificationModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id = "notificationModalBody">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <span class="ti-trash"></span>
+                            <span>Vymaž</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--    Put content here:-->
-    <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-12">
@@ -203,8 +208,7 @@
 
 <script src="js/portal.js"></script>
 <script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
-<script src="js/notifications.js"></script>
-<script src="js/notifications_history.js"></script>
+<!--<script src="js/notifications_history.js"></script>-->
 <!--Datatables:-->
 <script src="js/data-table/datatables.min.js"></script>
 <script src="js//data-table/dataTables.bootstrap.min.js"></script>
@@ -217,6 +221,7 @@
 <script src="js/data-table/buttons.print.min.js"></script>
 <script src="js/data-table/buttons.colVis.min.js"></script>
 <!--<script src="../js/data-table/datatables-init.js"></script>-->
+<script src="js/notifications.js"></script>
 
 </body>
 </html>
