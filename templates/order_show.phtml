@@ -163,8 +163,12 @@ while ($ro = pg_fetch_object($rs)) {
 				  <td>$ro->hive_name</td>
 				  <td>$ro->hive_address</td>
 				  <td>$ro->notes</td>
-				  <td></td>				  
-				  </tr>";
+				  <form action=\"\" method='POST'>
+				  <input type='hidden' name='id_clear' value='$ro->id'>
+				  <input type='hidden' name='hive_name1' value='$ro->hive_name'>
+				  <td></td>
+				  <td><input type='submit' name='delete' value='Zmazať'></td>	  
+				  </tr></form>";
 		 }
 		 else
 		 {
@@ -177,8 +181,12 @@ while ($ro = pg_fetch_object($rs)) {
 				  <input type='hidden' name='n' value='$ro->id'>
 				  <input type='hidden' name='hive_name' value='$ro->hive_name'>
 				  <input type='hidden' name='hive_address' value='$ro->hive_address'>
-				  <td><input type='submit' name='submit' value='Potvrdiť'></td>
-				  </tr></form>";			 
+				  <td><input type='submit' name='submit' value='Potvrdiť'></form></td>
+				  <form action=\"\" method='POST'>
+				  <input type='hidden' name='id_clear' value='$ro->id'>
+				  <input type='hidden' name='hive_name1' value='$ro->hive_name'>
+				  <td><input type='submit' name='delete' value='Zmazať'></form></td>
+				  </tr>";			 
 		 }
 }
 
@@ -191,10 +199,18 @@ while ($ro = pg_fetch_object($rs)) {
 $id="nn";
 
     if(isset($_POST['submit'])){
+		
+	  if(isset($_POST['n']))
+	  {
 		$id	= $_POST['n'];
         select();
-		
+	  }	
     }
+	
+	if(isset($_POST['delete'])){
+	
+			delete1();	
+	}
 
 
     function select()
@@ -224,6 +240,28 @@ $id="nn";
 		  header("Refresh:0");
 		
     }
+	
+	function delete1()
+    { 
+		  $pr1 = $_POST['id_clear'];	
+		  $h_name = $_POST['hive_name1'];	
+		  $host = "147.175.149.151"; 
+		  $user = "postgres"; 
+		  $pass = "smenajlepsi"; 
+		  $db = "tp"; 	
+		  $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
+					or die("Could not connect to server\n"); 
+
+		  $query = "DELETE FROM bees.orders WHERE id = $pr1 and hive_name='$h_name'"; 
+		  $result = pg_query($query); 
+		  
+		  pg_close($con); 
+		  
+		  echo '<script language="javascript">';
+		  echo 'alert("Objednávka bola úspešne zmazaná.")';
+		  echo '</script>';
+		  header("Refresh:0");
+	}
    
 
 ?>
