@@ -512,9 +512,6 @@ function arrowsPosition(element) {
 function createMeasurementHtml(result, id){
     var data = result.data;
 
-    console.log(data[0]);
-    console.log(data[0][0].hodnota);
-
     var div = document.getElementById('measurement-'+id);
     var div2 = document.getElementById('measurement2-'+id);
 
