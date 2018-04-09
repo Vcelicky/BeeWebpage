@@ -137,7 +137,7 @@
         </div>
     </div>
 	
-	<table class="table table-condensed"><tr><th>Meno zákazníka</th><th>Meno úľa</th><th>Adresa úľa</th><th>Poznámky</th></tr>
+	<table class="table table-condensed"><tr><th>Meno zákazníka</th><th>Meno úľa</th><th>Adresa úľa</th><th>Poznámky</th><th>Stav</th></tr>
 	
 <?php 
 
@@ -163,10 +163,10 @@ while ($ro = pg_fetch_object($rs)) {
 				  <td>$ro->hive_name</td>
 				  <td>$ro->hive_address</td>
 				  <td>$ro->notes</td>
+				  <td><i class=\"menu-icon fa ti-check\" style=\"align-content: center;padding-left: 7px;\"></td>
 				  <form action=\"\" method='POST'>
 				  <input type='hidden' name='id_clear' value='$ro->id'>
 				  <input type='hidden' name='hive_name1' value='$ro->hive_name'>
-				  <td></td>
 				  <td><input type='submit' name='delete' value='Zmazať'></td>	  
 				  </tr></form>";
 		 }
@@ -181,7 +181,7 @@ while ($ro = pg_fetch_object($rs)) {
 				  <input type='hidden' name='n' value='$ro->id'>
 				  <input type='hidden' name='hive_name' value='$ro->hive_name'>
 				  <input type='hidden' name='hive_address' value='$ro->hive_address'>
-				  <td><input type='submit' name='submit' value='Potvrdiť'></form></td>
+				  <td><input type='submit' name='submit' value='Potvrdiť' style=\"margin-left: -15px;\"></form></td>
 				  <form action=\"\" method='POST'>
 				  <input type='hidden' name='id_clear' value='$ro->id'>
 				  <input type='hidden' name='hive_name1' value='$ro->hive_name'>
