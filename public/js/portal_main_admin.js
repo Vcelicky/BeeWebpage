@@ -321,6 +321,7 @@ function createUserHtml(id, name, email, count){
 
     html = '<div class="card"> \
             <div class="card-body"> \
+			<form action=\"\" method=\'POST\'><input type=\'hidden\' name=\'n\' value='+id+'><div class="pull-right" id="clear_button"><input value="Zmazať" id="clear" style="color: black;background-color: white;" type="submit"></div></form> \
                 <div class="clearfix"> \
                     <i class="fa fa-user bg-flat-color-1 p-3 font-2xl mr-3 float-left text-light"></i> \
                     <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
