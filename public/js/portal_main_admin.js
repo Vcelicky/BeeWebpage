@@ -522,9 +522,9 @@ function createHiveHtml(id, name, location){
                                 onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes;\
                                            for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
                                            this.className = \"nav-link active\";\
-                                           document.getElementById(\"graph-title-' + id +'\", 1).textContent = \"Hmotnost\";\
+                                           document.getElementById(\"graph-title-' + id +'\", 1).textContent = \"Hmotnosť\";\
                                            addNewChart(\"'+id.toString()+'\", 5, \"Hmotnosť\")\'\
-                            >Hmotnost</a>\
+                            >Hmotnosť</a>\
                         </li> \
                         <li class="nav-item">\
                             <a\
