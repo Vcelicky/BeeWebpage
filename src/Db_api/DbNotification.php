@@ -121,8 +121,8 @@ class DbNotification
         $error = false;
         array_pop($notifications);
         array_pop($notifications);
-        $query =   'INSERT INTO bees.notifications(title_text, body_text, hive_id, hive_name, user_id, time)
-                    VALUES ($1, $2, $3, $4, $5, $6);';
+        $query =   'INSERT INTO bees.notifications(title_text, body_text, hive_id, hive_name, user_id, time, token)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7);';
         $notification_query = pg_prepare($this->conn, "notification insertion", $query);
 
         foreach ($notifications as $notification) {
@@ -134,7 +134,8 @@ class DbNotification
                 $hive_id,
                 $hive_name,
                 $user_id,
-                date('Y-m-d G:i:s', $time)
+                date('Y-m-d G:i:s', $time),
+                password_hash($time . $hive_id . $user_id . $message["title"], PASSWORD_DEFAULT)
             ]);
 
             if (!$result) {
