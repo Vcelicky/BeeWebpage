@@ -45,13 +45,13 @@
             <ul class="nav navbar-nav">
                 <li class="active">
                     <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-dashboard"></i>Manažment úľov </a>
-				</li>
-				<li>
+                </li>
+                <li>
                     <a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-wpforms"></i>Vytvorenie objednávky </a>
-				</li>
-				<li>
+                </li>
+                <li>
                     <a href="/BeeWebpage/public/notifications"> <i class="menu-icon fa fa-history"></i>Historia notifikácií</a>
-				</li>
+                </li>
 
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -95,23 +95,23 @@
             </div>
 
             <div class="col-sm-5">
-			<div class="user-area dropdown float-right">
-            
-				<?php 
-							$id=$_COOKIE['user_name'];
-										echo "<a>$id &ensp;</a>";
-				?>
-			
+                <div class="user-area dropdown float-right">
+
+                    <?php
+                    $id=$_COOKIE['user_name'];
+                    echo "<a>$id &ensp;</a>";
+                    ?>
+
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
                     </a>
 
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="/BeeWebpage/public/profile"><i class="fa fa- user"></i>Môj Profil</a>
+                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Môj Profil</a>
 
                         <a class="nav-link" href="/BeeWebpage/public/notifications"><i class="fa fa- user"></i>História notifikácií</a>
 
-                         <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>-->
+                        <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>-->
 
                         <a class="nav-link" id="log_out_button" href="#"><i class="fa fa-power -off"></i>Odhlásenie</a>
                     </div>
@@ -147,7 +147,7 @@
         <div class="col-sm-4">
             <div class="page-header float-left">
                 <div class="page-title">
-                    <h1>Manažment úľov</h1>
+                    <h1>Profil</h1>
                 </div>
             </div>
         </div>
@@ -176,12 +176,61 @@
         </div>
     </div>
     <!--    Put content here:-->
-    <div id="div.hives">
+    <div class="container">
+        <div class="row my-2">
+            <div class="col-lg-8 order-lg-2">
+                <div class="tab-content py-4">
+                        <form role="form">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Meno</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" value="Jane">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="email" value="email@gmail.com">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Telefónne číslo</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="email" value="email@gmail.com">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="password" value="11111122333">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="password" value="11111122333">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label"></label>
+                                <div class="col-lg-9">
+                                    <input type="button" class="btn btn-primary" value="Uložiť zmeny">
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+            <div class="col-lg-4 order-lg-1 text-center">
+                <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                <h6 class="mt-2">Uložiť novú profilovú fotku</h6>
+                <label class="custom-file">
+                    <input type="file" id="file" class="custom-file-input">
+                    <span class="custom-file-control">Vybrať</span>
+                </label>
+            </div>
+        </div>
+    </div>
 
-    </div><!--/.col-->
-
-
-</div> <!-- .content -->
 </div><!-- /#right-panel -->
 <!-- Right Panel -->
 

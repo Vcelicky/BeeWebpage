@@ -394,6 +394,18 @@ $app->post('/api/measurements/all', function (Request $request, Response $respon
 
 });
 
+$app->get('/profile', function (Request $request, Response $response, array $args) {
+    if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['role_id'])) {
+            if ($_SESSION['role_id'] == 1)
+                return $this->renderer->render($response, 'user_profile.phtml');
+        }
+    }
+
+    else
+        return $response->withStatus(401);
+});
+
 /**
  * Create new order
  * Body: name, email, phone, device_count, notes
