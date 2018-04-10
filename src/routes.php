@@ -404,7 +404,7 @@ $app->post('/order/new', function ($request, $response, $args) {
     $dbManager = new DbManager($config);
     $dbManager->connect();
 
-    $return = $dbManager->createOrder($allPostPutVars['user_id'], $allPostPutVars['token'], $allPostPutVars['name'], $allPostPutVars['email'], $allPostPutVars['phone'], $allPostPutVars['device_count'], $allPostPutVars['notes']);
+    $return = $dbManager->createOrder($allPostPutVars['id'], $allPostPutVars['token'], $allPostPutVars['hive_name'], $allPostPutVars['hive_address'], $allPostPutVars['SMS'], $allPostPutVars['E-mail'], $allPostPutVars['notes']);
     return $response->withStatus($return);
 });
 
