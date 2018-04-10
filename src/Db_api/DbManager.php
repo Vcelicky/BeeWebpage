@@ -125,43 +125,14 @@ class DbManager
         }
     }
 
-    /** Logged in user creates order for device
-     * @param $name
-     * @param $email
-     * @param $phone
-     * @param $device_count
-     * @param $notes
-     */
-    public function createOrder2($name, $email,  $phone, $device_count, $notes) {
-
-        $query = 'INSERT INTO bees.orders(name, email, phone, device_count, notes)
-                  VALUES ($1, $2, $3, $4, $5);';
-
-        $result = pg_prepare($this->conn, "my_query", $query);
-        $result = pg_execute($this->conn, "my_query", array("$name", "$email", "$phone", "$device_count", "$notes"));
-
-
-        if (!$result) {
-            echo "Problem with query ";
-            echo pg_last_error();
-            exit();
-        }
-    }
-
-    //TODO Add token, userId, check
-    public function createOrder($userId, $token, $name, $email,  $phone, $device_count, $notes) {
+    public function createOrder($userId, $token, $name, $adress, $sms, $email, $notes) {
         if(!$this->tokenizer->isValidToken($token, $userId)){
             print json_encode(array('error'=>true));
             return 401;
         }
-
-
-        $query = 'INSERT INTO bees.orders(name, email, phone, device_count, notes)
-                  VALUES ($1, $2, $3, $4, $5);';
-
-        $result = pg_prepare($this->conn, "my_query", $query);
-        $result = pg_execute($this->conn, "my_query", array("$name", "$email", "$phone", "$device_count", "$notes"));
-
+        $query = "INSERT INTO bees.orders VALUES ($userId, '$name', '$adress', '$notes', '" . (($sms) ? "true" : "false") . "', '" .
+            (($email) ? "true" : "false") . "', 'False');";
+        $result = pg_query($this->conn, $query);
 
         if (!$result) {
             echo "Problem with query ";
