@@ -278,14 +278,14 @@ class DbManager
         return $hash;
     }
 
-    public function insertValue($raw_data)
+    public function insertValue($raw_data, $fcm_key)
     {
         $data = parser::getData($raw_data['data']['value']);
         // check notifications
-        $notification = new DbNotification($this->conn);
+        $notification = new DbNotification($this->config);
         $notifications = $notification->checkNotification($data,  $raw_data['id']);
         if ($notifications) {
-            $notification->addNotification($raw_data['id'], $notifications, $raw_data['time']);
+            $notification->addNotification($raw_data['id'], $notifications, $raw_data['time'], $fcm_key);
         }
 
         $query = 'INSERT INTO bees.measurements(time, temperature_in, weight, proximity, temperature_out,

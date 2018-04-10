@@ -41,14 +41,14 @@ class DbNotification
         if (count($message_topic) < 2) {
             // weight message
             if (strcmp(key($item), "weight") === 0) {
-                $returned_meessage["title"] = "Prekročená hranica hmotnosti";
+                $returned_message["title"] = "Hodnota hmotnosti";
                 $returned_message["body"]  = "Hmotnost úľa je " . $item["weight"]["value"];
             }
 
             // battery
             if (strcmp(key($item), "battery") === 0) {
                 $returned_message["title"] = "Hodnota batérie";
-                $returned_message["body"]  = "Hodnota batérie je " . $item["battery"]["value"];
+                $returned_message["body"]  = "Hodnota batérie je " . $item["battery"]["value"] . "%";
             }
 
             //proximity
@@ -58,15 +58,64 @@ class DbNotification
             }
         }
         else {
-			$vv="prekročila hranicu";
-            $returned_message["title"] = $message_topic[0] . " " . $message_topic[1] . $vv;
-            $returned_message["body"]  = $message_topic[0] . " ma hodnotu " . $item["battery"]["value"];
+            //humidity
+            if (strcmp($message_topic[0], "vlhkost") === 0) {
+                $returned_message["title"] = "Hodnota vlhkosti";
+                $returned_message["body"]  = "Hodnota vlhkosti " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"];
+            }
+            //temperature
+            if (strcmp($message_topic[0], "teplota") === 0) {
+                $returned_message["title"] = "Hodnota teploty";
+                $returned_message["body"]  = "Hodnota teploty " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"] . "°C";
+            }
+
         }
 
         return $returned_message;
     }
 
-    public function addNotification($hive_id, $notifications, $time) {
+    public function sendFCMNotification($message, $hive_id, $hive_name, $user_id, $key) {
+        $data = [
+            "data" => [
+                "title_text" => $message["title"],
+                "text" => $message["body"],
+                "hive_id" => $hive_id,
+                "hive_name" => $hive_name,
+                "priority" => "high"
+            ],
+            "to" => "/topics/" . $user_id
+        ];
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://fcm.googleapis.com/fcm/send",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data, true),
+            CURLOPT_HTTPHEADER => array(
+                "authorization: " . $key,
+                "content-type: application/json"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if (!$err) {
+            return $response;
+        }
+
+        return false;
+    }
+
+    public function addNotification($hive_id, $notifications, $time, $key) {
         $user_id = $notifications["user_id"];
         $hive_name = $notifications["hive_name"];
         $error = false;
@@ -78,6 +127,7 @@ class DbNotification
 
         foreach ($notifications as $notification) {
             $message = $this->addNotificationMessage($notification);
+            $this->sendFCMNotification($message, $hive_id, $hive_name, $user_id, $key);
             $result = pg_execute($this->conn, "notification insertion", [
                 $message["title"],
                 $message["body"],

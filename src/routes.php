@@ -174,7 +174,7 @@ $app->post('/sigfox', function (Request $request, Response $response, array $arg
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
     $dbManager->connect();
-    $returnedValue = $dbManager->insertValue($request->getParams());
+    $returnedValue = $dbManager->insertValue($request->getParams(), $config["firebase_cloud_messaging.key"]);
     if ($returnedValue['error']) {
         return $response->withJson($returnedValue, 500);
     }

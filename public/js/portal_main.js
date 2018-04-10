@@ -511,17 +511,19 @@ function arrowsPosition(element) {
 //Create measurement Html for device
 function createMeasurementHtml(result, id){
     var data = result.data;
+    if (data.length > 0) {
+        var div = document.getElementById('measurement-'+id);
+        var div2 = document.getElementById('measurement2-'+id);
 
-    var div = document.getElementById('measurement-'+id);
-    var div2 = document.getElementById('measurement2-'+id);
+        proximity = "Neprevrátený";
 
-    proximity = "Neprevrátený";
-    if(data[0][4].hodnota =='true'){
-        proximity='<span class="text-danger">Prevrátený</span>';
+        if(data[0][4].hodnota =='true'){
+            proximity='<span class="text-danger">Prevrátený</span>';
+        }
+
+        div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkosť: "+data[0][3].hodnota+"";
+        div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
     }
-
-    div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkosť: "+data[0][3].hodnota+"";
-    div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
 }
 
 function getCookie(cname) {

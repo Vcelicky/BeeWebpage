@@ -3,6 +3,7 @@ var device_id;
 var actualURL = window.location.origin + "/BeeWebpage/public";
 
 $( document ).ready(function() {
+    getNotifications();
     device_id = location.href.match(/([^\/]*)\/*$/)[1];
     loc = window.location.origin;
 
@@ -31,8 +32,6 @@ $( document ).ready(function() {
         event.stopPropagation();
         $('.search-trigger').parent('.header-left').removeClass('open');
     });
-
-    getNotifications();
 
 });
 
@@ -78,7 +77,7 @@ function createDataTable(data){
         "processing": true,
         "bAutoWidth": false,
         "dom": '<"pull-left"f><"pull-left"l>tip',
-        searching: false,
+        "searching" : false,
         "data": objects.data,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Slovak.json"
@@ -91,30 +90,7 @@ function createDataTable(data){
         ]
     });
 
-    table.order([ 0, 'desc' ]);
-}
-
-function ajaxGetDeviceInfo() {
-    var loc = window.location.origin;
-
-    data = {
-        'token' : getCookie('token'),
-        'user_id' : getCookie('user_id'),
-        'device_id' : device_id
-    };
-
-    $.ajax({
-        url: loc + '/BeeWebpage/public/user/device',
-        method : 'POST',
-        data : JSON.stringify(data),
-        dataType:'json',
-        headers : {
-            'Content-Type' : 'application/json'
-        }
-    }).done(function (data) {
-        console.log(data);
-        //createHiveInfo(data);
-    });
+    //table.order([ 0, 'desc' ]);
 }
 
 function getCookie(cname) {
