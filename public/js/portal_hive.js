@@ -171,7 +171,6 @@ $( "#save" ).click(function() {
         setTimeout(function(){
             $(".myAlert-bottom").hide();
         }, 30000);
-
     }
 
 });
