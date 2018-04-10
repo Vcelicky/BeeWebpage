@@ -33,8 +33,8 @@
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand" href="../portal"><img src="../public/images/logo_portal1.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="../portal"><img src="../public/images/logo_portal2.png" alt="Logo"></a>
+            <a class="navbar-brand" href="../public//portal"><img src="../public/images/logo_portal1.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="../public//portal"><img src="../public/images/logo_portal2.png" alt="Logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
                 <i class="fa fa-bars"></i>
             </button>
@@ -42,10 +42,10 @@
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li>
                     <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-users"></i>Manažment používateľov </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="/BeeWebpage/public/order_management"> <i class="menu-icon fa fa-list-alt"></i>Manažment objednávok </a>
                 </li>
             </ul>
@@ -77,21 +77,27 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-sm-5">
                 <div class="user-area dropdown float-right">
+			
+					
+					<?php 
+							$id=$_COOKIE['user_name'];
+										echo "<a>$id &ensp;</a>";
+				?>
+			
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="../public/images/admin.jpg" alt="User Avatar">
                     </a>
 
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
+                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Môj Profil</a>
 
-                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifikácie <span class="count">13</span></a>
 
-                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
+                         <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>-->
 
-                        <a class="nav-link" id="log_out_button" href="#"><i class="fa fa-power -off"></i>Logout</a>
+                        <a class="nav-link" id="log_out_button" href="#"><i class="fa fa-power -off"></i>Odhlásenie</a>
                     </div>
                 </div>
 
@@ -131,9 +137,9 @@
         </div>
     </div>
 	
-	<table class="table table-condensed"><tr><th>Meno zákazníka</th><th>Meno úľa</th><th>Adresa úľa</th><th>Poznámky</th></tr>
+	<table class="table table-condensed"><tr><th>Meno zákazníka</th><th>Meno úľa</th><th>Adresa úľa</th><th>Poznámky</th><th>Stav</th></tr>
 	
-	<?php 
+<?php 
 
 $host = "147.175.149.151"; 
 $user = "postgres"; 
@@ -143,7 +149,7 @@ $db = "tp";
 $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die("Could not connect to server\n"); 
 
-$query = "SELECT name, hive_name, hive_address, notes FROM bees.users JOIN bees.orders ON (orders.id=users.id) ORDER BY name;"; 
+$query = 'SELECT name, hive_name, hive_address, notes, orders.id, "Verify_order" FROM bees.users JOIN bees.orders ON (orders.id=users.id) ORDER BY name;'; 
 
 $rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
 
@@ -151,18 +157,115 @@ $rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
 	
 while ($ro = pg_fetch_object($rs)) {
 	
-	 echo "<tr>	<td>$ro->name</td>
-				<td>$ro->hive_name</td>
-				<td>$ro->hive_address</td>
-				<td>$ro->notes</td>		
-				</tr>";
+	 if($ro->Verify_order=="t")
+		 {
+			echo "<tr><td>$ro->name</td>
+				  <td>$ro->hive_name</td>
+				  <td>$ro->hive_address</td>
+				  <td>$ro->notes</td>
+				  <td><i class=\"menu-icon fa ti-check\" style=\"align-content: center;padding-left: 7px;\"></td>
+				  <form action=\"\" method='POST'>
+				  <input type='hidden' name='id_clear' value='$ro->id'>
+				  <input type='hidden' name='hive_name1' value='$ro->hive_name'>
+				  <td><input type='submit' name='delete' value='Zmazať'></td>	  
+				  </tr></form>";
+		 }
+		 else
+		 {
+			 echo "<form action=\"\" method='POST'>
+				  <tr>	
+				  <td>$ro->name</td>
+				  <td>$ro->hive_name</td>
+				  <td>$ro->hive_address</td>
+				  <td>$ro->notes</td>
+				  <input type='hidden' name='n' value='$ro->id'>
+				  <input type='hidden' name='hive_name' value='$ro->hive_name'>
+				  <input type='hidden' name='hive_address' value='$ro->hive_address'>
+				  <td><input type='submit' name='submit' value='Potvrdiť' style=\"margin-left: -15px;\"></form></td>
+				  <form action=\"\" method='POST'>
+				  <input type='hidden' name='id_clear' value='$ro->id'>
+				  <input type='hidden' name='hive_name1' value='$ro->hive_name'>
+				  <td><input type='submit' name='delete' value='Zmazať'></form></td>
+				  </tr>";			 
+		 }
 }
 
 
-
-pg_close($con); 
+	pg_close($con); 
 
 ?>
+
+<?php
+$id="nn";
+
+    if(isset($_POST['submit'])){
+		
+	  if(isset($_POST['n']))
+	  {
+		$id	= $_POST['n'];
+        select();
+	  }	
+    }
+	
+	if(isset($_POST['delete'])){
+	
+			delete1();	
+	}
+
+
+    function select()
+    {      
+		 $pr = $_POST['n'];	
+		 $hive_name= $_POST['hive_name'];	
+		 $hive_address= $_POST['hive_address'];	
+		 $host = "147.175.149.151"; 
+		 $user = "postgres"; 
+		 $pass = "smenajlepsi"; 
+		 $db = "tp"; 	
+		 $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
+					or die("Could not connect to server\n"); 
+
+			//$query = 'UPDATE bees.orders SET "Verify_order" = False WHERE id = ".$pr."'; 
+		  $query = "UPDATE bees.orders SET \"Verify_order\" = True WHERE id = $pr"; 
+		  $result = pg_query($query); 
+		  $together=$hive_name . $pr;
+		  $id_device=password_hash($together, PASSWORD_DEFAULT);
+		  $query1 = "INSERT INTO bees.devices VALUES ('$id_device', '$pr', '14.0.17.0', '$hive_name', '$hive_address')";
+		  $result1 = pg_query($query1); 
+		  pg_close($con); 	
+		  
+		  echo '<script language="javascript">';
+		  echo 'alert("Objednávka bola úspešne potvrdená.")';
+		  echo '</script>';
+		  header("Refresh:0");
+		
+    }
+	
+	function delete1()
+    { 
+		  $pr1 = $_POST['id_clear'];	
+		  $h_name = $_POST['hive_name1'];	
+		  $host = "147.175.149.151"; 
+		  $user = "postgres"; 
+		  $pass = "smenajlepsi"; 
+		  $db = "tp"; 	
+		  $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
+					or die("Could not connect to server\n"); 
+
+		  $query = "DELETE FROM bees.orders WHERE id = $pr1 and hive_name='$h_name'"; 
+		  $result = pg_query($query); 
+		  
+		  pg_close($con); 
+		  
+		  echo '<script language="javascript">';
+		  echo 'alert("Objednávka bola úspešne zmazaná.")';
+		  echo '</script>';
+		  header("Refresh:0");
+	}
+   
+
+?>
+
 
 </table>;
 
@@ -185,5 +288,8 @@ pg_close($con);
 
 <!--<script src="../js/data-table/datatables-init.js"></script>-->
 
+
 </body>
 </html>
+
+

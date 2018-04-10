@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tomas
- * Date: 11.11.2017
- * Time: 11:25
- */
 
 namespace src\Db_api;
 use \Firebase\JWT\JWT;
@@ -287,6 +281,13 @@ class DbManager
     public function insertValue($raw_data)
     {
         $data = parser::getData($raw_data['data']['value']);
+        // check notifications
+        $notification = new DbNotification($this->conn);
+        $notifications = $notification->checkNotification($data,  $raw_data['id']);
+        if ($notifications) {
+            $notification->addNotification($raw_data['id'], $notifications, $raw_data['time']);
+        }
+
         $query = 'INSERT INTO bees.measurements(time, temperature_in, weight, proximity, temperature_out,
                   humidity_in, humidity_out, device_name, batery)
                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);';
@@ -303,16 +304,14 @@ class DbManager
             $raw_data['id'],
             $data['stav_baterie']
         ]);
-        $result_data['error'] = false;
+        $result_data = "";
         if (!$result) {
-            $result_data['error'] = true;
-            $result_data['message'] = pg_last_error();
+            $result_data = pg_last_error();
             return $result_data;
         }
 
-        $result_data['error'] = false;
-        $result_data['message'] = "query was successfully executed";
-        return $result;
+        $result_data = "query was successfully executed";
+        return $result_data;
     }
 
     public function getAllDevices($token, $userId) {
@@ -442,7 +441,7 @@ class DbManager
     }
 
     public function getUserMeasurements($token, $userId, $deviceId, $from, $to) {
-        if($this->tokenizer->isValidToken($token, $userId) == false){
+        if((isset($_SESSION['role_id']) && ($_SESSION['role_id'] === 1)) && ($this->tokenizer->isValidToken($token, $userId) == false)){
            return [
                'error'   => true,
                'status'  => 401,

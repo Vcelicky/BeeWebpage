@@ -86,7 +86,7 @@ function showGraph(deviceElement, deviceId) {
         console.log(document.getElementById("chart-section-" + deviceId).getElementsByTagName("canvas"));
         document.getElementById("chart-section-" + deviceId).className = "d-block";
         if (document.getElementById("chart-" + deviceId.toString()).className.length === 0) {
-            getDeviceData(deviceId, '', devicesMeasurements.actual_time);
+            getDeviceData(deviceId, '', devicesMeasurements[ deviceId ].actual_time);
             while (typeof devicesMeasurements[ deviceId ] === "undefined");
             addNewDoubleChart(deviceId, 1, "Teplota");
         }
@@ -177,7 +177,7 @@ function addNewDoubleChart(device, type, title) {
                             fill: false
                         },
                         {
-                            label : title + " vnutri",
+                            label : title + " vnútri",
                             data: graphData2,
                             borderColor: "#3e95cd",
                             fill: false
@@ -272,7 +272,7 @@ function updateChartData(device, way) {
         fill: false
         },
         {
-            label : title + " vnutri",
+            label : title + " vnútri",
             data: graphData2,
             borderColor: "#3e95cd",
             fill: false
@@ -365,7 +365,10 @@ function ajaxGetMeasurement(id) {
     }).done(function (data) {
         console.log(data);
         if (data.data.length > 0) {
-            devicesMeasurements.actual_time = data.data[0][0].cas;
+            if (typeof devicesMeasurements[ id ] === "undefined") {
+                devicesMeasurements[ id ] = {};
+            }
+            devicesMeasurements[ id ].actual_time = data.data[0][0].cas;
         }
         createMeasurementHtml(data, id);
     });
@@ -446,9 +449,9 @@ function createHiveHtml(id, name, location){
                                 onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes;\
                                            for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
                                            this.className = \"nav-link active\";\
-                                           document.getElementById(\"graph-title-' + id +'\", 1).textContent = \"Hmotnost\";\
-                                           addNewChart(\"'+id.toString()+'\", 5, \"Hnotnost\")\'\
-                            >Hmotnost</a>\
+                                           document.getElementById(\"graph-title-' + id +'\", 1).textContent = \"Hmotnosť\";\
+                                           addNewChart(\"'+id.toString()+'\", 5, \"Hmotnosť\")\'\
+                            >Hmotnosť</a>\
                         </li> \
                         <li class="nav-item">\
                             <a\
@@ -457,9 +460,9 @@ function createHiveHtml(id, name, location){
                                 onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes;\
                                            for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
                                            this.className = \"nav-link active\";\
-                                           document.getElementById(\"graph-title-' + id +'\").textContent = \"Baterka\";\
-                                           addNewChart(\"'+id.toString()+'\", 6, \"Baterka\")\'\
-                            >Baterka</a>\
+                                           document.getElementById(\"graph-title-' + id +'\").textContent = \"Batéria\";\
+                                           addNewChart(\"'+id.toString()+'\", 6, \"Batéria\")\'\
+                            >Batéria</a>\
                         </li> \
                     </ul> \
                     <div class="chart-space"> \
@@ -491,7 +494,7 @@ function checkSize(){
     }
     else {
         $(".chart-space").width("width: 50vw");
-        const width = Math.round($(".chart-space-arrow-left").width());
+        var width = Math.round($(".chart-space-arrow-left").width());
         $(".chart-space-arrow-left").css("left", "-" + width + "px");
         $(".chart-space-arrow-right")
             .css("right", "-" + width + "px")
@@ -509,9 +512,6 @@ function arrowsPosition(element) {
 function createMeasurementHtml(result, id){
     var data = result.data;
 
-    console.log(data[0]);
-    console.log(data[0][0].hodnota);
-
     var div = document.getElementById('measurement-'+id);
     var div2 = document.getElementById('measurement2-'+id);
 
@@ -520,7 +520,7 @@ function createMeasurementHtml(result, id){
         proximity='<span class="text-danger">Prevrátený</span>';
     }
 
-    div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkost: "+data[0][3].hodnota+"";
+    div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkosť: "+data[0][3].hodnota+"";
     div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
 }
 
