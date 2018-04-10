@@ -135,7 +135,7 @@ class DbNotification
                 $hive_name,
                 $user_id,
                 date('Y-m-d G:i:s', $time),
-                password_hash($time . $hive_id . $user_id . $message["title"], PASSWORD_DEFAULT)
+                $time . $hive_id . $user_id . $message["title"]
             ]);
 
             if (!$result) {
@@ -185,6 +185,14 @@ class DbNotification
             array_pop($data);
             $data = array_reverse($data);
             array_pop($data);
+
+            // check proximity
+            if ($data[0] != 0) {
+                array_push($result, ['poloha' => ['value' => $data['poloha'], 'type' => '']]);
+            }
+            $data = array_reverse($data);
+            array_pop($data);
+            $data = array_reverse($data);
 
             // check up and down limits of temperature and humidity
             $limit_item = 3;
