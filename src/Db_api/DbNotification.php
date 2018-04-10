@@ -41,24 +41,25 @@ class DbNotification
         if (count($message_topic) < 2) {
             // weight message
             if (strcmp(key($item), "weight") === 0) {
-                $returned_meessage["title"] = "Prekrocenie hranice hmotnosti";
-                $returned_message["body"]  = "Hmotnost vcelinu je " . $item["weight"]["value"];
+                $returned_meessage["title"] = "Prekročená hranica hmotnosti";
+                $returned_message["body"]  = "Hmotnost úľa je " . $item["weight"]["value"];
             }
 
             // battery
             if (strcmp(key($item), "battery") === 0) {
-                $returned_message["title"] = "Hodnota baterie";
-                $returned_message["body"]  = "Hodnota baterie je " . $item["battery"]["value"];
+                $returned_message["title"] = "Hodnota batérie";
+                $returned_message["body"]  = "Hodnota batérie je " . $item["battery"]["value"];
             }
 
             //proximity
             if (strcmp(key($item), "poloha") === 0) {
-                $returned_message["title"] = "Vcelin sa prevratil";
+                $returned_message["title"] = "Úľ sa prevrátil";
                 $returned_message["body"]  = "";
             }
         }
         else {
-            $returned_message["title"] = $message_topic[0] . " " . $message_topic[1] . " prekrocila hranicu";
+			$vv="prekročila hranicu";
+            $returned_message["title"] = $message_topic[0] . " " . $message_topic[1] . $vv;
             $returned_message["body"]  = $message_topic[0] . " ma hodnotu " . $item["battery"]["value"];
         }
 

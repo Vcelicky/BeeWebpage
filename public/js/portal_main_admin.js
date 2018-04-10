@@ -180,7 +180,7 @@ function addNewDoubleChart(device, type, title) {
                         fill: false
                     },
                         {
-                            label : title + " vnutri",
+                            label : title + " vnútri",
                             data: graphData2,
                             borderColor: "#3e95cd",
                             fill: false
@@ -275,7 +275,7 @@ function updateChartData(device, way) {
         fill: false
     },
         {
-            label : title + " vnutri",
+            label : title + " vnútri",
             data: graphData2,
             borderColor: "#3e95cd",
             fill: false
@@ -523,7 +523,7 @@ function createHiveHtml(id, name, location){
                                            for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
                                            this.className = \"nav-link active\";\
                                            document.getElementById(\"graph-title-' + id +'\", 1).textContent = \"Hmotnost\";\
-                                           addNewChart(\"'+id.toString()+'\", 5, \"Hnotnost\")\'\
+                                           addNewChart(\"'+id.toString()+'\", 5, \"Hmotnosť\")\'\
                             >Hmotnost</a>\
                         </li> \
                         <li class="nav-item">\
@@ -533,9 +533,9 @@ function createHiveHtml(id, name, location){
                                 onclick=\' var tabs = $(this)[0].parentElement.parentElement.childNodes;\
                                            for(i=1; i< tabs.length; i+=2) {tabs[i].children[0].className = "nav-link";}\
                                            this.className = \"nav-link active\";\
-                                           document.getElementById(\"graph-title-' + id +'\").textContent = \"Baterka\";\
-                                           addNewChart(\"'+id.toString()+'\", 6, \"Baterka\")\'\
-                            >Baterka</a>\
+                                           document.getElementById(\"graph-title-' + id +'\").textContent = \"Batéria\";\
+                                           addNewChart(\"'+id.toString()+'\", 6, \"Batéria\")\'\
+                            >Batéria</a>\
                         </li> \
                     </ul> \
                     <div class="chart-space"> \
@@ -567,7 +567,7 @@ function createMeasurementHtml(result, id){
         proximity='<span class="text-danger">Prevrátený</span>';
     }
 
-    div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkost: "+data[0][3].hodnota+"";
+    div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkosť: "+data[0][3].hodnota+"";
     div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
 }
 
