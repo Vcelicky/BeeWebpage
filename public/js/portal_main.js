@@ -395,7 +395,7 @@ function createHiveHtml(id, name, location){
                         <div class="clearfix margin-bottom-sm"> \
                             <div class="col-lg-2">\
                                 <i class="fa fa-archive bg-flat-color-3 p-3 font-2xl mr-3 float-left text-light"></i> \
-                                <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
+                                <div class="h6 text-secondary mb-0 mt-1">'+name+'</div> \
                                 <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
                             </div>\
                             <div class="col-lg-10">\
