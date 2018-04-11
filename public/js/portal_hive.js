@@ -1,5 +1,5 @@
 //Javascript file for main portal page only
-var device_id;
+// var device_id;
 var loc;
 
 $( document ).ready(function() {
@@ -32,8 +32,9 @@ $( document ).ready(function() {
         $('.search-trigger').parent('.header-left').removeClass('open');
     });
 
-    ajaxGetMeasurements();
+
     ajaxGetDeviceInfo();
+    ajaxGetMeasurements();
 
 });
 
@@ -45,8 +46,6 @@ $('.hive').editable(function(value, settings) {
         "value": value
     };
 
-    // console.log(data);
-
     $.ajax({
         url: loc+'/BeeWebpage/public/user/device/name',
         method : 'PUT',
@@ -56,7 +55,13 @@ $('.hive').editable(function(value, settings) {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        alert("Názov úľa bol úspešne zmenený");
+        var box = $('#alert-succ');
+        box.show();
+        box.html("<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a> <strong>Názov úľa bol úspešne zmenený</strong> ");
+
+        setTimeout(function(){
+            $(".myAlert-bottom").hide();
+        }, 5000);
     });
 
     return(value);
@@ -74,7 +79,6 @@ $('.location').editable(function(value, settings) {
         "value": value
     };
 
-    // console.log(data);
 
     $.ajax({
         url: loc+'/BeeWebpage/public/user/device/location',
@@ -85,7 +89,13 @@ $('.location').editable(function(value, settings) {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        alert("Lokácia úľa bola úspešne zmenená");
+        var box = $('#alert-succ');
+        box.show();
+        box.html("<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a> <strong>Lokácia úľa bola úspešne zmenená</strong> ");
+
+        setTimeout(function(){
+            $(".myAlert-bottom").hide();
+        }, 5000);
     });
 
     return(value);
@@ -143,8 +153,6 @@ $( "#save" ).click(function() {
             "w": w
         };
 
-        // console.log(data);
-
         $.ajax({
             url: loc + '/BeeWebpage/public/user/device/limits',
             method: 'PUT',
@@ -193,7 +201,13 @@ $( "#reset" ).click(function() {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        alert("Hraničné hodnoty boli úspešne zresetované");
+        var box = $('#alert-succ');
+        box.show();
+        box.html("<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a> <strong>Hraničné hodnoty boli úspešne zresetované</strong> ");
+
+        setTimeout(function(){
+            $(".myAlert-bottom").hide();
+        }, 5000);
         location.reload();
 
     });
@@ -223,8 +237,6 @@ function logout() {
 function ajaxGetMeasurements() {
     var loc = window.location.origin;
     var id = location.href.match(/([^\/]*)\/*$/)[1];
-
-    // console.log("Id:" +id);
 
     data = {
         'token' : getCookie('token'),
@@ -283,9 +295,37 @@ function createDataTable(response){
         },
         "createdRow": function(row, data ) {
             if (data["P"] == "true" ) {
-                // $(row).addClass('red');
-                // $('td', row).eq(5).css('background-color', 'pink');
                 $('td', row).eq(5).addClass('red');
+            }
+            if(data["IT"] > document.getElementById("it-u").value){
+                $('td', row).eq(1).addClass('red');
+            }
+            if(data["IT"] < document.getElementById("it-d").value){
+                $('td', row).eq(1).addClass('red');
+            }
+            if(data["OT"] > document.getElementById("ot-u").value){
+                $('td', row).eq(2).addClass('red');
+            }
+            if(data["OT"] < document.getElementById("ot-d").value){
+                $('td', row).eq(2).addClass('red');
+            }
+            if(data["IH"] > document.getElementById("ih-u").value){
+                $('td', row).eq(3).addClass('red');
+            }
+            if(data["IH"] < document.getElementById("ih-d").value){
+                $('td', row).eq(3).addClass('red');
+            }
+            if(data["OH"] > document.getElementById("oh-u").value){
+                $('td', row).eq(4).addClass('red');
+            }
+            if(data["OH"] < document.getElementById("oh-d").value){
+                $('td', row).eq(4).addClass('red');
+            }
+            if(data["W"] > document.getElementById("w").value){
+                $('td', row).eq(6).addClass('red');
+            }
+            if(data["B"] < document.getElementById("b").value && data["B"]!=100){
+                $('td', row).eq(7).addClass('red');
             }
         },
         "columns": [
@@ -373,7 +413,6 @@ function ajaxGetDeviceInfo() {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        // console.log(data);
         createHiveInfo(data);
     });
 }
