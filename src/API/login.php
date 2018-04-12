@@ -20,7 +20,9 @@ if (isset($_POST['email']) && isset($_POST['password']) && (strlen($_POST['email
     if ($user != false) {
         $_SESSION['id']=  $user[2];
         $_SESSION['role_id']=  $user[3];
-
+        $_SESSION['user_name'] = $user[0];
+        $_SESSION['user_email'] = $user[1];
+        $_SESSION['user_phone'] = $user[6];
         // use is found
         $response["error"] = FALSE;
         $response["id"] = $user[2];
