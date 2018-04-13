@@ -2,9 +2,9 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use src\Carrot_api\Api;
 use src\Db_api\DbManager;
 use src\Db_api\DbNotification;
+include (__DIR__ . '/API/include/DB_Functions.php');
 
 $app->get('/', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'index.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
@@ -397,8 +397,17 @@ $app->post('/api/measurements/all', function (Request $request, Response $respon
 $app->get('/profile', function (Request $request, Response $response, array $args) {
     if (isset($_SESSION['id'])) {
         if (isset($_SESSION['role_id'])) {
-            if ($_SESSION['role_id'] == 1)
-                return $this->renderer->render($response, 'user_profile.phtml');
+            if ($_SESSION['role_id'] == 1) {
+                $api_db =  new DB_Functions();
+                $user = $api_db->getUser($_SESSION['id']);
+                return $this->renderer->render($response, 'user_profile.phtml',
+                    [
+                        'name' => $user['data'][0],
+                        'email' => $user['data'][1],
+                        'phone' => $user['data'][2]
+                    ]
+                );
+            }
         }
     }
 
