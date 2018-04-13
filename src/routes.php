@@ -396,19 +396,15 @@ $app->post('/api/measurements/all', function (Request $request, Response $respon
 
 $app->get('/profile', function (Request $request, Response $response, array $args) {
     if (isset($_SESSION['id'])) {
-        if (isset($_SESSION['role_id'])) {
-            if ($_SESSION['role_id'] == 1) {
-                $api_db =  new DB_Functions();
-                $user = $api_db->getUser($_SESSION['id']);
-                return $this->renderer->render($response, 'user_profile.phtml',
-                    [
-                        'name' => $user['data'][0],
-                        'email' => $user['data'][1],
-                        'phone' => $user['data'][2]
-                    ]
-                );
-            }
-        }
+        $api_db =  new DB_Functions();
+        $user = $api_db->getUser($_SESSION['id']);
+        return $this->renderer->render($response, 'user_profile.phtml',
+            [
+                'name' => $user['data'][0],
+                'email' => $user['data'][1],
+                'phone' => $user['data'][2]
+            ]
+        );
     }
 
     else
