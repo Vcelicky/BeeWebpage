@@ -26,9 +26,9 @@ $menu_footer_midd = function ($request, $response, $next) {
 
     $footer = '
                     
-                        <footer class="footer bg-light">
+                        <footer class="footer bg-light" onclick="teamphoto()" style="cursor: pointer;">
                             <div class="container">
-                                <p class="m-0 text-center">Včeličky Team - FIIT STU, 2018</p>
+                                <p class="m-0 text-center">Včeličky Team - FIIT STU, 2018 | fiittp20@gmail.com</p>
                             </div>
                         </footer>
             ';
@@ -37,5 +37,7 @@ $menu_footer_midd = function ($request, $response, $next) {
     $request = $request->withAttribute('footer', $footer);
     return $next($request, $response);
 };
+
+
 
 $app->add($menu_footer_midd);
