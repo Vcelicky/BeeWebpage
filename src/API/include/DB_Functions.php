@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-
 use bb\Sha3\Sha3;
 
 class DB_Functions {
@@ -11,7 +10,7 @@ class DB_Functions {
     function __construct() {
         require_once 'DB_Connect.php';
         // connecting to database
-        $db = new Db_Connect();
+        $db = new \Db_Connect();
         $this->conn = $db->connect();
     }
 
@@ -36,6 +35,61 @@ class DB_Functions {
         }
 
         return false;
+    }
+
+    public function getUser($id) {
+        $query = 'SELECT name, email, phone
+              FROM bees.users
+              WHERE id = $1;';
+        $result = pg_prepare($this->conn, 'user', $query);
+        $result = pg_execute($this->conn, 'user', [$id]);
+
+        $return_value['error'] = false;
+
+        if (!$result) {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+        else {
+            $user =  pg_fetch_row($result);
+            $return_value['data'] = $user;
+        }
+        return $return_value;
+
+    }
+
+    /**
+     * Change user personal data
+     * return database update status
+     */
+    public function changeUserData($user_id, $name, $phone) {
+        $query = 'UPDATE bees.users SET name = $1, phone = $2
+                  WHERE id = $3;';
+
+        $result = pg_prepare($this->conn, 'change user query', $query);
+        $result = pg_execute($this->conn, 'change user query', [$name, $phone, $user_id]);
+
+        $return_value['error'] = false;
+
+        if (!$result) {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+        return $return_value;
+    }
+
+    public function deleteUser($id) {
+        $query = 'DELETE FROM bees.users WHERE id = $1';
+        $result = pg_prepare($this->conn, 'delete user query', $query);
+        $result = pg_execute($this->conn, 'delete user query', [$id]);
+
+        $return_value['error'] = false;
+
+        if (!$result) {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+        return $return_value;
     }
  
     /**

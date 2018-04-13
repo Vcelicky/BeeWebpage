@@ -1,0 +1,360 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bee Manager</title>
+    <meta name="description" content="BeeAdmin portal">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="images/avicon.ico">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom Theme Style -->
+    <link href="css/portal.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/cs-skin-elastic.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+
+<!-- Left Panel -->
+
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="./"><img src="images/logo_portal3.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="./"><img src="images/logo_portal2.png" alt="Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-dashboard"></i>Manažment úľov </a>
+                </li>
+                <li>
+                    <a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-wpforms"></i>Vytvorenie objednávky </a>
+                </li>
+                <li>
+                    <a href="/BeeWebpage/public/notifications"> <i class="menu-icon fa fa-history"></i>Historia notifikácií</a>
+                </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+
+    </nav>
+</aside><!-- /#left-panel -->
+
+<!-- Left Panel -->
+
+<!-- Right Panel -->
+
+<div id="right-panel" class="right-panel">
+
+    <!-- Header-->
+    <header id="header" class="header">
+
+        <div class="header-menu">
+
+            <div class="col-sm-7">
+                <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                <div class="header-left">
+                    <button class="search-trigger"><i class="fa fa-search"></i></button>
+                    <div class="form-inline">
+                        <form class="search-form">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
+                            <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="dropdown for-notification keep-open">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" >
+                            <i class="fa fa-bell"></i>
+                            <span class="unread-count"></span>
+                        </button>
+                        <div id = "dropdown-notification" class="dropdown-menu" aria-labelledby="notification">
+                            <p class="red .dropdown.for-notification.keep-open"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="user-area dropdown float-right">
+
+                    <?php
+                    $id=$_COOKIE['user_name'];
+                    echo "<a>$id &ensp;</a>";
+                    ?>
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
+                    </a>
+
+                    <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Môj Profil</a>
+
+                        <a class="nav-link" href="/BeeWebpage/public/notifications"><i class="fa fa- user"></i>História notifikácií</a>
+
+                        <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>-->
+
+                        <a class="nav-link" id="log_out_button" href="#"><i class="fa fa-power -off"></i>Odhlásenie</a>
+                    </div>
+                </div>
+
+                <div class="language-select dropdown" id="language-select">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
+                        <i class="flag-icon flag-icon-us"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="language" >
+                        <div class="dropdown-item">
+                            <span class="flag-icon flag-icon-fr"></span>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-es"></i>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-us"></i>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-it"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </header><!-- /header -->
+    <!-- Header-->
+
+    <div class="breadcrumbs">
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1>Profil</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Notification modal window-->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id = "notificationModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="ti-trash"></span>
+                        <span>Vymaž</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    Put content here:-->
+    <div class="container">
+        <div class="row my-2">
+            <div class="col-lg-8 order-lg-2">
+                <div class="tab-content py-4">
+                        <form id = "profile-form" role="form">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Meno</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id = "user_name" name = "user_name" type="text" value="<?php echo $name; ?>">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id = "user_email" type="email" name = "user_email" value="<?php echo $email;?>">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Telefónne číslo</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id = "user_phone" type="tel" name = "user_phone" value="<?php echo $phone ?>">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id = "user_pass1" type="password" name="user_pass1">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id = "user_pass" type="password" name="user_pass">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label"></label>
+                                <div class="col-lg-9">
+                                    <input type="submit" class="btn btn-primary" value="Uložiť zmeny" >
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /#right-panel -->
+<script src="js/jquery.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script>
+    $('#profile-form').validate(
+        {
+            rules: {
+                user_name: {
+                    minlength: 4
+                },
+                user_email: {
+                    emailvalidation: true
+                },
+                user_phone: {
+
+                    phonevalidation: true
+                },
+                user_pass1: {
+
+                    minlength: 8
+                },
+                user_pass: {
+                    minlength: 8,
+                    samePass: true
+                }
+
+            },
+            //successful validation
+            unhighlight: function(element) {
+                const id = element.id;
+                $('label[for="' + id + '"]').removeClass('text-danger').addClass("col-form-label text-success");
+                $(element).removeClass('is-invalid').addClass("form-control is-valid");
+            },
+            // error validation
+            highlight: function(element) {
+                const id = element.id;
+                $('label[for="' + id + '"]').removeClass('text-success').addClass("col-form-label text-danger");
+                $(element).removeClass('is-valid').addClass("form-control is-invalid");
+            },
+            submitHandler:function(){
+                var userForm = document.getElementById("profile-form");
+                $.ajax({
+                    url: actualURL + '/../src/API/change_profile_data.php',
+                    method : 'POST',
+                    dataType : 'json',
+                    data : {
+                        user_name : userForm["0"].value,
+                        user_email : userForm["1"].value,
+                        user_phone : userForm["2"].value,
+                        user_pass : userForm["4"].value
+                    }
+                })
+                    .done(function (data) {
+                        if (data.error) {
+                            /**
+                             * @param {{error_msg:string}} data
+                             */
+                            $("<div style = \"display:block;\" class= \"alert alert-danger\">\n" +
+                                "<strong>Chyba!</strong>" + data.message + "\n" +
+                                "</div>").insertAfter(".breadcrumbs");
+
+                            $('html, body').animate({
+                                scrollTop: $(".breadcrumbs").offset().top
+                            }, 1000);
+
+                            setTimeout(function(){
+                                var alert = $(".alert");
+                                alert.fadeOut();
+                                alert.remove();
+                            }, 5000);
+                        }
+                        else {
+                            console.log("success");
+                            $("<div style=\"display:block;\" class= \"alert alert-success\">\n" +
+                                "Údaje boli úspešne zmenené\n" +
+                                "</div>").insertAfter(".breadcrumbs");
+
+                            $('html, body').animate({
+                                scrollTop: $(".breadcrumbs").offset().top
+                            }, 1000);
+                            setTimeout(function(){
+                                var alert = $(".alert");
+                                alert.fadeOut();
+                                alert.remove();
+                            }, 5000);
+                        }
+                    });
+            }
+
+        });
+
+    $.validator.addMethod("emailvalidation",
+        function(value, element) {
+            var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+            return $.trim(value).match(pattern) ? true : false;
+        }
+    );
+
+    $.validator.addMethod("phonevalidation",
+        function(value, element) {
+            var pattern = /^\+[0-9]{3}\s*[0-9]{3}\s*[0-9]{3}\s*[0-9]{3}$/;
+
+            return $.trim(value).match(pattern) ? true : false;
+        }
+    );
+
+    $.validator.addMethod("samePass",
+        function (value, element) {
+            var first = $("#user_pass1").val();
+            return value === first;
+        }
+    );
+
+    jQuery.extend(jQuery.validator.messages, {
+        required: "Toto pole je povinné",
+        sameEmail: "Prosím zadajte rovnaký email",
+        samePass: "Prosím zadajte rovnaké heslo",
+        email: "Prosím zadajte email v korektnom stave.",
+        phonevalidation: "Prosim zadajte telefonne cislo v korektnom tvare",
+        minlength: jQuery.validator.format("Prosím zadajte minimálne {0} znakov.")
+    });
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"</script>
+<script src="js/portal.js"></script>
+<script src="js/portal_main.js"></script>
+<script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
+<script src="js/notifications.js"></script>
+<script src="./../node_modules/chart.js/dist/Chart.js"></script>
+
+</body>
+</html>
