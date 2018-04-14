@@ -42,7 +42,7 @@ class DbNotification
             // weight message
             if (strcmp(key($item), "weight") === 0) {
                 $returned_message["title"] = "Hodnota hmotnosti";
-                $returned_message["body"]  = "Hmotnost úľa je " . $item["weight"]["value"] . "kg";
+                $returned_message["body"]  = "Hmotnosť úľa je " . $item["weight"]["value"] . "kg";
             }
 
             // battery
