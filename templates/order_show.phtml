@@ -230,6 +230,7 @@ $id="nn";
 		  $result = pg_query($query); 
 		  $together=$hive_name . $pr;
 		  $id_device=password_hash($together, PASSWORD_DEFAULT);
+		  $id_device = str_replace('/', '', $id_device);
 		  $query1 = "INSERT INTO bees.devices VALUES ('$id_device', '$pr', '14.0.17.0', '$hive_name', '$hive_address')";
 		  $result1 = pg_query($query1); 
 		  pg_close($con); 	
