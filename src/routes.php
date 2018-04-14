@@ -422,7 +422,12 @@ $app->post('/order/new', function ($request, $response, $args) {
     $dbManager->connect();
 
     $return = $dbManager->createOrder($allPostPutVars['id'], $allPostPutVars['token'], $allPostPutVars['hive_name'], $allPostPutVars['hive_address'], $allPostPutVars['SMS'], $allPostPutVars['E-mail'], $allPostPutVars['notes']);
-    return $response->withStatus($return);
+    if ($return['error']) {
+        return $response->withJson($return, 500);
+    }
+    else {
+        return $response->withJson($return, 200);
+    }
 });
 
 $app->get('/notifications', function (Request $request, Response $response, array $args) {

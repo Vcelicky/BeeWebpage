@@ -133,13 +133,12 @@ class DbManager
         $query = "INSERT INTO bees.orders VALUES ($userId, '$name', '$adress', '$notes', '" . (($sms) ? "true" : "false") . "', '" .
             (($email) ? "true" : "false") . "', 'False');";
         $result = pg_query($this->conn, $query);
-
+        $result_value = ['error' => false];
         if (!$result) {
-            echo "Problem with query ";
-            echo pg_last_error();
-            exit();
+            $result_value['error'] = true;
+            $result_value['message'] = pg_last_error();
         }
-        return 200;
+        return $result_value;
     }
 
     function disconnect(){
