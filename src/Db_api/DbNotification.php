@@ -42,7 +42,7 @@ class DbNotification
             // weight message
             if (strcmp(key($item), "weight") === 0) {
                 $returned_message["title"] = "Hodnota hmotnosti";
-                $returned_message["body"]  = "Hmotnost úľa je " . $item["weight"]["value"];
+                $returned_message["body"]  = "Hmotnost úľa je " . $item["weight"]["value"] . "kg";
             }
 
             // battery
@@ -61,7 +61,7 @@ class DbNotification
             //humidity
             if (strcmp($message_topic[0], "vlhkost") === 0) {
                 $returned_message["title"] = "Hodnota vlhkosti";
-                $returned_message["body"]  = "Hodnota vlhkosti " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"];
+                $returned_message["body"]  = "Hodnota vlhkosti " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"] . "%";
             }
             //temperature
             if (strcmp($message_topic[0], "teplota") === 0) {
