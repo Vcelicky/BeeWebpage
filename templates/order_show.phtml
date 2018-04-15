@@ -226,7 +226,7 @@ $id="nn";
 					or die("Could not connect to server\n"); 
 
 			//$query = 'UPDATE bees.orders SET "Verify_order" = False WHERE id = ".$pr."'; 
-		  $query = "UPDATE bees.orders SET \"Verify_order\" = True WHERE id = $pr"; 
+		  $query = "UPDATE bees.orders SET \"Verify_order\" = True WHERE id = $pr and hive_name='$hive_name'"; 
 		  $result = pg_query($query); 
 		  $together=$hive_name . $pr;
 		  $id_device=password_hash($together, PASSWORD_DEFAULT);
