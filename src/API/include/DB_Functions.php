@@ -38,7 +38,7 @@ class DB_Functions {
     }
 
     public function getUser($id) {
-        $query = 'SELECT name, email, phone
+        $query = 'SELECT name, email, phone, password_hash, password_salt
               FROM bees.users
               WHERE id = $1;';
         $result = pg_prepare($this->conn, 'user', $query);
@@ -62,20 +62,26 @@ class DB_Functions {
      * Change user personal data
      * return database update status
      */
-    public function changeUserData($user_id, $name, $phone) {
-        $query = 'UPDATE bees.users SET name = $1, phone = $2
-                  WHERE id = $3;';
+    public function changeUserData($user_id, $name, $phone, $email, $pass = NULL, $pass_salt = NULL, $pass_hash = NULL) {
+    // check if user set new password
+    if (is_null($pass_salt)) {
+        $pass_salt = uniqid(mt_rand(), true);
+        $pass_hash = Sha3::hash($pass_salt . $pass, 512);
+    }
 
-        $result = pg_prepare($this->conn, 'change user query', $query);
-        $result = pg_execute($this->conn, 'change user query', [$name, $phone, $user_id]);
+    $query = 'UPDATE bees.users SET name = $1, phone = $2, email = $3, password_hash = $4, password_salt = $5
+                  WHERE id = $6;';
 
-        $return_value['error'] = false;
+    $result = pg_prepare($this->conn, 'change user query', $query);
+    $result = pg_execute($this->conn, 'change user query', [$name, $phone, $email, $pass_hash, $pass_salt, $user_id]);
 
-        if (!$result) {
-            $return_value['error'] = true;
-            $return_value['message'] = 'sql error';
-        }
-        return $return_value;
+    $return_value['error'] = false;
+
+    if (!$result) {
+        $return_value['error'] = true;
+        $return_value['message'] = 'sql error';
+    }
+    return $return_value;
     }
 
     public function deleteUser($id) {
