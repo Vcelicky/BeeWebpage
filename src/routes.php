@@ -395,20 +395,29 @@ $app->post('/api/measurements/all', function (Request $request, Response $respon
 });
 
 $app->get('/profile', function (Request $request, Response $response, array $args) {
-    if (isset($_SESSION['id'])) {
-        $api_db =  new DB_Functions();
-        $user = $api_db->getUser($_SESSION['id']);
-        return $this->renderer->render($response, 'user_profile.phtml',
-            [
-                'name' => $user['data'][0],
-                'email' => $user['data'][1],
-                'phone' => $user['data'][2]
-            ]
-        );
-    }
-
-    else
-        return $response->withStatus(401);
+    if (isset($_SESSION['id']))
+        if(isset($_SESSION['role_id'])){
+            $api_db =  new DB_Functions();
+            $user = $api_db->getUser($_SESSION['id']);
+            if($_SESSION['role_id'] == 1)
+                return $this->renderer->render($response, 'user_profile.phtml',
+                    [
+                        'name' => $user['data'][0],
+                        'email' => $user['data'][1],
+                        'phone' => $user['data'][2]
+                    ]
+                );
+            else if ($_SESSION['role_id'] == 2){
+                return $this->renderer->render($response, 'admin_profile.phtml',
+                    [
+                        'name' => $user['data'][0],
+                        'email' => $user['data'][1],
+                        'phone' => $user['data'][2]
+                    ]
+                );
+            }}
+        else
+            return $response->withStatus(401);
 });
 
 /**
