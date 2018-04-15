@@ -677,5 +677,36 @@ class DbManager
         return $return_value;
     }
 
+    public function getDeviceNotifications($userId, $token, $device) {
+        if ($this->tokenizer->isValidToken($token, $userId) == false) {
+            return [
+                'error' => true,
+                'status' => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
+
+        $query = 'SELECT sms_not, email_not
+                  FROM bees.devices
+                  WHERE device_id = $1;';
+        $result = pg_prepare($this->conn, 'device not', $query);
+        $result = pg_execute($this->conn, 'device not', [$device]);
+        $result_response = ['error' => false];
+
+        if ($result) {
+            $rows = array();
+            while($r =  pg_fetch_assoc($result)) {
+                $rows = $r;
+            }
+            $result_response['data'] = $rows;
+        }
+        else {
+            $result_response['error'] = true;
+            $result_response['message'] = 'sql error';
+        }
+
+        return $result_response;
+    }
+
 
 }

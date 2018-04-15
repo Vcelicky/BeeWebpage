@@ -440,6 +440,30 @@ function ajaxGetMeasurement(id) {
     });
 }
 
+function ajaxGetDeviceNotifications(device) {
+    var loc = window.location.origin;
+
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : device
+    };
+
+    $.ajax({
+        url: loc + '/BeeWebpage/public/user/device/notifications',
+        method : 'POST',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+        let hive_item = document.getElementById('measurement-' + device);
+        hive_item.parentElement.parentElement.childNodes[3].childNodes[1].childNodes[1].checked = data.data.sms_not == "f" ? false : true;
+        hive_item.parentElement.parentElement.childNodes[5].childNodes[1].childNodes[1].checked = data.data.email_not == "f" ? false : true;
+    });
+}
+
 function createHives(result){
     var data = result.data;
     var div = document.getElementById('div.hives');
@@ -451,6 +475,10 @@ function createHives(result){
         ajaxGetMeasurement(data[index].device_id);
     }
 
+    //Set notifications for each device
+    for (index = 0; index < data.length; ++index) {
+        ajaxGetDeviceNotifications(data[index].device_id);
+    }
 }
 
 function createHiveHtml(id, name, location){
@@ -469,7 +497,7 @@ function createHiveHtml(id, name, location){
                                 <div class="form-check checkbox-slider--b"> \
                                     <label> \
                                         <input type="checkbox"><span>sms</span> \
-                                        </label> \
+                                    </label> \
                                 </div> \
                                 <div class="form-check checkbox-slider--b"> \
                                     <label> \

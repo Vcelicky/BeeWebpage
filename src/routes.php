@@ -211,6 +211,20 @@ $app->post('/user/devices', function (Request $request, Response $response, arra
     }
 });
 
+$app->post('/user/device/notifications', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices_notifications = $dbManager->getDeviceNotifications($body->user_id, $body->token, $body->device_id);
+    if ($devices_notifications['error']) {
+        return $response->withJson($devices_notifications, 500);
+    }
+    else {
+        return $response->withJson($devices_notifications, 200);
+    }
+});
+
 $app->post('/user/measurements2', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
