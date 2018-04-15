@@ -98,6 +98,9 @@ $(document).ready(function(){
             $('html, body').animate({
                 scrollTop: $("#register").offset().top
             }, 1000);
+			
+			//var phpadd= <?phpmail("sosnak.matus@gmail.com","My subject","nothing else");?> //call the php add function
+			//alert(phpadd) // result in undefined
 
             window.setTimeout("location=(window.origin + \"/BeeWebpage/public\");",5000);
         }
@@ -138,7 +141,7 @@ $(document).ready(function(){
         sameEmail: "Prosím zadajte rovnaký email",
         samePass: "Prosím zadajte rovnaké heslo",
         email: "Prosím zadajte email v korektnom stave.",
-        phonevalidation: "Prosim zadajte telefonne cislo v korektnom tvare",
+        phonevalidation: "Prosím zadajte telefónne číslo v korektnom tvare",
         minlength: jQuery.validator.format("Prosím zadajte minimálne {0} znakov.")
     });
 
