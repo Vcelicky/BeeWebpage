@@ -211,6 +211,20 @@ $app->post('/user/devices', function (Request $request, Response $response, arra
     }
 });
 
+$app->post('/user/measurements2', function (Request $request, Response $response, array $args) {
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $body = json_decode($request->getBody()->getContents());
+    $dbManager->connect();
+    $devices = $dbManager->getUserMeasurementsByAmount($body->token, $body->user_id, $body->device_id , $body->from, $body->to);
+    if ($devices['error']) {
+        return $response->withJson($devices, 500);
+    }
+    else {
+        return $response->withJson($devices, 200);
+    }
+});
+
 $app->post('/user/measurements', function (Request $request, Response $response, array $args) {
     $config = $this->config->getConfig();
     $dbManager = new DbManager($config);
