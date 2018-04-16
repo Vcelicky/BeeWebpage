@@ -284,7 +284,7 @@ function updateChartData(e, device, way) {
                 else {
                     if (dif >= 0) {
                         let start  = ((dif - localStep) >= 0) ? (dif - localStep) : 0;
-                        devicesMeasurements[ device ].actual_index = start;
+                        devicesMeasurements[ device ].actual_index = dif;
                         for (i = start; i < localStep; i++) {
                             graphData1.push({
                                 x: new moment(new Date(devicesMeasurements[device].data[i][0].cas.toString())),
