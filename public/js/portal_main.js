@@ -464,6 +464,29 @@ function ajaxGetDeviceNotifications(device) {
     });
 }
 
+function setDeviceNotification(device, type, value) {
+    var loc = window.location.origin;
+
+    data = {
+        'token' : getCookie('token'),
+        'user_id' : getCookie('user_id'),
+        'device_id' : device,
+        'type' : type,
+        'value' : value
+    };
+
+    $.ajax({
+        url: loc + '/BeeWebpage/public/user/device/notifications/set',
+        method : 'POST',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+    });
+}
+
 function createHives(result){
     var data = result.data;
     var div = document.getElementById('div.hives');
@@ -496,12 +519,12 @@ function createHiveHtml(id, name, location){
                                 <label class="notifications-label">Notifikácie</label> \
                                 <div class="form-check checkbox-slider--b"> \
                                     <label> \
-                                        <input type="checkbox"><span>sms</span> \
+                                        <input type="checkbox" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "sms", this.checked)\'><span>sms</span> \
                                     </label> \
                                 </div> \
                                 <div class="form-check checkbox-slider--b"> \
                                     <label> \
-                                        <input type="checkbox"><span>e-mail</span> \
+                                        <input type="checkbox" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "email", this.checked)\'><span>e-mail</span> \
                                     </label> \
                                 </div> \
                                 <div class="col-lg-10"> \

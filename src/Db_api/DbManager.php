@@ -708,5 +708,36 @@ class DbManager
         return $result_response;
     }
 
+    public function setDeviceNotifications($userId, $token, $device, $type, $value) {
+        if ($this->tokenizer->isValidToken($token, $userId) == false) {
+            return [
+                'error' => true,
+                'status' => 401,
+                'message' => 'Unauthorized access'
+            ];
+        }
+        $query = (strcmp($type, 'sms') == 0) ?
+            'UPDATE bees.devices
+                  SET sms_not = $1
+                  WHERE device_id = $2;' :
+            'UPDATE bees.devices
+                  SET email_not = $1
+                  WHERE device_id = $2;';
+                  
+        $result = pg_prepare($this->conn, 'device not set', $query);
+        $result = pg_execute($this->conn, 'device not set', [
+            $value ? 'true' : 'false',
+            $device]
+        );
+        $result_response = ['error' => false];
+
+        if (!$result) {
+            $result_response['error'] = true;
+            $result_response['message'] = pg_last_error();
+        }
+
+        return $result_response;
+    }
+
 
 }
