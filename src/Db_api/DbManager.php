@@ -137,10 +137,19 @@ class DbManager
 
         if (!preg_match("/^[a-zA-Z á Á ä č Č ď Ď dž Dž é É í ĺ ľ Ľ ó Ó ó š Š ť Ť ú Ú ň Ň ý ž Ž ]*$/",$name) || ($name)) {
             $errName = "Zadali ste nesprávny formát mena! (príklad: Pekný úlik)";
+            $result_value['error'] = true;
+            $result_value['message'] = $errName;
+
+            return $result_value;
         }
 
         if (!preg_match("/^[a-zA-Z 0-9 á ä č Č ď Ď dž Dž é í ĺ ľ Ľ ó š Š ť Ť ú ň Ň ý ž Ž , ]*$/",$adress) || (!$adress)) {
             $errAddress = "Zadali ste nesprávny formát adresy! (príklad: Lesnícka 44, Bratislava)";
+
+            $result_value['error'] = true;
+            $result_value['message'] = $errAddress;
+
+            return $result_value;
         }
 
 
