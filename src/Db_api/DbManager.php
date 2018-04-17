@@ -130,13 +130,69 @@ class DbManager
             print json_encode(array('error'=>true));
             return 401;
         }
+        $result_value = ['error' => false];
+        $errName ="";
+        $errAddress ="";
+
+        if (!preg_match("/^[a-zA-Z á Á ä č Č ď Ď dž Dž é É í ĺ ľ Ľ ó Ó ó š Š ť Ť ú Ú ň Ň ý ž Ž ]*$/",$name) || ($name)) {
+            $errName = "Zadali ste nesprávny formát mena! (príklad: Pekný úlik)";
+        }
+
+        if (!preg_match("/^[a-zA-Z 0-9 á ä č Č ď Ď dž Dž é í ĺ ľ Ľ ó š Š ť Ť ú ň Ň ý ž Ž , ]*$/",$adress) || (!$adress)) {
+            $errAddress = "Zadali ste nesprávny formát adresy! (príklad: Lesnícka 44, Bratislava)";
+        }
+
+
+        if (!$errName && !$errAddress)
+        {
+            $result = 'Žiadosť o potvrdení objednávky';
+            $poa = '<html><body>';
+            $poa .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+            $poa .= "<tr style='background: #eee;'><td><strong>Meno úľa:</strong> </td><td>" . strip_tags($name) . "</td></tr>";
+            $poa .= "<tr><td><strong>Adresa úľa:</strong> </td><td>" . strip_tags($_POST['address']) . "</td></tr>";
+
+            if (isset($email)) {
+                $poa .= "<tr><td><strong>E-mail:</strong> </td><td>" . Nastavený . "</td></tr>";
+            }
+
+            else{
+                $poa .= "<tr><td><strong>E-mail:</strong> </td><td>" . Nenastavený . "</td></tr>";
+            }
+
+
+            if (isset($sms)) {
+                $poa .= "<tr><td><strong>SMS:</strong> </td><td>" . Nastavené . "</td></tr>";
+            }
+
+            else{
+                $poa .= "<tr><td><strong>SMS:</strong> </td><td>" . Nenastavené . "</td></tr>";
+            }
+
+            $poa .= "<tr><td><strong>Odkaz:</strong> </td><td>" . strip_tags($notes) . "</td></tr>";
+            $poa .= "</table>";
+            $poa .= "</body></html>";
+            $headers  = "MIME-Version: 1.0" . PHP_EOL;
+            $headers .= "Content-Type: text/html; charset=utf-8" . PHP_EOL;
+            $headers .= "From: WEB-Včeličky Team" . PHP_EOL;
+            if ( Mail("fiittp20@gmail.com ", $result, $poa, $headers) )
+            {
+                $_POST = array();
+            }
+            else
+            {
+                $result_value['error'] = true;
+                $result_value['message'] = 'Pri odosielaní e-mailu nastala neočakávaná chyba, na jej odstránení sa pracuje! Ospravedlňujeme sa.';
+            }
+
+        }
+
+
         $query = "INSERT INTO bees.orders VALUES ($userId, '$name', '$adress', '$notes', '" . (($sms) ? "true" : "false") . "', '" .
             (($email) ? "true" : "false") . "', 'False');";
         $result = pg_query($this->conn, $query);
-        $result_value = ['error' => false];
         if (!$result) {
             $result_value['error'] = true;
-            $result_value['message'] = pg_last_error();
+            $result_value['message'] = isset($result_value['message']) ? $result_value['message'] . ' ' . pg_last_error() : pg_last_error();
         }
         return $result_value;
     }
