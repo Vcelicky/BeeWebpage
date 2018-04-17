@@ -65,6 +65,62 @@ $app->post('/admin/devices', function (Request $request, Response $response, arr
     }
 });
 
+$app->delete('/admin/device', function (Request $request, Response $response, array $args) {
+
+    if (isset($_SESSION['id'])){
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 1)
+                return $response->withStatus(401);
+            /*
+             * Admin is logged in
+             */
+            else if ($_SESSION['role_id'] == 2){
+                $config = $this->config->getConfig();
+                $body = json_decode($request->getBody()->getContents());
+                $dbManager = new DbManagerAdmin($config);
+                $dbManager->connect();
+                $devices = $dbManager->deleteDevice($body->device_id);
+                if ($devices['error']) {
+                    return $response->withJson($devices, 500);
+                }
+                else {
+                    return $response->withJson($devices, 200);
+                }
+            }}
+    }
+    else{
+        return $response->withStatus(401);
+    }
+});
+
+$app->post('/admin/device', function (Request $request, Response $response, array $args) {
+
+    if (isset($_SESSION['id'])){
+        if(isset($_SESSION['role_id'])){
+            if($_SESSION['role_id'] == 1)
+                return $response->withStatus(401);
+            /*
+             * Admin is logged in
+             */
+            else if ($_SESSION['role_id'] == 2){
+                $config = $this->config->getConfig();
+                $body = json_decode($request->getBody()->getContents());
+                $dbManager = new DbManagerAdmin($config);
+                $dbManager->connect();
+                $devices = $dbManager->getAdminDeviceInfo($body->device_id);
+                if ($devices['error']) {
+                    return $response->withJson($devices, 500);
+                }
+                else {
+                    return $response->withJson($devices, 200);
+                }
+            }}
+    }
+    else{
+        return $response->withStatus(401);
+    }
+});
+
 $app->post('/admin/measurements/actual', function (Request $request, Response $response, array $args) {
 
     if (isset($_SESSION['id'])){

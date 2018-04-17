@@ -3,6 +3,8 @@
  */
 $( document ).ready(function() {
 
+    device_id = location.href.match(/([^\/]*)\/*$/)[1];
+    loc = window.location.origin;
     "use strict";
 
     [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
@@ -29,6 +31,7 @@ $( document ).ready(function() {
         $('.search-trigger').parent('.header-left').removeClass('open');
     });
 
+    ajaxGetDeviceInfo();
     ajaxGetMeasurements();
 
 });
@@ -117,7 +120,37 @@ function createDataTable(response){
         },
         "createdRow": function(row, data ) {
             if (data["P"] == "true" ) {
-                $(row).addClass('red');
+                $('td', row).eq(5).addClass('red');
+            }
+            if(data["IT"] > document.getElementById("it-u").value){
+                $('td', row).eq(1).addClass('red');
+            }
+            if(data["IT"] < document.getElementById("it-d").value){
+                $('td', row).eq(1).addClass('red');
+            }
+            if(data["OT"] > document.getElementById("ot-u").value){
+                $('td', row).eq(2).addClass('red');
+            }
+            if(data["OT"] < document.getElementById("ot-d").value){
+                $('td', row).eq(2).addClass('red');
+            }
+            if(data["IH"] > document.getElementById("ih-u").value){
+                $('td', row).eq(3).addClass('red');
+            }
+            if(data["IH"] < document.getElementById("ih-d").value){
+                $('td', row).eq(3).addClass('red');
+            }
+            if(data["OH"] > document.getElementById("oh-u").value){
+                $('td', row).eq(4).addClass('red');
+            }
+            if(data["OH"] < document.getElementById("oh-d").value){
+                $('td', row).eq(4).addClass('red');
+            }
+            if(data["W"] > document.getElementById("w").value){
+                $('td', row).eq(6).addClass('red');
+            }
+            if(data["B"] < document.getElementById("b").value && data["B"]!=100){
+                $('td', row).eq(7).addClass('red');
             }
         },
         "columns": [
@@ -196,6 +229,44 @@ function createHives(result){
         console.log(data[index]);
         div.innerHTML += createUserHtml(data[index].device_id,data[index].uf_name, data[index].location);
     }
+
+}
+
+function ajaxGetDeviceInfo() {
+    var loc = window.location.origin;
+
+    data = {
+        'device_id' : device_id
+    };
+
+    $.ajax({
+        url: loc + '/BeeWebpage/public/admin/device',
+        method : 'POST',
+        data : JSON.stringify(data),
+        dataType:'json',
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).done(function (data) {
+         createHiveInfo(data);
+    });
+}
+
+function createHiveInfo(result){
+    var data = result.data;
+
+    document.getElementById("loc").innerHTML=data.location;
+    document.getElementById("name").innerHTML=data.uf_name;
+    document.getElementById("it-u").value=data.temperature_in_up_limit;
+    document.getElementById("ot-u").value=data.temperature_out_up_limit;
+    document.getElementById("oh-u").value=data.humidity_out_up_limit;
+    document.getElementById("ih-u").value=data.humidity_in_up_limit;
+    document.getElementById("it-d").value=data.temperature_in_down_limit;;
+    document.getElementById("ot-d").value=data.temperature_out_down_limit;;
+    document.getElementById("oh-d").value=data.humidity_out_down_limit;
+    document.getElementById("ih-d").value=data.humidity_in_down_limit;;
+    document.getElementById("b").value=data.batery_limit;
+    document.getElementById("w").value=data.weight_limit;
 
 }
 

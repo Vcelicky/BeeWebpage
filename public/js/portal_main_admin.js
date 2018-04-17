@@ -81,6 +81,29 @@ function checkSize(){
     }
 }
 
+function deleteHive(deviceId, deviceName){
+    var r = confirm("Naozaj vymazať zariadenie "+deviceName+"?");
+    if(r){
+        var loc = window.location.origin;
+
+        data = {
+            'device_id' : deviceId
+        };
+
+        $.ajax({
+            url: loc + '/BeeWebpage/public/admin/device',
+            method : 'DELETE',
+            dataType : 'json',
+            data: JSON.stringify(data),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+        }).done(function () {
+            window.location.assign(window.origin + "/BeeWebpage/public/portal");
+        });
+    }
+}
+
 function showGraph(deviceElement, deviceId) {
     var user_id = deviceElement.parentNode.parentNode.parentNode.parentNode.parentNode.id;
     devicesMeasurements[ deviceId ].user_id = user_id.split(/\./)[2];
@@ -321,7 +344,7 @@ function createUserHtml(id, name, email, count){
 
     html = '<div class="card"> \
             <div class="card-body"> \
-			<form action=\"\" method=\'POST\'><input type=\'hidden\' name=\'n\' value='+id+'><div class="pull-right" id="clear_button"><input value="Zmazať" onclick=\"return confirm(\'Naozaj chceš vymazať tohto používateľa?\')\" id="clear" style="color: black;background-color: white;" type="submit"></div></form> \
+			<form action=\"\" method=\'POST\'><input type=\'hidden\' name=\'n\' value='+id+'><div class="pull-right" id="clear_button"><input value="Zmazať" onclick=\"return confirm(\'Naozaj chceš vymazať tohto používateľa?\')\" id="clear" style="color: black;background-color: white;" class="btn btn-secondary" type="submit"></div></form> \
                 <div class="clearfix"> \
                     <i class="fa fa-user bg-flat-color-1 p-3 font-2xl mr-3 float-left text-light"></i> \
                     <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
@@ -460,7 +483,7 @@ function ajaxGetMeasurement(id) {
     });
 }
 
-function createHiveHtml(id, name, location){
+function createHiveHtml(id, name, location) {
 
     html = '<div class="col-12 col-lg-12">\
                 <div class="card"> \
@@ -471,13 +494,16 @@ function createHiveHtml(id, name, location){
                                 <div class="h5 text-secondary mb-0 mt-1">'+name+'</div> \
                                 <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
                             </div>\
-                            <div class="col-lg-10">\
+                            <div class="col-lg-8">\
                                 <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \n' +
-        '       <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+    '                           <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
                             </div>\
+                            <div class="col-lg-2"> \
+                                <div class="pull-right" id="clear_hive-'+id+'"><button type="button" id="clear" class="btn btn-primary"  onclick=\'deleteHive(\"'+id.toString()+'\", \"'+name.toString()+'\")\'><i class="fa fa-archive"></i>&nbsp; Zmazať</button></div>\
+                            </div> \
                         </div> \
                         <hr>  \
-                        <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
+                        <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;margin-top:20px;"> \
                             <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť namerané údaje</a> \
                             <a \
                                 class="font-weight-bold font-xs btn-block text-muted small"\

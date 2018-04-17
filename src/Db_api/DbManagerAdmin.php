@@ -62,6 +62,29 @@ class DbManagerAdmin extends DbManager
 
     }
 
+    public function deleteDevice($deviceId) {
+
+        $result = pg_prepare($this->conn, 'devices select', '
+        DELETE FROM bees.devices d
+        WHERE d.device_id = $1;');
+        $result = pg_execute($this->conn, 'devices select', [$deviceId]);
+        $return_value['error'] = false;
+        if ($result) {
+            $rows = array();
+            while($r =  pg_fetch_assoc($result)) {
+                $rows[] = $r;
+            }
+            $return_value['data'] = $rows;
+        }
+        else {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+
+        return $return_value;
+
+    }
+
     public function getAdminActualUserMeasurements($deviceId) {
 
         $result = pg_prepare($this->conn, 'user data select', '
@@ -174,6 +197,29 @@ class DbManagerAdmin extends DbManager
                         'typ' => 'B'
                     ]
                 ]);
+            }
+            $return_value['data'] = $rows;
+        }
+        else {
+            $return_value['error'] = true;
+            $return_value['message'] = 'sql error';
+        }
+
+        return $return_value;
+    }
+
+    public function getAdminDeviceInfo($deviceId)
+    {
+        $result = pg_prepare($this->conn, 'devices select', '
+        SELECT d.uf_name, d.location, d.coordinates, d.temperature_in_up_limit, d.temperature_in_down_limit, d.weight_limit, d.temperature_out_up_limit, 
+        d.temperature_out_down_limit, d.humidity_in_up_limit, d.humidity_in_down_limit, d.humidity_out_up_limit, d.humidity_out_down_limit, d.batery_limit FROM bees.devices d
+        WHERE d.device_id = $1');
+        $result = pg_execute($this->conn, 'devices select', [$deviceId]);
+        $return_value['error'] = false;
+        if ($result) {
+            $rows = array();
+            while($r =  pg_fetch_assoc($result)) {
+                $rows = $r;
             }
             $return_value['data'] = $rows;
         }
