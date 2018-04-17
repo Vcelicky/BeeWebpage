@@ -515,25 +515,27 @@ function createHiveHtml(id, name, location){
                                 <div class="h6 text-secondary mb-0 mt-1">'+name+'</div> \
                                 <div style="margin-bottom:20px" class="text-muted text-uppercase font-weight-bold font-xs small">'+location+'</div> \
                             </div> \
-                            <div class="col-lg-12" > \
+                            <div class="col-lg-4" > \
                                 <label class="notifications-label">Notifikácie</label> \
                                 <div class="form-check checkbox-slider--b"> \
-                                    <label> \
-                                        <input type="checkbox" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "sms", this.checked)\'><span>sms</span> \
+                                    <label class="switch switch-3d switch-success mr-3"> \
+                                        <input type="checkbox"  class="switch-input" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "sms", this.checked)\'><span class="switch-label"></span> <span class="switch-handle"></span>\
                                     </label> \
+                                    <span>SMS</span>\
                                 </div> \
                                 <div class="form-check checkbox-slider--b"> \
-                                    <label> \
-                                        <input type="checkbox" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "email", this.checked)\'><span>e-mail</span> \
+                                    <label class="switch switch-3d switch-success mr-3"> \
+                                        <input type="checkbox" class="switch-input" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "email", this.checked)\'><span class="switch-label"></span> <span class="switch-handle"></span>\
                                     </label> \
+                                    <span>E-mail</span>\
                                 </div> \
-                                <div class="col-lg-10"> \
-                                    <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
-                                    <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
-                                </div>\
                         </div> \
+                         <div class="col-lg-8"> \
+                            <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                            <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                        </div>\
                         <hr>  \
-                        <div id="'+id+'"class="more-info pt-2" style="margin-bottom:-10px;"> \
+                        <div id="'+id+'"class="more-info pt-2 col-lg-12" style="margin-bottom:-10px;"> \
                             <a class="font-weight-bold font-xs btn-block text-muted small" href="/BeeWebpage/public/portal/'+id+'">Zobraziť namerané údaje</a> \
                             <a \
                                 class="font-weight-bold font-xs btn-block text-muted small"\
