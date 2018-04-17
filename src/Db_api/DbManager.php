@@ -322,7 +322,8 @@ class DbManager
 
         $result = pg_prepare($this->conn, 'devices select', '
         SELECT * FROM bees.devices d
-        WHERE d.user_id = $1;');
+        WHERE d.user_id = $1
+        ORDER BY d.uf_name;');
         $result = pg_execute($this->conn, 'devices select', [$userId]);
         $return_value['error'] = false;
         if ($result) {
