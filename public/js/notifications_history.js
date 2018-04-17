@@ -90,7 +90,7 @@ function createDataTable(data){
         ]
     });
 
-    //table.order([ 0, 'desc' ]);
+    table.order([ 0, 'desc' ]);
 }
 
 function getCookie(cname) {
