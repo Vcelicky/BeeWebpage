@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11a050a4-70a7-4bee-98ac-881468b0914a" name="Default" comment="Detail Table.">
-      <change beforePath="$PROJECT_DIR$/.idea/BeeWebpage.iml" afterPath="$PROJECT_DIR$/.idea/BeeWebpage.iml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/Db_api/DbNotification.php" afterPath="$PROJECT_DIR$/src/Db_api/DbNotification.php" />
-      <change beforePath="$PROJECT_DIR$/templates/user_profile.phtml" afterPath="$PROJECT_DIR$/templates/user_profile.phtml" />
+      <change beforePath="$PROJECT_DIR$/public/js/portal_main_admin.js" afterPath="$PROJECT_DIR$/public/js/portal_main_admin.js" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_profile.phtml" afterPath="$PROJECT_DIR$/templates/admin_profile.phtml" />
+      <change beforePath="$PROJECT_DIR$/templates/order_show.phtml" afterPath="$PROJECT_DIR$/templates/order_show.phtml" />
+      <change beforePath="$PROJECT_DIR$/templates/portal_admin.phtml" afterPath="$PROJECT_DIR$/templates/portal_admin.phtml" />
       <change beforePath="$PROJECT_DIR$/vendor/autoload.php" afterPath="$PROJECT_DIR$/vendor/autoload.php" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterPath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/LICENSE" afterPath="$PROJECT_DIR$/vendor/composer/LICENSE" />
@@ -76,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/templates/index.phtml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="81" column="184" lean-forward="false" selection-start-line="81" selection-start-column="184" selection-end-line="81" selection-end-column="184" />
+              <caret line="98" column="68" lean-forward="false" selection-start-line="98" selection-start-column="68" selection-end-line="98" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -87,7 +88,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3247">
               <caret line="194" column="10" lean-forward="false" selection-start-line="194" selection-start-column="10" selection-end-line="194" selection-end-column="10" />
-              <folding />
+              <folding>
+                <marker date="1523866473215" expanded="true" signature="6905:6912" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,8 +98,8 @@
       <file leaf-file-name="DbManager.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Db_api/DbManager.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5746">
-              <caret line="338" column="9" lean-forward="false" selection-start-line="338" selection-start-column="9" selection-end-line="338" selection-end-column="9" />
+            <state relative-caret-position="5729">
+              <caret line="337" column="9" lean-forward="false" selection-start-line="337" selection-start-column="9" selection-end-line="337" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -137,41 +140,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="8908">
               <caret line="524" column="121" lean-forward="false" selection-start-line="524" selection-start-column="121" selection-end-line="524" selection-end-column="121" />
-              <folding>
-                <marker date="1523361996675" expanded="true" signature="10457:11936" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="10495:11920" ph="..." />
-                <marker date="1523361996675" expanded="false" signature="10665:10702" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="10771:11480" ph="..." />
-                <marker date="1523361996675" expanded="false" signature="10990:11008" ph="..." />
-                <marker date="1523361996675" expanded="false" signature="11126:11144" ph="..." />
-                <marker date="1523361996675" expanded="false" signature="11570:11590" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="11591:11899" ph="..." />
-                <marker date="1523361996675" expanded="false" signature="11783:11799" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="15310:17057" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="15346:17037" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="15392:17012" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="15458:16253" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="15511:15907" ph="..." />
-                <marker date="1523361996675" expanded="false" signature="15768:15786" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="15960:16221" ph="..." />
-                <marker date="1523361996675" expanded="false" signature="16359:16379" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="16380:16983" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="16575:16951" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="17121:21231" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="17173:21211" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="17220:20378" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="17268:18013" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="17301:17982" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="18061:18794" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="18094:18763" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="18842:19575" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="18875:19544" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="19623:20350" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="19656:20319" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="20426:21186" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="20594:20716" ph="..." />
-                <marker date="1523361996675" expanded="true" signature="20884:21007" ph="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -404,6 +373,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -425,7 +395,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -577,7 +546,12 @@
       <workItem from="1523654827508" duration="90000" />
       <workItem from="1523657100927" duration="15000" />
       <workItem from="1523704999925" duration="136000" />
-      <workItem from="1523706227120" duration="41000" />
+      <workItem from="1523706227120" duration="68000" />
+      <workItem from="1523719847363" duration="116000" />
+      <workItem from="1523777753718" duration="207000" />
+      <workItem from="1523788674137" duration="56000" />
+      <workItem from="1523866449059" duration="591000" />
+      <workItem from="1523905450412" duration="30000" />
     </task>
     <task id="LOCAL-00001" summary="Pridane ziskanie aktualneho merania pre zariadenie (http://www.bees.sk/api/measurements/DeviceTomas@fiittp20.fiittp20)&#10;Pridanie ziskania devicov konkretneho usera.">
       <created>1510402325682</created>
@@ -782,11 +756,46 @@
       <option name="project" value="LOCAL" />
       <updated>1523705099910</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="FIX diacrtic errors (notifications + profile)">
+      <created>1523706269433</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1523706269433</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Remove chars &quot;/&quot; from device_id before send to database">
+      <created>1523719949536</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1523719949536</updated>
+    </task>
+    <task id="LOCAL-00032" summary="FIX confirm order (if admin confirm one order it confirm all orders in same user)">
+      <created>1523777943858</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1523777943858</updated>
+    </task>
+    <task id="LOCAL-00033" summary="FIX alert diacritic errors">
+      <created>1523788718372</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1523788718372</updated>
+    </task>
+    <task id="LOCAL-00034" summary="FIX admin profile (image, menu, icons)">
+      <created>1523867027291</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1523867027291</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="233534000" />
+    <option name="totallyTimeSpent" value="234561000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -799,13 +808,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22057264" sideWeight="0.47083333" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16050686" sideWeight="0.5395833" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16050686" sideWeight="0.46041667" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16050686" sideWeight="0.55" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16050686" sideWeight="0.45" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13489583" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -858,10 +866,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Vytvorenie api na odoslanie registracneho formulara." />
-    <MESSAGE value="Pridanie tokenu do api na odoslanie registracneho formulara.&#10;Osetrenie chybovych stavov v API, 401 unauthorized." />
-    <MESSAGE value="Pridanie tokenu do api na odoslanie registracneho formulara.&#10;Osetrenie chybovych stavov v API, 401 unauthorized.&#10;Pridanie chyboveho Jsonu pri 401, unauthorized." />
-    <MESSAGE value="Refactoring of index web page. Refactored Carousel, menu, footer, added Cards." />
     <MESSAGE value="Refactoring of index web page. Refactored Carousel, menu, footer, added Cards.&#10;Added css file." />
     <MESSAGE value="Refactoring of index web page. Refactored Carousel, menu, footer, added Cards.&#10;Added css file.&#10;Added pictures." />
     <MESSAGE value="Refactoring of index web page. Refactored Carousel, menu, footer, added Cards.&#10;Added css file.&#10;Added pictures.&#10;Index page finished." />
@@ -883,7 +887,11 @@
     <MESSAGE value="Modify text on index page, remove forgot password on login form, modify (zeleny mužíček :D )" />
     <MESSAGE value="Add units to notifications" />
     <MESSAGE value="FIX diacrtic errors (notifications + profile)" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX diacrtic errors (notifications + profile)" />
+    <MESSAGE value="Remove chars &quot;/&quot; from device_id before send to database" />
+    <MESSAGE value="FIX confirm order (if admin confirm one order it confirm all orders in same user)" />
+    <MESSAGE value="FIX alert diacritic errors" />
+    <MESSAGE value="FIX admin profile (image, menu, icons)" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX admin profile (image, menu, icons)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1055,17 +1063,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/contact.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1887">
-          <caret line="111" column="30" lean-forward="false" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
-          <folding>
-            <marker date="1523654787242" expanded="true" signature="975:994" ph="..." />
-            <marker date="1523654787242" expanded="true" signature="1038:1055" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/API/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -1129,8 +1126,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Db_api/DbManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5746">
-          <caret line="338" column="9" lean-forward="false" selection-start-line="338" selection-start-column="9" selection-end-line="338" selection-end-column="9" />
+        <state relative-caret-position="5729">
+          <caret line="337" column="9" lean-forward="false" selection-start-line="337" selection-start-column="9" selection-end-line="337" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1155,7 +1152,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3247">
           <caret line="194" column="10" lean-forward="false" selection-start-line="194" selection-start-column="10" selection-end-line="194" selection-end-column="10" />
-          <folding />
+          <folding>
+            <marker date="1523866473215" expanded="true" signature="6905:6912" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1194,8 +1193,19 @@
     <entry file="file://$PROJECT_DIR$/templates/index.phtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="81" column="184" lean-forward="false" selection-start-line="81" selection-start-column="184" selection-end-line="81" selection-end-column="184" />
+          <caret line="98" column="68" lean-forward="false" selection-start-line="98" selection-start-column="68" selection-end-line="98" selection-end-column="68" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/contact.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1887">
+          <caret line="111" column="30" lean-forward="false" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+          <folding>
+            <marker date="1523654787242" expanded="true" signature="975:994" ph="..." />
+            <marker date="1523654787242" expanded="true" signature="1038:1055" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
