@@ -174,7 +174,7 @@ function renderNotifications(data) {
         not_message_text.className = "not-item";
 
         let p_text_time = document.createTextNode(moment(data[notification].time).format(time_format));
-        let p_text_msg = document.createTextNode(data[notification].title_text);
+        let p_text_msg = document.createTextNode(data[notification].hive_name);
         not_message_time.appendChild(p_text_time);
         not_message_text.appendChild(p_text_msg);
         first_not_item.appendChild(not_message_time);
@@ -216,8 +216,7 @@ function showNotification(not_number) {
     var modal = document.getElementById("notificationModal");
     console.log(modal);
     modal.childNodes[1].childNodes[1].childNodes[1].childNodes[1].innerHTML = notifications[not_number].title_text;
-    modal.childNodes[1].childNodes[1].childNodes[3].innerText = "včelín: " + notifications[not_number].hive_name + "\n" +
-        notifications[not_number].body_text;
+    modal.childNodes[1].childNodes[1].childNodes[3].innerText = notifications[not_number].body_text;
     modal.childNodes[1].childNodes[1].childNodes[5].childNodes[3].onclick = function() {deleteNotification(not_number);};
     $('#notificationModal').modal('show');
     modal.className= "modal fade show";

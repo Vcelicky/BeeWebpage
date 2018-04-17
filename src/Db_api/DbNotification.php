@@ -30,7 +30,7 @@ class DbNotification
         $this->conn = pg_connect("host=$host port=$port dbname=$dbName user=$user password=$password");
     }
 
-    public function addNotificationMessage($item) {
+    public function addNotificationMessage($item, $time, $hive_name) {
         $returned_message = [
             "title" => "",
             "body"  => ""
@@ -41,31 +41,31 @@ class DbNotification
         if (count($message_topic) < 2) {
             // weight message
             if (strcmp(key($item), "weight") === 0) {
-                $returned_message["title"] = "Hodnota hmotnosti";
+                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hmotnosť úľa je " . $item["weight"]["value"] . "kg";
             }
 
             // battery
             if (strcmp(key($item), "battery") === 0) {
-                $returned_message["title"] = "Hodnota batérie";
+                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hodnota batérie je " . $item["battery"]["value"] . "%";
             }
 
             //proximity
             if (strcmp(key($item), "poloha") === 0) {
-                $returned_message["title"] = "Úľ sa prevrátil";
-                $returned_message["body"]  = "";
+                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
+                $returned_message["body"]  = "Úl sa prevrátil";
             }
         }
         else {
             //humidity
             if (strcmp($message_topic[0], "vlhkost") === 0) {
-                $returned_message["title"] = "Hodnota vlhkosti";
+                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hodnota vlhkosti " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"] . "%";
             }
             //temperature
             if (strcmp($message_topic[0], "teplota") === 0) {
-                $returned_message["title"] = "Hodnota teploty";
+                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hodnota teploty " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"] . "°C";
             }
 
@@ -126,7 +126,7 @@ class DbNotification
         $notification_query = pg_prepare($this->conn, "notification insertion", $query);
 
         foreach ($notifications as $notification) {
-            $message = $this->addNotificationMessage($notification);
+            $message = $this->addNotificationMessage($notification, $time, $notifications["hive_name"]);
             $this->sendFCMNotification($message, $hive_id, $hive_name, $user_id, $key);
             $result = pg_execute($this->conn, "notification insertion", [
                 $message["title"],

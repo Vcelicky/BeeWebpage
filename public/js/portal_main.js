@@ -459,8 +459,9 @@ function ajaxGetDeviceNotifications(device) {
         }
     }).done(function (data) {
         let hive_item = document.getElementById('measurement-' + device);
-        hive_item.parentElement.parentElement.childNodes[3].childNodes[1].childNodes[1].checked = data.data.sms_not == "f" ? false : true;
-        hive_item.parentElement.parentElement.childNodes[5].childNodes[1].childNodes[1].checked = data.data.email_not == "f" ? false : true;
+
+        hive_item.parentElement.parentElement.childNodes[3].childNodes[3].childNodes[1].childNodes[1].checked = data.data.sms_not == "f" ? false : true;
+        hive_item.parentElement.parentElement.childNodes[3].childNodes[5].childNodes[1].childNodes[1].checked = data.data.email_not == "f" ? false : true;
     });
 }
 
