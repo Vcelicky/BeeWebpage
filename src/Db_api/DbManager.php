@@ -135,7 +135,7 @@ class DbManager
         $errName ="";
         $errAddress ="";
 
-        if (!preg_match("/^[a-zA-Z á Á ä č Č ď Ď dž Dž é É í ĺ ľ Ľ ó Ó ó š Š ť Ť ú Ú ň Ň ý ž Ž ]*$/",$name) || ($name)) {
+        if (!preg_match("/^[a-zA-Z á Á ä č Č ď Ď dž Dž é É í ĺ ľ Ľ ó Ó ó š Š ť Ť ú Ú ň Ň ý ž Ž ]*$/",$name)) {
             $errName = "Zadali ste nesprávny formát mena! (príklad: Pekný úlik)";
             $result_value['error'] = true;
             $result_value['message'] = $errName;
@@ -143,7 +143,7 @@ class DbManager
             return $result_value;
         }
 
-        if (!preg_match("/^[a-zA-Z 0-9 á ä č Č ď Ď dž Dž é í ĺ ľ Ľ ó š Š ť Ť ú ň Ň ý ž Ž , ]*$/",$adress) || (!$adress)) {
+        if (!preg_match("/^[a-zA-Z 0-9 á ä č Č ď Ď dž Dž é í ĺ ľ Ľ ó š Š ť Ť ú ň Ň ý ž Ž , ]*$/",$adress)) {
             $errAddress = "Zadali ste nesprávny formát adresy! (príklad: Lesnícka 44, Bratislava)";
 
             $result_value['error'] = true;
@@ -161,7 +161,7 @@ class DbManager
             $poa .= "<tr style='background: #eee;'><td><strong>Meno úľa:</strong> </td><td>" . strip_tags($name) . "</td></tr>";
             $poa .= "<tr><td><strong>Adresa úľa:</strong> </td><td>" . strip_tags($_POST['address']) . "</td></tr>";
 
-            if (isset($email)) {
+            if ($email) {
                 $poa .= "<tr><td><strong>E-mail:</strong> </td><td>" . Nastavený . "</td></tr>";
             }
 
@@ -170,7 +170,7 @@ class DbManager
             }
 
 
-            if (isset($sms)) {
+            if ($sms) {
                 $poa .= "<tr><td><strong>SMS:</strong> </td><td>" . Nastavené . "</td></tr>";
             }
 
