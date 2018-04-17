@@ -67,13 +67,20 @@ class DB_Functions {
     if (is_null($pass_salt)) {
         $pass_salt = uniqid(mt_rand(), true);
         $pass_hash = Sha3::hash($pass_salt . $pass, 512);
-    }
 
-    $query = 'UPDATE bees.users SET name = $1, phone = $2, email = $3, password_hash = $4, password_salt = $5
+        $query = 'UPDATE bees.users SET name = $1, phone = $2, email = $3, password_hash = $4, password_salt = $5
                   WHERE id = $6;';
 
-    $result = pg_prepare($this->conn, 'change user query', $query);
-    $result = pg_execute($this->conn, 'change user query', [$name, $phone, $email, $pass_hash, $pass_salt, $user_id]);
+        $result = pg_prepare($this->conn, 'change user query', $query);
+        $result = pg_execute($this->conn, 'change user query', [$name, $phone, $email, $pass_hash, $pass_salt, $user_id]);
+    }
+    else {
+        $query = 'UPDATE bees.users SET name = $1, phone = $2, email = $3
+                  WHERE id = $4;';
+
+        $result = pg_prepare($this->conn, 'change user query', $query);
+        $result = pg_execute($this->conn, 'change user query', [$name, $phone, $email, $user_id]);
+    }
 
     $return_value['error'] = false;
 
