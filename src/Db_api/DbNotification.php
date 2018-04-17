@@ -41,31 +41,31 @@ class DbNotification
         if (count($message_topic) < 2) {
             // weight message
             if (strcmp(key($item), "weight") === 0) {
-                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
+                $returned_message["title"] = date("d.m G:i", $time) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hmotnosť úľa je " . $item["weight"]["value"] . "kg";
             }
 
             // battery
             if (strcmp(key($item), "battery") === 0) {
-                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
+                $returned_message["title"] = date("d.m G:i", $time) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hodnota batérie je " . $item["battery"]["value"] . "%";
             }
 
             //proximity
             if (strcmp(key($item), "poloha") === 0) {
-                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
+                $returned_message["title"] = date("d.m G:i", $time) . ' ' . $hive_name;
                 $returned_message["body"]  = "Úl sa prevrátil";
             }
         }
         else {
             //humidity
             if (strcmp($message_topic[0], "vlhkost") === 0) {
-                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
+                $returned_message["title"] = date("d.m G:i", $time) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hodnota vlhkosti " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"] . "%";
             }
             //temperature
             if (strcmp($message_topic[0], "teplota") === 0) {
-                $returned_message["title"] = date("d.m G:i", time()) . ' ' . $hive_name;
+                $returned_message["title"] = date("d.m G:i", $time) . ' ' . $hive_name;
                 $returned_message["body"]  = "Hodnota teploty " . $message_topic[1] . " má hodnotu " . $item[key($item)]["value"] . "°C";
             }
 
@@ -125,9 +125,15 @@ class DbNotification
                     VALUES ($1, $2, $3, $4, $5, $6, $7);';
         $notification_query = pg_prepare($this->conn, "notification insertion", $query);
 
+        $check_query = 'SELECT id FROM bees.notifications WHERE user_id = $1 AND time = $2;';
+        $check_result = pg_prepare($this->conn, "notification check", $check_query);
+        $check_result = pg_execute($this->conn, "notification check", [$user_id, date('Y-m-d G:i:s', $time)]);
+        $mobile_send = (pg_fetch_row($check_result)) ? false : true;
+
         foreach ($notifications as $notification) {
             $message = $this->addNotificationMessage($notification, $time, $notifications["hive_name"]);
-            $this->sendFCMNotification($message, $hive_id, $hive_name, $user_id, $key);
+            if ($mobile_send)
+                $this->sendFCMNotification($message, $hive_id, $hive_name, $user_id, $key);
             $result = pg_execute($this->conn, "notification insertion", [
                 $message["title"],
                 $message["body"],
