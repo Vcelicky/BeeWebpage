@@ -126,11 +126,12 @@ class DbManager
     }
 
     public function createOrder($userId, $token, $name, $adress, $sms, $email, $notes) {
-        if(!$this->tokenizer->isValidToken($token, $userId)){
-            print json_encode(array('error'=>true));
-            return 401;
-        }
         $result_value = ['error' => false];
+        if(!$this->tokenizer->isValidToken($token, $userId)){
+            $result_value['error'] = true;
+            $result_value['message'] = 'Používateľ nemá prístup';
+            return $result_value;
+        }
         $errName ="";
         $errAddress ="";
 
