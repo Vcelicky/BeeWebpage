@@ -159,7 +159,7 @@ class DbManager
             $poa = '<html><body>';
             $poa .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
             $poa .= "<tr style='background: #eee;'><td><strong>Meno úľa:</strong> </td><td>" . strip_tags($name) . "</td></tr>";
-            $poa .= "<tr><td><strong>Adresa úľa:</strong> </td><td>" . strip_tags($_POST['address']) . "</td></tr>";
+            $poa .= "<tr><td><strong>Adresa úľa:</strong> </td><td>" . strip_tags($adress) . "</td></tr>";
 
             if ($email) {
                 $poa .= "<tr><td><strong>E-mail:</strong> </td><td>" . Nastavený . "</td></tr>";
@@ -184,7 +184,7 @@ class DbManager
             $headers  = "MIME-Version: 1.0" . PHP_EOL;
             $headers .= "Content-Type: text/html; charset=utf-8" . PHP_EOL;
             $headers .= "From: WEB-Včeličky Team" . PHP_EOL;
-            if ( Mail("fiittp20@gmail.com ", $result, $poa, $headers) )
+            if ( Mail("fiittp20@gmail.com", $result, $poa, $headers) )
             {
                 $_POST = array();
             }
