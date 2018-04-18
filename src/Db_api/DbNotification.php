@@ -123,7 +123,7 @@ class DbNotification
         $headers .= "From: WEB-Včeličky Team" . PHP_EOL;
 
         $message = $message['title'] . ' ' . $message['body'];
-        if ( Mail("fiittp20@gmail.com ", $result, $message, $headers) )
+        if ( Mail($user_email, $result, $message, $headers) )
         {
             return true;
         }
