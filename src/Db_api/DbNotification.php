@@ -122,7 +122,7 @@ class DbNotification
         $headers .= "Content-Type: text/html; charset=utf-8" . PHP_EOL;
         $headers .= "From: WEB-Včeličky Team" . PHP_EOL;
 
-        $message = $message['title'] . '\n' . $message['body'];
+        $message = $message['title'] . ' ' . $message['body'];
         if ( Mail("fiittp20@gmail.com ", $result, $message, $headers) )
         {
             return true;
