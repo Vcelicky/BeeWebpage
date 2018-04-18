@@ -115,9 +115,27 @@ class DbNotification
         return false;
     }
 
+    public function sendEmail($message, $hive_name, $user_email) {
+        $result = 'Upozornenie prekročenia hodnoty v úle ' . $hive_name;
+
+        $headers  = "MIME-Version: 1.0" . PHP_EOL;
+        $headers .= "Content-Type: text/html; charset=utf-8" . PHP_EOL;
+        $headers .= "From: WEB-Včeličky Team" . PHP_EOL;
+
+        $message = $message['title'] . '\n' . $message['body'];
+        if ( Mail("fiittp20@gmail.com ", $result, $message, $headers) )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public function addNotification($hive_id, $notifications, $time, $key) {
         $user_id = $notifications["user_id"];
         $hive_name = $notifications["hive_name"];
+        $user_email = "";
+        $email_send = false;
         $error = false;
         array_pop($notifications);
         array_pop($notifications);
@@ -125,13 +143,33 @@ class DbNotification
                     VALUES ($1, $2, $3, $4, $5, $6, $7);';
         $notification_query = pg_prepare($this->conn, "notification insertion", $query);
 
+        // check if notification is already sent
         $check_query = 'SELECT id FROM bees.notifications WHERE user_id = $1 AND time = $2;';
         $check_result = pg_prepare($this->conn, "notification check", $check_query);
         $check_result = pg_execute($this->conn, "notification check", [$user_id, date('Y-m-d G:i:s', $time)]);
         $mobile_send = (pg_fetch_row($check_result)) ? false : true;
 
+        // check if user set email notification
+        // later check sms notification
+
+        $not_query = 'SELECT email_not, sms_not FROM bees.devices WHERE device_id = $1;';
+        $not_result = pg_prepare($this->conn, 'notification sent', $not_query);
+        $not_result = pg_execute($this->conn, 'notification sent', [$hive_id]);
+        $result = pg_fetch_row($not_result);
+        if (strcmp($result[0], 't') == 0) {
+            // get user email
+            $email_query = 'SELECT email FROM bees.users WHERE id = $1';
+            $email_result = pg_prepare($this->conn, 'email query', $email_query);
+            $email_result = pg_execute($this->conn, 'email query', [$user_id]);
+
+            if ($email_result) {
+                $user_email = pg_fetch_row($email_result)[0];
+                $email_send = true;
+            }
+        }
+
         foreach ($notifications as $notification) {
-            $message = $this->addNotificationMessage($notification, $time, $notifications["hive_name"]);
+            $message = $this->addNotificationMessage($notification, $time, $hive_name);
             if ($mobile_send)
                 $this->sendFCMNotification($message, $hive_id, $hive_name, $user_id, $key);
             $result = pg_execute($this->conn, "notification insertion", [
@@ -147,6 +185,11 @@ class DbNotification
             if (!$result) {
                 error_log(pg_last_error(), true);
                 $error = true;
+            }
+            else {
+                if (!$this->sendEmail($message, $hive_name, $user_email)) {
+                    return false;
+                }
             }
         }
 

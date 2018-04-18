@@ -129,7 +129,10 @@ class DB_Functions {
         $result = pg_query_params($this->conn, 'SELECT * FROM bees.users WHERE email = $1', array($email));
         $row =  pg_fetch_row($result);
 
-        return count($row) > 0 ? $row : false;
+        if ($row) {
+            return $row;
+        }
+        return false;
     }
 
 }
