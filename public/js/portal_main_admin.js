@@ -582,6 +582,13 @@ function createHiveHtml(id, name, location) {
                                 <i class="fa fa-caret-right"></i>\
                                 Zobraziť grafy meraní\
                             </a>\
+							<a \
+                                class="font-weight-bold font-xs btn-block text-muted small"\
+                                href="#"\
+                                \'>\
+                                <i class="fa fa-map-marker"></i>\
+                                Zobraziť mapu\
+                            </a>\
                         </div> \
                     </div> \
                 </div>\
