@@ -110,6 +110,9 @@ function deleteHive(deviceId, deviceName){
 
 function showGraph(e, deviceElement, deviceId) {
     var user_id = deviceElement.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+    if (typeof devicesMeasurements[ deviceId ] === "undefined") {
+        devicesMeasurements[ deviceId ] = {};
+    }
     devicesMeasurements[ deviceId ].user_id = user_id.split(/\./)[2];
     if (deviceElement.childNodes[1].className === "fa fa-caret-right") {
         deviceElement.childNodes[1].className = "fa fa-caret-down";
