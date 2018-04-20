@@ -145,13 +145,52 @@
     <!-- Header-->
 
     <div class="breadcrumbs">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="page-header float-left">
                 <div class="page-title">
                     <h1>Manažment úľov</h1>
                 </div>
             </div>
         </div>
+        <div class="col-sm-6">
+            <div class="page-header float-right input-group" style="margin-top: 10px">
+                <div class="input-group">
+                    <select class="form-control" style="margin-right: 30px; width: auto;" id="select-order" onchange="orderClick()">
+                        <div>
+                            <option selected>Zobraziť vzostupne</option>
+                            <option>Zobraziť zostupne</option>
+                        </div>
+
+                    </select>
+                    <select class="form-control" style="margin-right: 30px; width: auto; display: none" id="select-measurement" onchange="measurementClick()">
+                        <div>
+                            <option selected>Vnútorná teplota</option>
+                            <option>Vonkajšia teplota</option>
+                            <option selected>Vnútorná vlhkosť</option>
+                            <option>Vonkajšia vlhkosť</option>
+                            <option>Váha</option>
+                            <option>Batéria</option>
+                            <option>Prevrátenie</option>
+                        </div>
+                    </select>
+
+                    <div class="btn-group btn-group-toggle" id="btns-filter" data-toggle="buttons" style="padding-bottom:10px">
+                        <label class="btn btn-outline-primary active" id="nazov">
+                            <input type="radio" name="options" id="option1" autocomplete="off" checked> Názov
+                        </label>
+                        <label class="btn btn-outline-primary" id="lokacia">
+                            <input type="radio" name="options" id="option2" autocomplete="off"> Lokácia
+                        </label>
+                        <label class="btn btn-outline-primary" id="meranie">
+                            <input type="radio" name="options" id="option3" autocomplete="off"> Posledné meranie
+                        </label>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <!--Notification modal window-->
