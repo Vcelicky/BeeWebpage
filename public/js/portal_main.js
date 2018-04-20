@@ -2,6 +2,7 @@
 
 // loaded data for choose devices
 var devicesMeasurements = {};
+var hives = {};
 
 // number of elements to show in graph
 var graphStep = 20;
@@ -40,8 +41,136 @@ $( document ).ready(function() {
 $("#log_out_button").click(function() {
     logout();
     window.location.assign(window.origin + "/BeeWebpage/public");
-
 });
+
+
+$("#nazov").click(function() {
+    document.getElementById("select-measurement").style.display = "none";
+
+   sortName();
+});
+
+$("#lokacia").click(function() {
+    document.getElementById("select-measurement").style.display = "none";
+
+    sortLocation();
+});
+
+$("#meranie").click(function() {
+    document.getElementById("select-measurement").style.display = "block";
+
+    sortMeranie();
+});
+
+function orderClick(){
+    var button = document.getElementById("nazov");
+    if(button.classList.contains('active'))
+       sortName();
+    else{
+        button = document.getElementById("lokacia");
+        if(button.classList.contains('active')) {
+            sortLocation();
+        }
+        else{
+            var button = document.getElementById("meranie");
+            if(button.classList.contains('active'))
+            {
+                sortMeranie();
+            }
+        }
+    }
+}
+
+function measurementClick(){
+    sortMeranie();
+}
+
+function sortMeranie(){
+
+    var reverse = false;
+    var order = document.getElementById("select-order");
+    if(order.selectedIndex==0)
+        reverse = false;
+    else
+        reverse = true;
+
+    var order = document.getElementById("select-measurement");
+
+
+    if(order.selectedIndex==0)
+        hives.sort(compare(reverse, 'IT'));
+    else if(order.selectedIndex==1)
+        hives.sort(compare(reverse, 'OT'));
+    else if(order.selectedIndex==2)
+        hives.sort(compare(reverse, 'IH'));
+    else if(order.selectedIndex==3)
+        hives.sort(compare(reverse, 'OH'));
+    else if(order.selectedIndex==4)
+        hives.sort(compare(reverse, 'W'))
+    else if(order.selectedIndex==5)
+        hives.sort(compare(reverse, 'B'));
+    else if(order.selectedIndex==6)
+        hives.sort(compare(reverse, 'P'));
+
+    createHives(hives);
+}
+
+function sortLocation(){
+    var reverse = false;
+    var order = document.getElementById("select-order");
+
+    if(order.selectedIndex==0)
+        reverse = false;
+    else
+        reverse = true;
+
+    hives.sort(compare(reverse, 'location'));
+
+    createHives(hives);
+}
+
+function sortName(){
+    var reverse = false;
+    var order = document.getElementById("select-order");
+    if(order.selectedIndex==0)
+        reverse = false;
+    else
+        reverse = true;
+
+    hives.sort(compare(reverse, 'uf_name'));
+    createHives(hives);
+}
+
+
+function compare(reverse, parameter) {
+    return function (a, b) {
+        if (removeAccents(a[parameter]) < removeAccents(b[parameter]))
+            if(!reverse)
+                return -1;
+            else
+                return 1;
+        if (removeAccents(a[parameter]) > removeAccents(b[parameter]))
+            if(!reverse)
+                return 1;
+            else
+                return 1;
+        return 0;
+    }
+}
+
+function removeAccents(str) {
+    var accents    = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇČçčÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCCccDIIIIiiiiUUUUuuuuNnSsYyyZz";
+    str = str.split('');
+    var strLen = str.length;
+    var i, x;
+    for (i = 0; i < strLen; i++) {
+        if ((x = accents.indexOf(str[i])) != -1) {
+            str[i] = accentsOut[x];
+        }
+    }
+    return str.join('');
+}
 
 function logout() {
         var loc = window.location.origin;
@@ -75,7 +204,8 @@ function ajaxGetDevices() {
         }
 	}).done(function (data) {
 	    console.log(data);
-        createHives(data);
+        hives = data.data;
+        createHives(hives);
 	});
 }
 
@@ -408,11 +538,8 @@ function getTime(date) {
     return formatDate;
 }
 
-function ajaxGetMeasurement(id) {
+function ajaxGetMeasurement(id, index) {
     var loc = window.location.origin;
-
-
-    console.log("Id:" +id);
 
     data = {
         'token' : getCookie('token'),
@@ -436,7 +563,7 @@ function ajaxGetMeasurement(id) {
             }
             devicesMeasurements[ id ].actual_time = data.data[0][0].cas;
         }
-        createMeasurementHtml(data, id);
+        createMeasurementHtml(data, id, index);
     });
 }
 
@@ -488,20 +615,19 @@ function setDeviceNotification(device, type, value) {
     });
 }
 
-function createHives(result){
-    var data = result.data;
+function createHives(hives){
     var div = document.getElementById('div.hives');
     div.innerHTML = "";
 
     //Foreach Hive
-    for (index = 0; index < data.length; ++index) {
-        div.innerHTML += createHiveHtml(data[index].device_id,data[index].uf_name, data[index].location);
-        ajaxGetMeasurement(data[index].device_id);
+    for (index = 0; index < hives.length; ++index) {
+        div.innerHTML += createHiveHtml(hives[index].device_id,hives[index].uf_name, hives[index].location);
+        ajaxGetMeasurement(hives[index].device_id, index);
     }
 
     //Set notifications for each device
-    for (index = 0; index < data.length; ++index) {
-        ajaxGetDeviceNotifications(data[index].device_id);
+    for (index = 0; index < hives.length; ++index) {
+        ajaxGetDeviceNotifications(hives[index].device_id);
     }
 }
 
@@ -652,7 +778,7 @@ function arrowsPosition(element) {
 }
 
 //Create measurement Html for device
-function createMeasurementHtml(result, id){
+function createMeasurementHtml(result, id, index){
     var data = result.data;
     if (data.length > 0) {
         var div = document.getElementById('measurement-'+id);
@@ -666,6 +792,15 @@ function createMeasurementHtml(result, id){
 
         div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkosť: "+data[0][3].hodnota+"";
         div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
+
+        //Pre ordering:
+        hives[index].IT = data[0][0].hodnota;
+        hives[index].OT = data[0][1].hodnota;
+        hives[index].IH = data[0][2].hodnota;
+        hives[index].OH = data[0][3].hodnota;
+        hives[index].P = data[0][4].hodnota;
+        hives[index].W = data[0][5].hodnota;
+        hives[index].B = data[0][6].hodnota;
     }
 }
 
