@@ -5,6 +5,8 @@
 // loaded data for choose devices
 var devicesMeasurements = {};
 
+var users = {};
+
 // number of elements to show in graph
 var graphStep = 20;
 
@@ -391,12 +393,12 @@ function ajaxGetUsers() {
             'Content-Type' : 'application/json'
         }
     }).done(function (data) {
-        createUsers(data);
+        users = data.data;
+        createUsers(users);
     });
 }
 
-function createUsers(result){
-    var data = result.data;
+function createUsers(data){
     console.log(data);
     var div = document.getElementById('div.users');
     div.innerHTML = "";
@@ -665,6 +667,105 @@ function createMeasurementHtml(result, id){
 
     div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkosť: "+data[0][3].hodnota+"";
     div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
+}
+
+$("#pocet").click(function() {
+    sortCount();
+});
+
+$("#meno").click(function() {
+
+    sortName();
+});
+
+/**
+ * Called when select combobox is changed
+ */
+function orderClick() {
+    var button = document.getElementById("pocet");
+    if(button.classList.contains('active'))
+        sortCount();
+    else{
+        button = document.getElementById("meno");
+        if(button.classList.contains('active')) {
+            sortName();
+        }
+    }
+}
+
+/**
+ * Sort users by Device Count
+ */
+function sortCount(){
+    var reverse = false;
+    var order = document.getElementById("select-order");
+
+    if(order.selectedIndex==0)
+        reverse = false;
+    else
+        reverse = true;
+
+    users.sort(compare(reverse, 'hive_count'));
+
+    createUsers(users);
+}
+
+/**
+ * Sourt users by name
+ */
+function sortName(){
+    var reverse = false;
+    var order = document.getElementById("select-order");
+
+    if(order.selectedIndex==0)
+        reverse = false;
+    else
+        reverse = true;
+
+    users.sort(compare(reverse, 'name'));
+
+    createUsers(users);
+}
+
+/**
+ * Function used for ordering array
+ * @param reverse
+ * @param parameter - Array parameter to order by
+ * @returns {Function}
+ */
+function compare(reverse, parameter) {
+    return function (a, b) {
+        if (removeAccents(a[parameter]) < removeAccents(b[parameter]))
+            if(!reverse)
+                return -1;
+            else
+                return 1;
+        if (removeAccents(a[parameter]) > removeAccents(b[parameter]))
+            if(!reverse)
+                return 1;
+            else
+                return -1;
+        return 0;
+    }
+}
+
+/**
+ * Removes Slovak Accents from Strings to allow correct order
+ * @param str
+ * @returns {string}
+ */
+function removeAccents(str) {
+    var accents    = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇČçčÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCCccDIIIIiiiiUUUUuuuuNnSsYyyZz";
+    str = str.split('');
+    var strLen = str.length;
+    var i, x;
+    for (i = 0; i < strLen; i++) {
+        if ((x = accents.indexOf(str[i])) != -1) {
+            str[i] = accentsOut[x];
+        }
+    }
+    return str.join('');
 }
 
 function getCookie(cname) {

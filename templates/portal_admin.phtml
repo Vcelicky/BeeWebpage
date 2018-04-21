@@ -126,10 +126,30 @@
     <!-- Header-->
 
     <div class="breadcrumbs">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="page-header float-left">
                 <div class="page-title">
                     <h1>Manažment používateľov</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="page-header float-right input-group" style="margin-top: 10px">
+                <select class="form-control" style="margin-right: 30px; width: auto;" id="select-order" onchange="orderClick()">
+                    <div>
+                        <option>Zobraziť vzostupne</option>
+                        <option selected>Zobraziť zostupne</option>
+                    </div>
+
+                </select>
+
+                <div class="btn-group btn-group-toggle" id="btns-filter" data-toggle="buttons" style="padding-bottom:10px">
+                    <label class="btn btn-outline-primary active" id="pocet">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Počet zariadení
+                    </label>
+                    <label class="btn btn-outline-primary" id="meno">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Meno
+                    </label>
                 </div>
             </div>
         </div>

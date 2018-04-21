@@ -85,6 +85,9 @@ function measurementClick(){
     sortMeranie();
 }
 
+/**
+ * Function called when Measurement Type combobox value is changed
+ */
 function sortMeranie(){
 
     var reverse = false;
@@ -115,6 +118,9 @@ function sortMeranie(){
     createHives(hives);
 }
 
+/**
+ * Sorts devices by location
+ */
 function sortLocation(){
     var reverse = false;
     var order = document.getElementById("select-order");
@@ -129,6 +135,9 @@ function sortLocation(){
     createHives(hives);
 }
 
+/**
+ * Sorts devices by name
+ */
 function sortName(){
     var reverse = false;
     var order = document.getElementById("select-order");
@@ -141,7 +150,12 @@ function sortName(){
     createHives(hives);
 }
 
-
+/**
+ * Function used for ordering array
+ * @param reverse
+ * @param parameter - Array parameter to order by
+ * @returns {Function}
+ */
 function compare(reverse, parameter) {
     return function (a, b) {
         if (removeAccents(a[parameter]) < removeAccents(b[parameter]))
@@ -153,11 +167,16 @@ function compare(reverse, parameter) {
             if(!reverse)
                 return 1;
             else
-                return 1;
+                return -1;
         return 0;
     }
 }
 
+/**
+ * Removes Slovak Accents from Strings to allow correct order
+ * @param str
+ * @returns {string}
+ */
 function removeAccents(str) {
     var accents    = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇČçčÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
     var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCCccDIIIIiiiiUUUUuuuuNnSsYyyZz";
