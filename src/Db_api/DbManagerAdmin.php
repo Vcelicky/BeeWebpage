@@ -19,6 +19,7 @@ class DbManagerAdmin extends DbManager
                     FROM bees.users u
                     LEFT JOIN bees.devices d ON u.id = d.user_id
                     GROUP BY (u.id, u.name, u.email)
+                    HAVING u.role_id=1
                     ORDER BY hive_count DESC';
 
         $result = pg_prepare($this->conn, "my_query", $query);
