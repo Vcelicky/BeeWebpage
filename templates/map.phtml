@@ -126,16 +126,15 @@
 
     <div class="breadcrumbs">
 	<img src="images/hive_icon.jpg" alt="Logo" class="rounded float-left" style="margin-top: 5px;">
-        <div class="col-sm-6">
+        <div class="col-sm-6" style="padding-left: -0px;margin-left: -10px;">
 		
             <div class="page-header float-left">
-             <!--   <div class="page-title" id="nadpis">
+                <div class="page-title" id="nadpis">
                     <h1>Mapa</h1>
                 </div>
-				<img src="images/hive_icon.jpg" alt="Logo" class="img-responsive">
-				-->
-				  <a  id="nadpis"></a>
-				  <a  id="nadpis1"></a>
+
+				
+				 
             </div>
         </div>
       
@@ -150,8 +149,8 @@
 		var lngg;
 
 		function setCoords(latt, lngg, hi_name){
-		 // document.getElementById("nadpis").innerHTML = "<a class=\"logo pull-left\"<h1>"+hi_name+"</h1><img src=\"images/hive_icon.jpg\"></a>";
-		   document.getElementById("nadpis1").innerHTML = "<h1 class=\"brand brand-name navbar-left\" style=\"margin-left: -15px;\"><div class\"navbar-left\" style=\"margin-left: -15px;\">"+hi_name+"</h1>";
+		 document.getElementById("nadpis").innerHTML = "<h1>"+hi_name+"</h1>";
+		 //  document.getElementById("nadpis1").innerHTML = "<h1 class=\"brand brand-name navbar-left\" style=\"margin-left: -15px;\"><div class\"navbar-left\" style=\"margin-left: -15px;\">"+hi_name+"</h1>";
 		   //document.getElementById("nadpis1").innerHTML="<h1>"+hi_name+"</h1>";
 		  this.latt =  parseInt(latt);
 		  this.lngg =  parseInt(lngg);
