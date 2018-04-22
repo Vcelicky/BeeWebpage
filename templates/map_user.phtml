@@ -3,10 +3,11 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Bee Manager</title>
+    <title>Bee Manager</title>
     <meta name="description" content="BeeAdmin portal">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,18 +22,20 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/themify-icons.css">
     <link rel="stylesheet" href="css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="./../node_modules/titatoggle/dist/titatoggle-dist.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
 
+
 <!-- Left Panel -->
 
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand" href="./"><img src="images/logo_portal1.png" alt="Logo"></a>
+            <a class="navbar-brand" href="./"><img src="images/logo_portal3.png" alt="Logo"></a>
             <a class="navbar-brand hidden" href="./"><img src="images/logo_portal2.png" alt="Logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
                 <i class="fa fa-bars"></i>
@@ -42,11 +45,15 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-users"></i>Manažment používateľov </a>
-                </li>
-                <li>
-                    <a href="/BeeWebpage/public/order_management"> <i class="menu-icon fa fa-list-alt"></i>Manažment objednávok </a>
-                </li>
+                    <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-archive"></i>Manažment úľov </a>
+				</li>
+				<li>
+                    <a href="/BeeWebpage/public/create_order"> <i class="menu-icon fa fa-wpforms"></i>Vytvorenie objednávky </a>
+				</li>
+				<li>
+                    <a href="/BeeWebpage/public/notifications"> <i class="menu-icon fa fa-history"></i>Historia notifikácií</a>
+				</li>
+
             </ul>
         </div><!-- /.navbar-collapse -->
 
@@ -57,7 +64,7 @@
 
 <!-- Right Panel -->
 
-<div id="right-panel" class="right-panel">
+    <div id="right-panel" class="right-panel">
 
     <!-- Header-->
     <header id="header" class="header">
@@ -74,12 +81,23 @@
 <!--                            <button class="search-close" type="submit"><i class="fa fa-close"></i></button>-->
 <!--                        </form>-->
 <!--                    </div>-->
+
+                    <div class="dropdown for-notification keep-open">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" >
+                            <i class="fa fa-bell"></i>
+                            <span class="unread-count"></span>
+                        </button>
+                        <div id = "dropdown-notification" class="dropdown-menu" aria-labelledby="notification">
+                            <p class="red .dropdown.for-notification.keep-open"></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
             <div class="col-sm-5">
-                <div class="user-area dropdown float-right">
-			
+			<div class="user-area dropdown float-right">
+            
 				<?php 
 							$id=$_COOKIE['user_name'];
 										echo "<a>$id &ensp;</a>";
@@ -92,7 +110,9 @@
                     <div class="user-menu dropdown-menu">
                         <a class="nav-link" href="/BeeWebpage/public/profile"><i class="fa fa- user"></i>Môj Profil</a>
 
-                        <!--  <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>-->
+                        <a class="nav-link" href="/BeeWebpage/public/notifications"><i class="fa fa- user"></i>História notifikácií</a>
+
+                         <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>-->
 
                         <a class="nav-link" id="log_out_button" href="#"><i class="fa fa-power -off"></i>Odhlásenie</a>
                     </div>
@@ -191,22 +211,46 @@
 	 }
 ?>
 
-   <!--/.col-->
+
+    <!--Notification modal window-->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id = "notificationModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="ti-trash"></span>
+                        <span>Vymaž</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    Put content here:-->
+    <div id="div.hives">
+
+    </div><!--/.col-->
+
 
 </div> <!-- .content -->
 </div><!-- /#right-panel -->
-
 <!-- Right Panel -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"</script>
-<script src="js/notifications.js"></script>
-
 <script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
+<script src="js/notifications.js"></script>
 <script src="./../node_modules/chart.js/dist/Chart.js"></script>
 
 </body>
 </html>
-

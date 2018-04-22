@@ -86,6 +86,15 @@ $app->post('/map', function (Request $request, Response $response, array $args) 
         return $response->withStatus(401);
 });
 
+$app->post('/map_user', function (Request $request, Response $response, array $args) {
+	
+     if (isset($_SESSION['id'])){      
+            return $this->renderer->render($response, 'map_user.phtml');
+       }
+    else
+        return $response->withStatus(401);
+});
+
 $app->post('/order_management', function (Request $request, Response $response, array $args) {
 	
      if (isset($_SESSION['id'])){       
@@ -150,6 +159,14 @@ $app->get('/map', function (Request $request, Response $response, array $args) {
         return $response->withStatus(401);
 });
 
+$app->get('/map_user', function (Request $request, Response $response, array $args) {
+    if (isset($_SESSION['id'])){ 
+            return $this->renderer->render($response, 'map_user.phtml');
+    }
+
+    else
+        return $response->withStatus(401);
+});
 //Portal - Hive
 $app->get('/portal/{id}', function (Request $request, Response $response, array $args) {
 

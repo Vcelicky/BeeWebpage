@@ -690,7 +690,7 @@ function createHiveHtml(id, name, location){
                                 <i class="fa fa-caret-right"></i>\
                                 Zobraziť grafy meraní\
                             </a>\
-							<form id="form-id" class="font-weight-bold font-xs btn-block text-muted small" method="post" action="map">\
+							<form id="form-id" class="font-weight-bold font-xs btn-block text-muted small" method="post" action="map_user">\
 							<input type="hidden" name="device_name" value=\"'+name.toString()+'\">\
 							<div onclick="document.getElementById(\'form-id\').submit();" style="cursor: pointer;"><i class="fa fa-map-marker"></i> Zobraziť mapu</div>\
 							</form>\
