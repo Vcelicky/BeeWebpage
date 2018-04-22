@@ -88,7 +88,7 @@ function checkSize(){
 }
 
 function deleteHive(deviceId, deviceName){
-    var r = confirm("Naozaj chcete vymaazať zariadenie "+deviceName+"?");
+    var r = confirm("Naozaj chcete vymazať úľ s názvom "+deviceName+"?");
     if(r){
         var loc = window.location.origin;
 

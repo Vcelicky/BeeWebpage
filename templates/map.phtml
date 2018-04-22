@@ -124,32 +124,29 @@
     </header><!-- /header -->
     <!-- Header-->
 
-    <div class="breadcrumbs">
-	<img src="images/hive_icon.jpg" alt="Logo" class="rounded float-left" style="margin-top: 5px;">
-        <div class="col-sm-6" style="padding-left: -0px;margin-left: -10px;">
-		
-            <div class="page-header float-left">
-                <div class="page-title" id="nadpis">
-                    <h1>Mapa</h1>
-                </div>
-
-				
-				 
-            </div>
-        </div>
+      <div class="breadcrumbs">
+	<div class="paragraphs">
+  <div class="row">
+    <div class="span4" style="margin-left: 10px;">
+      <img style="float:left" src="images/hive_icon.jpg"/>
+      <div style="float:left"><h3 style="font-size: 18px;margin-top: 7px;">Mapa &nbsp; </h3></div>
       
     </div>
-
+  </div>
+</div>
+	
+      
+  </div>
+ 
     <!--    Put content here:-->
    
 	<div align="center" id="map" style="height:400px;"></div>
-
 <script>
 		var latt;
 		var lngg;
 
 		function setCoords(latt, lngg, hi_name){
-		 document.getElementById("nadpis").innerHTML = "<h1>Mapa</h1>";
+		 //document.getElementById("nadpis").innerHTML = "<h1>Mapa</h1>";
 		 //  document.getElementById("nadpis1").innerHTML = "<h1 class=\"brand brand-name navbar-left\" style=\"margin-left: -15px;\"><div class\"navbar-left\" style=\"margin-left: -15px;\">"+hi_name+"</h1>";
 		   //document.getElementById("nadpis1").innerHTML="<h1>"+hi_name+"</h1>";
 		  this.latt =  parseInt(latt);
@@ -201,8 +198,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/tether.min.js"></script>
+<script src="js/map.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"</script>
-<script src="js/notifications.js"></script>
+
 
 <script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
 <script src="./../node_modules/chart.js/dist/Chart.js"></script>
