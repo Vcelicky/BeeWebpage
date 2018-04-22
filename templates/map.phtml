@@ -1,0 +1,213 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Bee Manager</title>
+    <meta name="description" content="BeeAdmin portal">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="images/avicon.ico">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom Theme Style -->
+    <link href="css/portal.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/cs-skin-elastic.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+<!-- Left Panel -->
+
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="./"><img src="images/logo_portal1.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="./"><img src="images/logo_portal2.png" alt="Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="true" aria-label="Toggle navigation" id="toggler" style="visibility: hidden">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/BeeWebpage/public/portal"> <i class="menu-icon fa fa-users"></i>Manažment používateľov </a>
+                </li>
+                <li>
+                    <a href="/BeeWebpage/public/order_management"> <i class="menu-icon fa fa-list-alt"></i>Manažment objednávok </a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+
+    </nav>
+</aside><!-- /#left-panel -->
+
+<!-- Left Panel -->
+
+<!-- Right Panel -->
+
+<div id="right-panel" class="right-panel">
+
+    <!-- Header-->
+    <header id="header" class="header">
+
+        <div class="header-menu">
+
+            <div class="col-sm-7">
+                <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                <div class="header-left">
+<!--                    <button class="search-trigger"><i class="fa fa-search"></i></button>-->
+<!--                    <div class="form-inline">-->
+<!--                        <form class="search-form">-->
+<!--                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">-->
+<!--                            <button class="search-close" type="submit"><i class="fa fa-close"></i></button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+                </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="user-area dropdown float-right">
+			
+				<?php 
+							$id=$_COOKIE['user_name'];
+										echo "<a>$id &ensp;</a>";
+				?>
+			
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
+                    </a>
+
+                    <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="/BeeWebpage/public/profile"><i class="fa fa- user"></i>Môj Profil</a>
+
+                        <!--  <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>-->
+
+                        <a class="nav-link" id="log_out_button" href="#"><i class="fa fa-power -off"></i>Odhlásenie</a>
+                    </div>
+                </div>
+
+                <div class="language-select dropdown" id="language-select">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
+                        <i class="flag-icon flag-icon-us"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="language" >
+                        <div class="dropdown-item">
+                            <span class="flag-icon flag-icon-fr"></span>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-es"></i>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-us"></i>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="flag-icon flag-icon-it"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </header><!-- /header -->
+    <!-- Header-->
+
+    <div class="breadcrumbs">
+	<img src="images/hive_icon.jpg" alt="Logo" class="rounded float-left" style="margin-top: 5px;">
+        <div class="col-sm-6">
+		
+            <div class="page-header float-left">
+             <!--   <div class="page-title" id="nadpis">
+                    <h1>Mapa</h1>
+                </div>
+				<img src="images/hive_icon.jpg" alt="Logo" class="img-responsive">
+				-->
+				  <a  id="nadpis"></a>
+				  <a  id="nadpis1"></a>
+            </div>
+        </div>
+      
+    </div>
+
+    <!--    Put content here:-->
+   
+	<div align="center" id="map" style="height:400px;"></div>
+
+<script>
+		var latt;
+		var lngg;
+
+		function setCoords(latt, lngg, hi_name){
+		 // document.getElementById("nadpis").innerHTML = "<a class=\"logo pull-left\"<h1>"+hi_name+"</h1><img src=\"images/hive_icon.jpg\"></a>";
+		   document.getElementById("nadpis1").innerHTML = "<h1 class=\"brand brand-name navbar-left\" style=\"margin-left: -15px;\"><div class\"navbar-left\" style=\"margin-left: -15px;\">"+hi_name+"</h1>";
+		   //document.getElementById("nadpis1").innerHTML="<h1>"+hi_name+"</h1>";
+		  this.latt =  parseInt(latt);
+		  this.lngg =  parseInt(lngg);
+		}
+		
+      function initMap() {
+	    var uluru = {lat: latt , lng: lngg};
+        //var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+	
+<?php
+	 if(isset($_POST['device_name'])){
+		  $dn = $_POST['device_name']; 
+		  $host = "147.175.149.151"; 
+		  $user = "postgres"; 
+		  $pass = "smenajlepsi"; 
+		  $db = "tp"; 	
+		  $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
+					or die("Could not connect to server\n"); 
+
+		  $query = "SELECT lat, long FROM bees.devices WHERE uf_name='$dn'"; 
+		  $result = pg_query($query); 
+		  $row = pg_fetch_row($result);
+		  $lat=$row[0];
+		  $long=$row[1];
+		  pg_close($con); 
+		  echo "<script type='text/javascript'>setCoords('$lat', '$long', '$dn');</script>";
+		  echo '<script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyDwPiBNKlW2U1ejERqOmQtSijAEZDid-uM &callback=initMap"></script>';
+	 }
+?>
+
+   <!--/.col-->
+
+</div> <!-- .content -->
+</div><!-- /#right-panel -->
+
+<!-- Right Panel -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"</script>
+
+
+<script src="./../node_modules/moment-with-locales-es6/node_modules/moment/min/moment-with-locales.min.js"></script>
+<script src="./../node_modules/chart.js/dist/Chart.js"></script>
+
+</body>
+</html>
+

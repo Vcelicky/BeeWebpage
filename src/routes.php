@@ -77,6 +77,15 @@ $app->post('/create_order', function (Request $request, Response $response, arra
         return $response->withStatus(401);
 });
 
+$app->post('/map', function (Request $request, Response $response, array $args) {
+	
+     if (isset($_SESSION['id'])){      
+            return $this->renderer->render($response, 'map.phtml');
+       }
+    else
+        return $response->withStatus(401);
+});
+
 $app->post('/order_management', function (Request $request, Response $response, array $args) {
 	
      if (isset($_SESSION['id'])){       
@@ -126,6 +135,15 @@ $app->get('/portal', function (Request $request, Response $response, array $args
             return $this->renderer->render($response, 'portal_admin.phtml');
         }}
 
+    }
+
+    else
+        return $response->withStatus(401);
+});
+
+$app->get('/map', function (Request $request, Response $response, array $args) {
+    if (isset($_SESSION['id'])){ 
+            return $this->renderer->render($response, 'map.phtml');
     }
 
     else
