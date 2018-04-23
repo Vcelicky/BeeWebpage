@@ -129,8 +129,8 @@
   <div class="row">
     <div class="span4" style="margin-left: 10px;">
       <img style="float:left" src="images/hive_icon.jpg"/>
-      <div style="float:left"><h3 style="font-size: 18px;margin-top: 7px;">Mapa &nbsp; </h3></div>
-      
+      <div style="float:left" id="nadpis"></div>
+        <!--div style="float:left" id="nadpis"><h3 style="font-size: 18px;margin-top: 7px;">Mapa &nbsp; </h3></div>-->
     </div>
   </div>
 </div>
@@ -148,7 +148,7 @@
 		function setCoords(latt, lngg, hi_name){
 		 //document.getElementById("nadpis").innerHTML = "<h1>Mapa</h1>";
 		 //  document.getElementById("nadpis1").innerHTML = "<h1 class=\"brand brand-name navbar-left\" style=\"margin-left: -15px;\"><div class\"navbar-left\" style=\"margin-left: -15px;\">"+hi_name+"</h1>";
-		   //document.getElementById("nadpis1").innerHTML="<h1>"+hi_name+"</h1>";
+		   document.getElementById("nadpis").innerHTML="<h3 style=\"font-size: 18px;margin-top: 7px;\">"+hi_name+" &nbsp; </h3>";
 		  this.latt =  parseInt(latt);
 		  this.lngg =  parseInt(lngg);
 		}
@@ -169,6 +169,7 @@
 	
 <?php
 	 if(isset($_POST['device_name'])){
+		   
 		  $dn = $_POST['device_name']; 
 		  $host = "147.175.149.151"; 
 		  $user = "postgres"; 
@@ -176,7 +177,6 @@
 		  $db = "tp"; 	
 		  $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
 					or die("Could not connect to server\n"); 
-
 		  $query = "SELECT lat, long FROM bees.devices WHERE uf_name='$dn'"; 
 		  $result = pg_query($query); 
 		  $row = pg_fetch_row($result);
