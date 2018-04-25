@@ -136,7 +136,18 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 
 // product prices
 $app->get('/products-prices', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response, 'products_prices.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+    // get products from DB
+    $config = $this->config->getConfig();
+    $dbManager = new DbManager($config);
+    $dbManager->connect();
+    $products = $dbManager->getProducts();
+    if ($products['error']) {
+        error_log("database error");
+    }
+    return $this->renderer->render($response, 'products_prices.phtml', ['menu' => $request->getAttribute('menu'),
+        'footer' => $request->getAttribute('footer'),
+        'products' => $products['data']
+    ]);
 });
 
 //Portal

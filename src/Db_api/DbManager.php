@@ -820,5 +820,27 @@ class DbManager
         return $result_response;
     }
 
+    public function getProducts() {
+        $query = 'SELECT image_path, title, price, body
+                  FROM bees.products;';
+        $prepare_result = pg_prepare($this->conn, 'products query', $query);
+        $result = pg_execute($this->conn, 'products query', []);
+
+        if ($result) {
+            $rows = array();
+            while($r =  pg_fetch_assoc($result)) {
+                array_push($rows, $r);
+            }
+            //$values = pg_fetch_row($result);
+            return [
+                'error' => false,
+                'data' => $rows
+            ];
+        }
+
+        return [
+            'error' => true
+        ];
+    }
 
 }
