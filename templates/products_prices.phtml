@@ -44,77 +44,80 @@
     </div>
 
 </nav>
-
-<!-- Page Content -->
-<div class="container">
-    <div class="row">
-                <?php foreach ($products as $product): ?>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src=<?php echo $product['image_path']; ?> alt=""></a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <?php echo $product['title']; ?>
-                                    </h4>
-                                    <h5>€ <?php echo $product['price']; ?><hr>
-                                    <p class="card-text"> <?php echo $product['body']; ?> </p>
+<div style="margin-top: 40px">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="well well-sm">
+            <h3><strong>Produkty</strong></h3>
+        </div>
+        <div class="row">
+                    <?php foreach ($products as $product): ?>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src=<?php echo $product['image_path']; ?> alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <?php echo $product['title']; ?>
+                                        </h4>
+                                        <h5>€ <?php echo $product['price']; ?><hr>
+                                        <p class="card-text"> <?php echo $product['body']; ?> </p>
+                                    </div>
+                                    <div class="card-footer">
+                                    </div>
                                 </div>
-                                <div class="card-footer">
-                                </div>
-                            </div>
-                         </div>
-                <?php endforeach; ?>
-            </div>
-            <!-- /.row -->
+                             </div>
+                    <?php endforeach; ?>
+                </div>
+                <!-- /.row -->
+        </div>
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
-</div>
 
-<!-- Modal HTML Markup -->
-<div id="ModalLoginForm" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title text-xs-center">Prihlásenie</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" id = "login">
-                    <div class="form-group">
-                        <label class="control-label">Email</label>
-                        <div>
-                            <input type="email" class="form-control input-lg" name="email" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Heslo</label>
-                        <div>
-                            <input type="password" class="form-control input-lg" name="password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember"> Zapamätaj si
-                                </label>
+    <!-- Modal HTML Markup -->
+    <div id="ModalLoginForm" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-xs-center">Prihlásenie</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id = "login">
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <div>
+                                <input type="email" class="form-control input-lg" name="email" value="">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-
-                            <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
+                        <div class="form-group">
+                            <label class="control-label">Heslo</label>
+                            <div>
+                                <input type="password" class="form-control input-lg" name="password">
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer text-xs-center">
-                Nemáte účet? <br><a href="/BeeWebpage/public/register"> Zaregistrujte sa »</a>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                        <div class="form-group">
+                            <div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember"> Zapamätaj si
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
 
+                                <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-xs-center">
+                    Nemáte účet? <br><a href="/BeeWebpage/public/register"> Zaregistrujte sa »</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
 
 
     <?php echo $footer;?>
