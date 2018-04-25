@@ -17,6 +17,7 @@
     "jquery": "^3.2.1",
     "moment-range": "^3.1.1",
     "moment-with-locales-es6": "^2.18.1",
+    "startbootstrap-shop-homepage": "^4.0.0",
     "titatoggle": "^2.1.2"
   },
   "devDependencies": {

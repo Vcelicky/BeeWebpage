@@ -134,6 +134,11 @@ $app->get('/products', function (Request $request, Response $response, array $ar
     return $this->renderer->render($response, 'products.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
 });
 
+// product prices
+$app->get('/products-prices', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response, 'products_prices.phtml', ['menu' => $request->getAttribute('menu'), 'footer' => $request->getAttribute('footer')]);
+});
+
 //Portal
 $app->get('/portal', function (Request $request, Response $response, array $args) {
     if (isset($_SESSION['id'])){
