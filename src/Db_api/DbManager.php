@@ -343,11 +343,33 @@ class DbManager
         $result_data = "";
         if (!$result) {
             $result_data = pg_last_error();
-            return $result_data;
+            return [
+              'error' => true,
+              'data' => $result_data
+            ];
+        }
+        else {
+            // save gps data
+            $query = 'UPDATE bees.devices
+                      SET lat = $1, long = $2
+                      WHERE device_id = $3;';
+
+            $prepare_result = pg_prepare($this->conn, 'device update', $query);
+            $result = pg_exec($this->conn, [$raw_data['lat'], $raw_data['lng'], $raw_data['id']]);
+            if (!$result) {
+                $result_data = pg_last_error();
+                return [
+                    'error' => true,
+                    'data' => $result_data
+                ];
+            }
         }
 
         $result_data = "query was successfully executed";
-        return $result_data;
+        return [
+            'error' => false,
+            'data' => $result_data
+        ];
     }
 
     public function getAllDevices($token, $userId) {
