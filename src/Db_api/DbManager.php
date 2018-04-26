@@ -441,8 +441,10 @@ class DbManager
 
         $result = pg_prepare($this->conn, 'user data select', '
         SELECT m.time, m.temperature_in, m.weight, m.proximity, m.temperature_out, m.humidity_in,
-         m.humidity_out, m.batery, d.temperature_in_up_limit, d.weight_limit, d.temperature_out_up_limit, d.humidity_in_up_limit, d.humidity_out_up_limit, 
-            d.batery_limit, d.temperature_in_down_limit, d.temperature_out_down_limit,d.humidity_in_down_limit,d.humidity_out_down_limit FROM bees.devices d
+         m.humidity_out, m.batery, d.temperature_in_up_limit, d.weight_limit, d.temperature_out_up_limit,
+         d.humidity_in_up_limit, d.humidity_out_up_limit, d.batery_limit, d.temperature_in_down_limit,
+         d.temperature_out_down_limit,d.humidity_in_down_limit,d.humidity_out_down_limit, d.lat, d.long
+         FROM bees.devices d
                   JOIN bees.measurements m ON d.device_id = m.device_name
                   WHERE d.user_id = $1 AND m.device_name = $2
                   ORDER BY m.time DESC
@@ -499,6 +501,10 @@ class DbManager
                         'temperature_out_down_limit' => $r['temperature_out_down_limit'],
                         'humidity_in_down_limit' => $r['humidity_in_down_limit'],
                         'humidity_out_down_limit' => $r['humidity_out_down_limit']
+                    ],
+                    8 => [
+                        'lat' => $r['lat'],
+                        'long' => $r['long']
                     ]
 
                 ]);
