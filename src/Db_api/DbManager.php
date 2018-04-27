@@ -355,7 +355,7 @@ class DbManager
                       WHERE device_id = $3;';
 
             $prepare_result = pg_prepare($this->conn, 'device update', $query);
-            $result = pg_exec($this->conn, [$raw_data['lat'], $raw_data['lng'], $raw_data['id']]);
+            $result = pg_execute($this->conn, [$raw_data['lat'], $raw_data['lng'], $raw_data['id']]);
             if (!$result) {
                 $result_data = pg_last_error();
                 return [
