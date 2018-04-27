@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Včeličky | Kontakt</title>
+    <link rel="shortcut icon" href="images/avicon.ico">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../node_modules/startbootstrap-shop-homepage/css/shop-homepage.css">
+    <link rel="stylesheet" href="css/global.css">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top bg-faded">
+    <a href="/BeeWebpage/public" class="navbar-brand text-primary" id="logo" style="margin-left: 10%">
+        <img src="images/logo.png" width="50px" height="50px">
+    </a>
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <!--                        <ul class="navbar-nav">-->
+        <ul class="navbar-nav ml-auto">
+            <?php foreach($menu as $key => $value): ?>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="<?=$value['href']?>"
+                        <?php if(strlen($value['href']) == 0): echo 'data-toggle="modal" data-target="#ModalLoginForm"'; endif; ?>
+                    >
+                        <?=$value['name']?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+</nav>
+<div style="margin-top: 40px">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="well well-sm">
+            <h3><strong>Produkty</strong></h3>
+        </div>
+        <div class="row">
+                    <?php foreach ($products as $product): ?>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src=<?php echo $product['image_path']; ?> alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <?php echo $product['title']; ?>
+                                        </h4>
+                                        <h5>€ <?php echo $product['price']; ?><hr>
+                                        <p class="card-text"> <?php echo $product['body']; ?> </p>
+                                    </div>
+                                    <div class="card-footer">
+                                    </div>
+                                </div>
+                             </div>
+                    <?php endforeach; ?>
+                </div>
+                <!-- /.row -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+    <!-- Modal HTML Markup -->
+    <div id="ModalLoginForm" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-xs-center">Prihlásenie</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id = "login">
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <div>
+                                <input type="email" class="form-control input-lg" name="email" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Heslo</label>
+                            <div>
+                                <input type="password" class="form-control input-lg" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember"> Zapamätaj si
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+
+                                <button type="button" id = "login_button" class="btn btn-info btn-block">Prihlásiť sa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-xs-center">
+                    Nemáte účet? <br><a href="/BeeWebpage/public/register"> Zaregistrujte sa »</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
+    <?php echo $footer;?>
+
+    <script>
+        function teamphoto() {
+            //window.location = "https://stackoverflow.com/";
+            //window.location.href="http://stackoverflow.com";
+            window.location = "https://team20-17.studenti.fiit.stuba.sk/#tim";
+        }
+    </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/style.js"></script>
+
+</body>
+</html>
+
