@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/themify-icons.css">
     <link rel="stylesheet" href="../css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../css/dataTables.bootstrap.min.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -152,76 +153,81 @@
                         <div class="card-body" style="padding-top: 0px;">
                             <div id="div.info" style="margin-bottom: 50px;">
                                 <div class="col-lg-2">
-                                    <div class="hive" id="name"></div>
-                                    <div class="location" id="loc"></div>
+<!--                                    <div class="hive" id="name"></div>-->
+                                    <div>
+                                        <span class="hive" id="name"></span>
+                                        <i id="hive-jeditable-activate" class="fa fa-edit" data-fa-transform="shrink-8 up-6"></i>
+                                    </div>
+                                    <span class="location" id="loc"></span>
+                                    <i id="location-jeditable-activate" class="fa fa-edit" data-fa-transform="shrink-8 up-6"></i>
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12"><b>Hraničné hodnoty:</b></div>
 
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vonkajšia teplota MAX</span>
+                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vonkajšia teplota MAX °C</span>
                                             <input id="ot-u" type="text" class="form-control" name="msg" value="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vonkajšia vlhkosť MAX</span>
-                                            <input id="oh-u" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vnútorná teplota MAX</span>
-                                            <input id="it-u" type="text" class="form-control" name="msg" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vnútorná vlhkosť MAX</span>
-                                            <input id="ih-u" type="text" class="form-control" name="msg" value="">
-                                        </div></div>
-                                    <div class="col-lg-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vonkajšia teplota MIN</span>
+                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vonkajšia teplota MIN °C</span>
                                             <input id="ot-d" type="text" class="form-control" name="msg" value="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vonkajšia vlhkosť MIN</span>
-                                            <input id="oh-d" type="text" class="form-control" name="msg" value="">
+                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vnútorná teplota MAX °C</span>
+                                            <input id="it-u" type="text" class="form-control" name="msg" value="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vnútorná teplota MIN</span>
+                                            <span class="input-group-addon"><i class="fa fa-thermometer"></i> Vnútorná teplota MIN °C</span>
                                             <input id="it-d" type="text" class="form-control" name="msg" value="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vnútorná vlhkosť MIN</span>
+                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vonkajšia vlhkosť MAX %</span>
+                                            <input id="oh-u" type="text" class="form-control" name="msg" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vonkajšia vlhkosť MIN %</span>
+                                            <input id="oh-d" type="text" class="form-control" name="msg" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vnútorná vlhkosť MAX %</span>
+                                            <input id="ih-u" type="text" class="form-control" name="msg" value="">
+                                        </div></div>
+                                   <div class="col-lg-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-cloud"></i> Vnútorná vlhkosť MIN %</span>
                                             <input id="ih-d" type="text" class="form-control" name="msg" value="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-battery-quarter"></i> Batéria MIN</span>
+                                            <span class="input-group-addon"><i class="fa fa-battery-quarter"></i> Batéria MIN %</span>
                                             <input id="b" type="text" class="form-control" name="msg"value="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-balance-scale"></i> Hmotnosť MAX</span>
+                                            <span class="input-group-addon"><i class="fa fa-balance-scale"></i> Hmotnosť MAX kg</span>
                                             <input id="w" type="text" class="form-control" name="msg" value="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3" style="margin-top: 10px;">
+                                    <div class="col-lg-4" style="margin-top: 10px;">
                                         <button type="button" id="save" class="btn btn-info btn-sm p pull-right"><i class="fa fa-save"></i>&nbsp; Uložiť</button>
                                     </div>
-                                    <div class="col-lg-3" style="margin-top: 10px;">
-                                        <button type="button" id="reset" class="btn btn-info btn-sm p"><i class="fa fa-exchange"></i>&nbsp; Obnoviť predvolené hodnoty</button>
+                                    <div class="col-lg-4" style="margin-top: 10px;">
+                                        <button type="button" id="reset" class="btn btn-info btn-sm p"><i class="fa fa-undo"></i>&nbsp; Obnoviť predvolené hodnoty</button>
                                     </div>
                                 </div>
                             <hr>
@@ -286,6 +292,7 @@
 <script src="../js/tether.min.js"></script>
 <script src="../js/jquery.jeditable.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!--<script defer src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous"></script>-->
 
 <script src="../js/portal.js"></script>
 <script src="../js/portal_hive.js"></script>

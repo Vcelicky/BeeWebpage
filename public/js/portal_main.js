@@ -677,8 +677,8 @@ function createHiveHtml(id, name, location){
                                 </div> \
                         </div> \
                          <div class="col-lg-8"> \
-                            <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
-                            <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs small"></div> \
+                            <div id="measurement-'+id+'" class="text-muted text-uppercase font-xs medium"></div> \
+                            <div id="measurement2-'+id+'" class="text-muted text-uppercase font-xs medium"></div> \
                         </div>\
                         <hr>  \
                         <div id="'+id+'"class="more-info pt-2 col-lg-12" style="margin-bottom:-10px;"> \
@@ -794,7 +794,7 @@ function arrowsPosition(element) {
 }
 
 //Create measurement Html for device
-function createMeasurementHtml(result, id, index){
+function createMeasurementHtml(result, id, index) {
     var data = result.data;
     if (data.length > 0) {
         var div = document.getElementById('measurement-'+id);
@@ -806,8 +806,32 @@ function createMeasurementHtml(result, id, index){
             proximity='<span class="text-danger">Prevrátený</span>';
         }
 
-        div.innerHTML = "Vnútorná teplota: "+data[0][0].hodnota+", Vonkajšia teplota: "+data[0][1].hodnota+", Vnútorná vlhkosť: "+data[0][2].hodnota+", Vonkajšia vlhkosť: "+data[0][3].hodnota+"";
-        div2.innerHTML = "Pohyb úľa: "+proximity+", Váha: "+data[0][5].hodnota+", Batéria: "+data[0][6].hodnota;
+
+        div.innerHTML =
+            "<div class=\"col-lg-6\">" +
+                "<i class=\"fa fa-thermometer\"></i> Vnútorná teplota: "+data[0][0].hodnota+"°C " +
+            "</div>" +
+            "<div class=\"col-lg-6\">" +
+                "<i class=\"fa fa-thermometer\"></i> Vonkajšia teplota: "+data[0][1].hodnota+"°C " +
+            "</div>" +
+            "<div class=\"col-lg-6\">" +
+                "<i class=\"fa fa-cloud\"></i>Vnútorná vlhkosť: "+data[0][2].hodnota+"% " +
+            "</div>"+
+            "<div class=\"col-lg-6\">" +
+                "<i class=\"fa fa-cloud\"></i>Vonkajšia vlhkosť: "+data[0][3].hodnota+"%" +
+            "</div>";
+
+        div2.innerHTML =
+            "<div class=\"col-lg-6\">" +
+                "<i class=\"fa fa-arrows-alt\"></i> Pohyb úľa: "+proximity+" " +
+            "</div>" +
+            "<div class=\"col-lg-6\">" +
+                "<i class=\"fa fa-balance-scale\"></i>  Váha: "+data[0][5].hodnota+"kg " +
+            "</div>" +
+            "<div class=\"col-lg-6\">" +
+                "<i class=\"fa fa-battery-quarter\"></i> Batéria: "+data[0][6].hodnota +"%"+
+            "</div>";
+
 
         //Pre ordering:
         hives[index].IT = data[0][0].hodnota;
