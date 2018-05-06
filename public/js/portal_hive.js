@@ -38,6 +38,14 @@ $( document ).ready(function() {
 
 });
 
+$( "#hive-jeditable-activate" ).click(function() {
+    $('.hive').click();
+});
+
+$( "#location-jeditable-activate" ).click(function() {
+    $('.location').click();
+});
+
 $('.hive').editable(function(value, settings) {
     data = {
         'token' : getCookie('token'),

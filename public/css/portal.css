@@ -2260,6 +2260,11 @@ div.hive {
     font-weight: bold;
 }
 
+span.hive {
+    font-size: 25px;
+    font-weight: bold;
+}
+
 .location {
     font-size: 25px;
 }
@@ -2315,4 +2320,10 @@ div.hive {
 
 .dropdown i {
     color: #ffc107;
+}
+
+
+.input-group-addon {
+    min-width:230px;
+    text-align:left;
 }
