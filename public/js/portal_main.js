@@ -606,8 +606,8 @@ function ajaxGetDeviceNotifications(device) {
     }).done(function (data) {
         let hive_item = document.getElementById('measurement-' + device);
 
-        hive_item.parentElement.parentElement.childNodes[3].childNodes[3].childNodes[1].childNodes[1].checked = data.data.sms_not == "f" ? false : true;
-        hive_item.parentElement.parentElement.childNodes[3].childNodes[5].childNodes[1].childNodes[1].checked = data.data.email_not == "f" ? false : true;
+        //hive_item.parentElement.parentElement.childNodes[3].childNodes[3].childNodes[1].childNodes[1].checked = data.data.sms_not == "f" ? false : true;
+        hive_item.parentElement.parentElement.childNodes[3].childNodes[3].childNodes[1].childNodes[1].checked = data.data.email_not == "f" ? false : true;
     });
 }
 
@@ -663,12 +663,6 @@ function createHiveHtml(id, name, location){
                             </div> \
                             <div class="col-lg-4" > \
                                 <label class="notifications-label">Notifikácie</label> \
-                                <div class="form-check checkbox-slider--b"> \
-                                    <label class="switch switch-3d switch-success mr-3"> \
-                                        <input type="checkbox"  class="switch-input" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "sms", this.checked)\'><span class="switch-label"></span> <span class="switch-handle"></span>\
-                                    </label> \
-                                    <span>SMS</span>\
-                                </div> \
                                 <div class="form-check checkbox-slider--b"> \
                                     <label class="switch switch-3d switch-success mr-3"> \
                                         <input type="checkbox" class="switch-input" onchange=\'setDeviceNotification(\"'+id.toString()+'\", "email", this.checked)\'><span class="switch-label"></span> <span class="switch-handle"></span>\
