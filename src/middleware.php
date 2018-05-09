@@ -13,15 +13,11 @@ $menu_footer_midd = function ($request, $response, $next) {
             'name' => 'O produkte',
             'href' => '/BeeWebpage/public/products',
         ],
-        'item3' => [
-            'name' => 'Cenník',
-            'href' => '/BeeWebpage/public/products-prices',
-        ],
-        'item4' => [
+        'item2' => [
             'name' => 'Kontakt',
             'href' => '/BeeWebpage/public/contact',
         ],
-        'item5' => [
+        'item3' => [
             'name' => 'Prihlásenie',
             'href' => '',
         ]
